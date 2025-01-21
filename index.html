@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Analysis AI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output, .error {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .output {
+            border: 1px solid #ddd;
+        }
+        .error {
+            background-color: #ffdddd;
+            color: #a94442;
+            font-weight: bold;
+        }
+        .separator {
+            margin: 30px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Financial Analysis AI</h1>
+        <p>
+            This platform provides two AI agents to assist you:
+        </p>
+        <ul>
+            <li>
+                <strong>Agent 1:</strong> This agent retrieves financial data for a specific company. Enter a company name 
+                and a quarter to analyze its financial performance, or choose annual data for yearly reports.
+            </li>
+            <li>
+                <strong>Agent 2:</strong> This agent compares market trends. You can ask a question, provide a company 
+                name, and optionally compare multiple companies over a chosen time period.
+            </li>
+        </ul>
+        <p>Start by using Agent 1 below to analyze financial data, and then proceed to Agent 2 for broader market insights.</p>
+
+        <!-- Agent 1 Form -->
+        <h2>Agent 1: Financial Data Retrieval</h2>
+        <form id="agent1Form" onsubmit="return false;">
+            <div class="form-group">
+                <label for="agent1Company">Company Name:</label>
+                <input type="text" id="agent1Company" placeholder="e.g., Capital One">
+            </div>
+            <div class="form-group">
+                <label for="agent1TimeRange">Time Range (e.g., 2020 Q1 to 2024 Q2):</label>
+                <input type="text" id="agent1TimeRange" placeholder="e.g., 2020 Q1 to 2024 Q2">
+            </div>
+            <div class="form-group">
+                <label for="agent1SheetType">Select Financial Sheet:</label>
+                <select id="agent1SheetType">
+                    <option value="INCOME_STATEMENT">Income Statement</option>
+                    <option value="BALANCE_SHEET">Balance Sheet</option>
+                    <option value="CASH_FLOW">Cash Flow</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="agent1Quarter">Select Quarter:</label>
+                <select id="agent1Quarter">
+                    <!-- Populated dynamically -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="agent1Annual">Retrieve Annual Data:</label>
+                <select id="agent1Annual">
+                    <option value="false" selected>No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="agent1Question">Ask a Question:</label>
+                <textarea id="agent1Question" rows="3" placeholder="e.g., What is the net income and total revenue?"></textarea>
+            </div>
+            <button type="button" onclick="submitAgent1()">Submit</button>
+        </form>
+        <div id="agent1Output" class="output" style="display: none;"></div>
+        <div id="agent1Error" class="error" style="display: none;"></div>
+
+        <div class="separator"></div>
+
+        <!-- Agent 2 Form -->
+        <h2>Agent 2: Market Trends Analysis</h2>
+        <form id="agent2Form" onsubmit="return false;">
+            <div class="form-group">
+                <label for="agent2Company">Company Name:</label>
+                <input type="text" id="agent2Company" placeholder="e.g., Capital One">
+            </div>
+            <div class="form-group">
+                <label for="agent2Question">What kinds of market trends are you looking for?</label>
+                <textarea id="agent2Question" rows="4" placeholder="Enter your question here..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="agent2CompareCompanies">Compare Companies (optional):</label>
+                <input type="text" id="agent2CompareCompanies" placeholder="e.g., Chase, Discover">
+            </div>
+            <div class="form-group">
+                <label for="agent2Timeframe">Select Time Range:</label>
+                <select id="agent2Timeframe">
+                    <option value="all">Lifetime</option>
+                    <option value="today 10-y">10 Years</option>
+                    <option value="today 5-y">5 Years</option>
+                    <option value="today 12-m" selected>1 Year</option>
+                    <option value="today 1-m">1 Month</option>
+                    <option value="now 7-d">1 Week</option>
+                </select>
+            </div>
+            <button type="button" onclick="submitAgent2()">Submit</button>
+        </form>
+        <div id="agent2Output" class="output" style="display: none;"></div>
+        <div id="agent2Error" class="error" style="display: none;"></div>
+
+        <!-- Chart Container -->
+        <canvas id="agent2Chart" width="400" height="200" style="display: none;"></canvas>
+        <!-- Agent 3 Output -->
+        <div id="agent3Output" class="output" style="display: none;"></div>
+
+    <script>
+        // WebSocket for Agent 1
+            const wsAgent1 = new WebSocket("ws://127.0.0.1:8000/ws/agent1");
+            wsAgent1.onopen = () => console.log("Agent 1 WebSocket connection established.");
+            wsAgent1.onclose = () => console.log("Agent 1 WebSocket connection closed.");
+            wsAgent1.onerror = () => {
+                const errorDiv = document.getElementById("agent1Error");
+                errorDiv.style.display = "block";
+                errorDiv.textContent = "Agent 1 WebSocket connection error.";
+            };
+            
+            wsAgent1.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const outputDiv = document.getElementById("agent1Output");
+            const errorDiv = document.getElementById("agent1Error");
+            outputDiv.style.display = "none";
+            errorDiv.style.display = "none";
+
+            if (data.error) {
+                errorDiv.style.display = "block";
+                errorDiv.textContent = data.error;
+            } else {
+                outputDiv.style.display = "block";
+                if (data.financial_data && data.financial_data.length > 0) {
+                    outputDiv.innerHTML = `<h3>Financial Data:</h3><pre>${JSON.stringify(data.financial_data, null, 2)}</pre>`;
+                } else {
+                    outputDiv.innerHTML = `<h3>Financial Data:</h3><p>No financial data available for the given parameters.</p>`;
+                }
+            }
+        };
+
+
+            function submitAgent1() {
+                const company = document.getElementById("agent1Company").value.trim();
+                const timeRange = document.getElementById("agent1TimeRange").value.trim();
+                const quarter = document.getElementById("agent1Quarter").value.trim();
+                const annual = document.getElementById("agent1Annual").value === "true";
+                const question = document.getElementById("agent1Question").value.trim();
+
+                if (!company || !timeRange || !question) {
+                    alert("Please enter the company name, time range, and question for Agent 1.");
+                    return;
+                }
+
+                wsAgent1.send(
+                    JSON.stringify({
+                        company,
+                        time_range: timeRange,
+                        quarter,
+                        annual,
+                        question
+                    })
+                );
+            }
+        // WebSocket for Agent 2
+        const wsAgent2 = new WebSocket("ws://127.0.0.1:8000/ws/agent2");
+        wsAgent2.onopen = () => console.log("Agent 2 WebSocket connection established.");
+        wsAgent2.onclose = () => console.log("Agent 2 WebSocket connection closed.");
+        wsAgent2.onerror = () => {
+            const errorDiv = document.getElementById("agent2Error");
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Agent 2 WebSocket connection error.";
+        };
+        wsAgent2.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const outputDiv = document.getElementById("agent2Output");
+            const errorDiv = document.getElementById("agent2Error");
+            const chartCanvas = document.getElementById("agent2Chart");
+
+            // Clear any previous messages or errors
+            outputDiv.style.display = "none";
+            errorDiv.style.display = "none";
+
+            if (data.error) {
+                errorDiv.style.display = "block";
+                errorDiv.textContent = data.error;
+            } else {
+                outputDiv.style.display = "block";
+
+                // Render text output
+                outputDiv.innerHTML = `<h3>Market Trends Analysis:</h3><p>${data.text_output}</p>`;
+
+                // Render the combined graph if available
+                if (data.combined_graph) {
+                    outputDiv.innerHTML += `
+                        <h4>Combined Graph:</h4>
+                        <img src="${data.combined_graph}" alt="Combined Graph" style="width: 100%; max-width: 800px;" />
+                    `;
+                }
+
+                // Render individual graphs if available
+                if (data.individual_graphs) {
+                    outputDiv.innerHTML += `<h4>Individual Graphs:</h4>`;
+                    for (const [keyword, graph] of Object.entries(data.individual_graphs)) {
+                        if (graph) {
+                            outputDiv.innerHTML += `
+                                <div style="margin-bottom: 20px;">
+                                    <h5>${keyword}</h5>
+                                    <img src="${graph}" alt="Graph for ${keyword}" style="width: 100%; max-width: 800px;" />
+                                </div>
+                            `;
+                        }
+                    }
+                }
+                // Trigger Agent 3 after Agent 2 completes successfully
+                console.log("Agent 2 completed successfully. Triggering Agent 3...");
+                submitAgent3FromAgent2(); // Call Agent 3 trigger function here
+            }
+        };
+
+
+        function submitAgent2() {
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
+            const compareCompanies = document.getElementById("agent2CompareCompanies").value.trim();
+            const timeframe = document.getElementById("agent2Timeframe").value;
+            if (!company && !compareCompanies) {
+                alert("Please enter at least one company name for Agent 2.");
+                return;
+            }
+            wsAgent2.send(
+                JSON.stringify({
+                    company,
+                    question,
+                    compare_companies: compareCompanies.split(",").map((c) => c.trim()),
+                    timeframe,
+                })
+            );
+        }
+
+        // WebSocket for Agent 3
+        // WebSocket for Agent 3
+        const wsAgent3 = new WebSocket("ws://127.0.0.1:8000/ws/agent3");
+        wsAgent3.onopen = () => console.log("Agent 3 WebSocket connection established.");
+        wsAgent3.onclose = () => console.log("Agent 3 WebSocket connection closed.");
+        wsAgent3.onerror = () => {
+            const errorDiv = document.getElementById("agent2Error"); // Reuse Agent 2 error display for simplicity
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Agent 3 WebSocket connection error.";
+        };
+        wsAgent3.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log("Agent 3 response:", data); // Debugging
+
+            const analysisOutput = document.getElementById("agent3Output");
+            const errorDiv = document.getElementById("agent2Error");
+
+            // Clear previous outputs
+            errorDiv.style.display = "none";
+            analysisOutput.innerHTML = "";
+
+            if (data.error) {
+                // Handle error case
+                errorDiv.style.display = "block";
+                errorDiv.textContent = data.error;
+            } else {
+                // Render the structured response
+                analysisOutput.style.display = "block";
+
+                let responseHTML = "<h3>Agent 3 Analysis</h3>";
+                if (data.summary) {
+                    responseHTML += `<h4>Summary:</h4><p>${data.summary}</p>`;
+                }
+                if (data.insights) {
+                    responseHTML += `<h4>Key Insights:</h4><p>${data.insights}</p>`;
+                }
+                if (data.recommendations) {
+                    responseHTML += `<h4>Recommendations:</h4><p>${data.recommendations}</p>`;
+                }
+
+                // If no sections are available, show a fallback message
+                if (!data.summary && !data.insights && !data.recommendations) {
+                    responseHTML += "<p>No structured analysis was provided by Agent 3.</p>";
+                }
+
+                analysisOutput.innerHTML = responseHTML;
+            }
+        };
+
+
+
+
+        // Trigger Agent 3 Analysis from Agent 2
+        function submitAgent3FromAgent2() {
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
+
+            if (!company || !question) {
+                console.log("Agent 3 requires both company and question inputs.");
+                return;
+            }
+
+            const payload = JSON.stringify({
+                company,
+                question
+            });
+
+            console.log("Triggering Agent 3 with payload:", payload); // Debugging
+            wsAgent3.send(payload);
+        }
+
+
+        // Utility to generate random colors for chart lines
+        function getRandomColor() {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
