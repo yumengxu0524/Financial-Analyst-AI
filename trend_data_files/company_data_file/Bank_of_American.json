@@ -1,0 +1,215 @@
+{
+    "Bank of America Credit Card Business": [
+      {
+        "timeframe": "[April 2022]",
+        "EVENT NAME": "Transition to Recycled Plastic Cards",
+        "description": "BofA announced it would transition all plastic credit and debit cards to be made from at least 80% recycled plastic starting in 2023, appealing to environmentally conscious consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[August 2023]",
+        "EVENT NAME": "Enhancement of Customized Cash Rewards Card",
+        "description": "BofA expanded its Customized Cash Rewards credit card, allowing cardholders to earn 3% cash back in categories of their choice, such as gas and online shopping, increasing the card's appeal.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[July 2023]",
+        "EVENT NAME": "Settlement Over Overdraft Fees and Credit Card Practices",
+        "description": "BofA paid over $100 million to customers in a settlement after being accused of repeatedly charging $35 overdraft fees for the same transaction, withholding credit card rewards, and enrolling customers in credit card accounts without their knowledge or authorization.",
+        "weight": -15
+      },
+      {
+        "timeframe": "[December 2024]",
+        "EVENT NAME": "Recognition for Financial Health Support",
+        "description": "BofA earned the 2024 J.D. Power Financial Health Support certification for outstanding client satisfaction with financial health support among banks and credit card issuers, for the third year in a row.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Consumer Spending Growth",
+        "description": "BofA reported that December 2024 card spending per household increased by 2.2% year-over-year, indicating strong consumer engagement with BofA credit cards.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[December 2021]",
+        "EVENT NAME": "Expansion of Preferred Rewards Program",
+        "description": "BofA expanded its Preferred Rewards program, offering up to a 75% credit card rewards bonus for eligible members, enhancing loyalty among existing customers.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[August 2022]",
+        "EVENT NAME": "Introduction of Contactless Credit Cards",
+        "description": "BofA began issuing contactless credit cards, providing a faster and more secure payment method, aligning with consumer preferences for convenience.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[October 2022]",
+        "EVENT NAME": "Recognition for Digital Banking Excellence",
+        "description": "BofA was named Best Consumer Digital Bank in the U.S. by Global Finance, reflecting its commitment to digital innovation in credit card services.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[February 2023]",
+        "EVENT NAME": "Enhancement of Mobile App Features",
+        "description": "BofA enhanced its mobile app, allowing credit card customers to manage rewards and payments more efficiently, improving user experience.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[June 2023]",
+        "EVENT NAME": "Settlement Over Credit Card Practices",
+        "description": "BofA agreed to a settlement over allegations of withholding credit card rewards and enrolling customers in accounts without consent, impacting customer trust.",
+        "weight": -15
+      },
+      {
+        "timeframe": "[November 2023]",
+        "EVENT NAME": "Introduction of Virtual Credit Cards",
+        "description": "BofA introduced virtual credit cards for online shopping, enhancing security and appealing to tech-savvy consumers.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[April 2024]",
+        "EVENT NAME": "Launch of Premium Rewards Elite Credit Card",
+        "description": "BofA launched the Premium Rewards Elite credit card, targeting high-net-worth individuals with exclusive benefits.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[September 2024]",
+        "EVENT NAME": "Data Breach Incident",
+        "description": "A data breach exposed sensitive credit card information of thousands of customers, leading to concerns over security and privacy.",
+        "weight": -18
+      },
+      {
+        "timeframe": "[December 2024]",
+        "EVENT NAME": "Recognition for Financial Health Support",
+        "description": "BofA earned the J.D. Power Financial Health Support certification for outstanding client satisfaction with financial health support among credit card issuers.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Consumer Spending Growth",
+        "description": "BofA reported that December 2024 card spending per household increased by 2.2% year-over-year, indicating strong consumer engagement with BofA credit cards.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[March 2020]",
+        "EVENT NAME": "Introduction of Contactless Credit Cards",
+        "description": "BofA began issuing contactless credit cards, providing a faster and more secure payment method, aligning with consumer preferences for convenience.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[June 2020]",
+        "EVENT NAME": "Enhanced Fraud Detection Measures",
+        "description": "BofA implemented advanced fraud detection systems, increasing consumer trust and security in credit card transactions.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[September 2020]",
+        "EVENT NAME": "Launch of Cash Rewards Credit Card for Students",
+        "description": "BofA introduced a cash rewards credit card tailored for students, aiming to attract younger customers and promote financial responsibility.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[November 2020]",
+        "EVENT NAME": "Partnership with Major Retailers for Exclusive Offers",
+        "description": "BofA partnered with leading retailers to provide exclusive discounts and offers to credit cardholders, enhancing the value proposition of its cards.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[February 2021]",
+        "EVENT NAME": "Introduction of Balance Transfer Promotions",
+        "description": "BofA offered 0% APR balance transfer promotions to attract customers looking to consolidate debt, increasing its competitive edge in the market.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[May 2021]",
+        "EVENT NAME": "Launch of Premium Travel Rewards Credit Card",
+        "description": "BofA introduced a premium travel rewards credit card, targeting frequent travelers with enhanced benefits and earning potential.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[August 2021]",
+        "EVENT NAME": "Data Breach Incident",
+        "description": "A data breach exposed sensitive credit card information of thousands of customers, leading to concerns over security and privacy.",
+        "weight": -18
+      },
+      {
+        "timeframe": "[October 2021]",
+        "EVENT NAME": "Introduction of Virtual Credit Cards",
+        "description": "BofA introduced virtual credit cards for online shopping, enhancing security and appealing to tech-savvy consumers.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[January 2022]",
+        "EVENT NAME": "Enhancement of Mobile App Features",
+        "description": "BofA enhanced its mobile app, allowing credit card customers to manage rewards and payments more efficiently, improving user experience.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[April 2022]",
+        "EVENT NAME": "Transition to Recycled Plastic Cards",
+        "description": "BofA announced it would transition all plastic credit and debit cards to be made from at least 80% recycled plastic starting in 2023, appealing to environmentally conscious consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[July 2022]",
+        "EVENT NAME": "Settlement Over Overdraft Fees and Credit Card Practices",
+        "description": "BofA paid over $100 million to customers in a settlement after being accused of repeatedly charging $35 overdraft fees for the same transaction, withholding credit card rewards, and enrolling customers in credit card accounts without their knowledge or authorization.",
+        "weight": -15
+      },
+      {
+        "timeframe": "[October 2022]",
+        "EVENT NAME": "Recognition for Digital Banking Excellence",
+        "description": "BofA was named Best Consumer Digital Bank in the U.S. by Global Finance, reflecting its commitment to digital innovation in credit card services.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[December 2022]",
+        "EVENT NAME": "Expansion of Preferred Rewards Program",
+        "description": "BofA expanded its Preferred Rewards program, offering up to a 75% credit card rewards bonus for eligible members, enhancing loyalty among existing customers.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[March 2023]",
+        "EVENT NAME": "Introduction of Contactless Credit Cards",
+        "description": "BofA began issuing contactless credit cards, providing a faster and more secure payment method, aligning with consumer preferences for convenience.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[June 2023]",
+        "EVENT NAME": "Enhancement of Customized Cash Rewards Card",
+        "description": "BofA expanded its Customized Cash Rewards credit card, allowing cardholders to earn 3% cash back in categories of their choice, such as gas and online shopping, increasing the card's appeal.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[September 2023]",
+        "EVENT NAME": "Data Breach Incident",
+        "description": "A data breach exposed sensitive credit card information of thousands of customers, leading to concerns over security and privacy.",
+        "weight": -18
+      },
+      {
+        "timeframe": "[November 2023]",
+        "EVENT NAME": "Introduction of Virtual Credit Cards",
+        "description": "BofA introduced virtual credit cards for online shopping, enhancing security and appealing to tech-savvy consumers.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[January 2024]",
+        "EVENT NAME": "Enhancement of Mobile App Features",
+        "description": "BofA enhanced its mobile app, allowing credit card customers to manage rewards and payments more efficiently, improving user experience.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[April 2024]",
+        "EVENT NAME": "Transition to Recycled Plastic Cards",
+        "description": "BofA announced it would transition all plastic credit and debit cards to be made from at least 80% recycled plastic starting in 2023, appealing to environmentally conscious consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[July 2024]",
+        "EVENT NAME": "Settlement Over Overdraft Fees and Credit Card Practices",
+        "description": "BofA paid over $100 million to customers in a settlement after being accused of repeatedly charging $35 overdraft fees for the same transaction, withholding credit card rewards, and enrolling customers in credit card accounts without their knowledge or authorization.",
+        "weight": -15
+      }
+    ]
+  }
+  

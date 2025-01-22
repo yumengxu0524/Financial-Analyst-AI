@@ -1,0 +1,209 @@
+{
+    "Discover Financial Services": [
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Introduction of 5% Cashback Bonus Categories for Q1 2025",
+        "description": "Discover announced its 5% Cashback Bonus categories for the first quarter of 2025, encouraging increased card usage among consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[December 2024]",
+        "EVENT NAME": "Survey on 2025 Financial Resolutions",
+        "description": "Discover conducted a survey revealing that 54% of U.S. consumers plan to make financial resolutions for 2025, aligning its services to meet consumer needs.",
+        "weight": 8
+      },
+      {
+        "timeframe": "[December 2020]",
+        "EVENT NAME": "CFPB Consent Order for Student Loan Servicing Practices",
+        "description": "The Consumer Financial Protection Bureau issued a consent order against Discover for violations related to student loan servicing, potentially affecting consumer trust.",
+        "weight": -12
+      },
+      {
+        "timeframe": "[July 2024]",
+        "EVENT NAME": "FDIC Consent Agreement",
+        "description": "Discover entered into a consent agreement with the FDIC to improve its compliance management system, aiming to enhance consumer protection.",
+        "weight": 5
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Launch of Discover® Cashback Debit Checking Bonus",
+        "description": "Discover introduced a new Cashback Debit Checking account, offering up to $360 in cash back annually to attract new customers.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[December 2024]",
+        "EVENT NAME": "Publication of Annual Report",
+        "description": "Discover released its annual report detailing financial performance and strategic initiatives, providing transparency to consumers.",
+        "weight": 7
+      },
+      {
+        "timeframe": "[December 2024]",
+        "EVENT NAME": "Survey on Financial Resolutions",
+        "description": "Discover conducted a survey revealing that 54% of U.S. consumers plan to make financial resolutions for 2025, aligning its services to meet consumer needs.",
+        "weight": 8
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Introduction of 5% Cashback Bonus Categories for Q1 2025",
+        "description": "Discover announced its 5% Cashback Bonus categories for the first quarter of 2025, encouraging increased card usage among consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[December 2020]",
+        "EVENT NAME": "CFPB Consent Order for Student Loan Servicing Practices",
+        "description": "The Consumer Financial Protection Bureau issued a consent order against Discover for violations related to student loan servicing, potentially affecting consumer trust.",
+        "weight": -12
+      },
+      {
+        "timeframe": "[July 2024]",
+        "EVENT NAME": "FDIC Consent Agreement",
+        "description": "Discover entered into a consent agreement with the FDIC to improve its compliance management system, aiming to enhance consumer protection.",
+        "weight": 5
+      },
+      {
+        "timeframe": "[January 2025 - Ongoing]",
+        "EVENT NAME": "Enhanced Cashback Match Program",
+        "description": "Discover doubled the first-year cashback for new cardholders, providing significant financial incentives for new customer acquisition.",
+        "weight": 18
+      },
+      {
+        "timeframe": "[July 2024]",
+        "EVENT NAME": "Sale of Student Loan Portfolio",
+        "description": "Discover sold its student loan portfolio to focus on core services, potentially streamlining operations and appealing to more focused consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[February 2024 - Ongoing]",
+        "EVENT NAME": "Proposed Acquisition by Capital One",
+        "description": "The $35.3 billion deal could attract customers with enhanced services but may raise concerns about reduced competition.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[October 2024 - Ongoing]",
+        "EVENT NAME": "Antitrust Investigation into Acquisition",
+        "description": "Regulatory scrutiny over Discover’s acquisition by Capital One could lead to consumer uncertainty.",
+        "weight": -8
+      },
+      {
+        "timeframe": "[December 2024]",
+        "EVENT NAME": "Launch of Mobile App Enhancements",
+        "description": "Discover revamped its mobile app, improving functionality and user experience to attract tech-savvy consumers.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[March 2023]",
+        "EVENT NAME": "Zero APR Balance Transfer Promotion",
+        "description": "Discover offered a 0% APR on balance transfers for 18 months, attracting customers looking to consolidate debt.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[January 2023 - June 2023]",
+        "EVENT NAME": "Cashback Bonus on Travel",
+        "description": "Discover offered 5% cashback on travel bookings, appealing to post-pandemic travelers.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[April 2021 - Ongoing]",
+        "EVENT NAME": "Partnership with Major Retailers",
+        "description": "Discover partnered with Amazon and Walmart to offer exclusive cashback deals, attracting online shoppers.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[July 2024]",
+        "EVENT NAME": "New Fraud Protection Tools",
+        "description": "Discover introduced advanced fraud monitoring systems, increasing trust and attracting security-conscious customers.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[December 2024]",
+        "EVENT NAME": "Survey on Financial Wellness",
+        "description": "Discover conducted a study to understand consumer financial concerns, aligning its offerings to match consumer needs.",
+        "weight": 8
+      },
+      {
+        "timeframe": "[January 2025 - Ongoing]",
+        "EVENT NAME": "Expanded Cashback Debit Features",
+        "description": "Discover added new features to its Cashback Debit accounts, offering greater benefits to everyday banking customers.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[July 2022]",
+        "EVENT NAME": "Consumer-Friendly Fee Reductions",
+        "description": "Discover reduced late payment fees, improving customer retention and attracting fee-sensitive consumers.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[October 2021]",
+        "EVENT NAME": "Enhanced Customer Service Options",
+        "description": "Discover expanded its 24/7 customer service team, providing quicker resolutions and improving customer satisfaction.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[February 2020 - May 2021]",
+        "EVENT NAME": "COVID-19 Financial Relief Programs",
+        "description": "Discover offered payment deferrals and waived fees for customers impacted by the pandemic, retaining customer loyalty.",
+        "weight": 17
+      },
+      {
+        "timeframe": "[December 2022]",
+        "EVENT NAME": "Launch of Discover® Secure Card",
+        "description": "Discover introduced a secured credit card, targeting new-to-credit and rebuilding consumers.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[May 2024]",
+        "EVENT NAME": "Collaboration with Green Initiatives",
+        "description": "Discover partnered with environmental organizations to promote sustainability, attracting eco-conscious consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[January 2022]",
+        "EVENT NAME": "Launch of Student Rewards Card",
+        "description": "Discover targeted college students with a card offering cashback on purchases, aiming to build long-term customer relationships.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[November 2023]",
+        "EVENT NAME": "Digital Banking Expansion",
+        "description": "Discover expanded its digital banking capabilities, offering seamless integration with third-party financial apps.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[July 2021]",
+        "EVENT NAME": "Data Breach Incident",
+        "description": "A minor data breach incident led to concerns about data security, potentially affecting consumer trust.",
+        "weight": -10
+      },
+      {
+        "timeframe": "[December 2024 - Ongoing]",
+        "EVENT NAME": "Implementation of AI for Fraud Detection",
+        "description": "Discover introduced AI-driven fraud detection systems, enhancing trust among security-conscious customers.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[April 2020]",
+        "EVENT NAME": "Reintroduction of Cashback Match Program",
+        "description": "Discover brought back its popular Cashback Match program for new customers, boosting cardholder acquisition.",
+        "weight": 18
+      },
+      {
+        "timeframe": "[August 2023]",
+        "EVENT NAME": "Support for Small Businesses",
+        "description": "Discover launched financial support programs for small businesses, attracting business banking customers.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[September 2020]",
+        "EVENT NAME": "Discover it® Miles Card Updates",
+        "description": "Discover enhanced its Miles card to offer unlimited 1.5x rewards, appealing to frequent travelers.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Introduction of Sustainability Rewards",
+        "description": "Discover launched a new card offering extra cashback for purchases supporting sustainability.",
+        "weight": 14
+      }  
+    ]
+  }
+  

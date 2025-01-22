@@ -1,0 +1,125 @@
+{
+    "Wells Fargo Credit Card Business": [
+      {
+        "timeframe": "[June 2021]",
+        "EVENT NAME": "Launch of Wells Fargo Active Cash® Card",
+        "description": "Wells Fargo introduced the Active Cash® Card, offering unlimited 2% cash rewards on purchases with no annual fee, appealing to consumers seeking straightforward cashback options.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[July 2021]",
+        "EVENT NAME": "Introduction of Wells Fargo Reflect® Card",
+        "description": "The Reflect® Card was launched, featuring a 0% introductory APR for up to 21 months on purchases and qualifying balance transfers, attracting customers interested in managing interest payments.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[May 2021]",
+        "EVENT NAME": "Banking Inclusion Initiative",
+        "description": "Wells Fargo announced a 10-year commitment to accelerate access to affordable mainstream accounts and financial education for unbanked communities, focusing on Black, African American, Hispanic, and Native American households.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[August 2022]",
+        "EVENT NAME": "Launch of Wells Fargo Autograph℠ Card",
+        "description": "The Autograph℠ Card was introduced, offering 3x points on categories like travel, dining, and streaming services, catering to consumers seeking versatile rewards.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[September 2022]",
+        "EVENT NAME": "Settlement Over Past Practices",
+        "description": "Wells Fargo reached a settlement addressing previous issues related to customer accounts, aiming to rebuild trust and improve customer satisfaction.",
+        "weight": -10
+      },
+      {
+        "timeframe": "[January 2023]",
+        "EVENT NAME": "Introduction of Wells Fargo Bilt Mastercard®",
+        "description": "Wells Fargo partnered with Bilt Rewards to offer a credit card allowing customers to earn points on rent payments without fees, appealing to renters seeking rewards.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[October 2023]",
+        "EVENT NAME": "Enhancement of Mobile App Features",
+        "description": "Wells Fargo enhanced its mobile app, providing credit card customers with improved tools for managing accounts, rewards, and payments, enhancing user experience.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[March 2024]",
+        "EVENT NAME": "Introduction of Wells Fargo Attune℠ Card",
+        "description": "The Attune℠ Card was launched, offering 4% cash rewards on eligible purchases for gym memberships, entertainment, and select streaming services, targeting consumers with active lifestyles.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[June 2024]",
+        "EVENT NAME": "Donation Initiative with Attune℠ Card",
+        "description": "For applications submitted between June 5, 2024, and May 31, 2025, Wells Fargo committed to donating $50 to Capital Link when customers qualify for the $100 cash rewards bonus, supporting Federally Qualified Health Centers and clean energy resiliency programs.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Appointment of New Credit Card Business Head",
+        "description": "Wells Fargo appointed Ed Olebe, a former JPMorgan Chase executive, to lead its credit card business, signaling a strategic move to expand and enhance credit card offerings.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[June 2021]",
+        "EVENT NAME": "Launch of Wells Fargo Active Cash® Card",
+        "description": "Wells Fargo introduced the Active Cash® Card, offering unlimited 2% cash rewards on purchases with no annual fee, appealing to consumers seeking straightforward cashback options.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[July 2021]",
+        "EVENT NAME": "Introduction of Wells Fargo Reflect® Card",
+        "description": "The Reflect® Card was launched, featuring a 0% introductory APR for up to 21 months on purchases and qualifying balance transfers, attracting customers interested in managing interest payments.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[May 2021]",
+        "EVENT NAME": "Banking Inclusion Initiative",
+        "description": "Wells Fargo announced a 10-year commitment to accelerate access to affordable mainstream accounts and financial education for unbanked communities, focusing on Black, African American, Hispanic, and Native American households.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[August 2022]",
+        "EVENT NAME": "Launch of Wells Fargo Autograph℠ Card",
+        "description": "The Autograph℠ Card was introduced, offering 3x points on categories like travel, dining, and streaming services, catering to consumers seeking versatile rewards.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[September 2022]",
+        "EVENT NAME": "Settlement Over Past Practices",
+        "description": "Wells Fargo reached a settlement addressing previous issues related to customer accounts, aiming to rebuild trust and improve customer satisfaction.",
+        "weight": -10
+      },
+      {
+        "timeframe": "[January 2023]",
+        "EVENT NAME": "Introduction of Wells Fargo Bilt Mastercard®",
+        "description": "Wells Fargo partnered with Bilt Rewards to offer a credit card allowing customers to earn points on rent payments without fees, appealing to renters seeking rewards.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[October 2023]",
+        "EVENT NAME": "Enhancement of Mobile App Features",
+        "description": "Wells Fargo enhanced its mobile app, providing credit card customers with improved tools for managing accounts, rewards, and payments, enhancing user experience.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[March 2024]",
+        "EVENT NAME": "Introduction of Wells Fargo Attune℠ Card",
+        "description": "The Attune℠ Card was launched, offering 4% cash rewards on eligible purchases for gym memberships, entertainment, and select streaming services, targeting consumers with active lifestyles.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[June 2024]",
+        "EVENT NAME": "Donation Initiative with Attune℠ Card",
+        "description": "For applications submitted between June 5, 2024, and May 31, 2025, Wells Fargo committed to donating $50 to Capital Link when customers qualify for the $100 cash rewards bonus, supporting Federally Qualified Health Centers and clean energy resiliency programs.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Appointment of New Credit Card Business Head",
+        "description": "Wells Fargo appointed Ed Olebe, a former JPMorgan Chase executive, to lead its credit card business, signaling a strategic move to expand and enhance credit card offerings.",
+        "weight": 13
+      }
+    ]
+  }
+  

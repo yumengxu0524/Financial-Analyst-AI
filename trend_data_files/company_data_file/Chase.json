@@ -1,0 +1,221 @@
+{
+    "Chase Credit Card Business": [
+      {
+        "timeframe": "[January 2020]",
+        "EVENT NAME": "Launch of United Business Card",
+        "description": "Chase introduced the United Business Card, offering strong bonus categories and benefits for United Airlines flyers, attracting small business owners seeking travel rewards.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[October 2020]",
+        "EVENT NAME": "Introduction of Chase Freedom Flex",
+        "description": "Chase launched the Freedom Flex card, featuring rotating 5% cash back categories and no annual fee, appealing to consumers seeking versatile cash back options.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[March 2021]",
+        "EVENT NAME": "Enhancement of Sapphire Preferred Bonus",
+        "description": "Chase increased the sign-up bonus for the Sapphire Preferred card to 100,000 points, attracting new customers interested in travel rewards.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[August 2021]",
+        "EVENT NAME": "Partnership with Instacart",
+        "description": "Chase partnered with Instacart to offer statement credits and accelerated points on grocery deliveries, catering to the growing demand for online grocery services.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[November 2021]",
+        "EVENT NAME": "Introduction of Aeroplan Credit Card",
+        "description": "Chase launched the Aeroplan Credit Card, providing unique benefits for Air Canada travelers and expanding its airline credit card portfolio.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[February 2022]",
+        "EVENT NAME": "Launch of Pay Yourself Back Feature",
+        "description": "Chase introduced the 'Pay Yourself Back' feature, allowing cardholders to redeem points for statement credits on everyday purchases, increasing redemption flexibility.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[July 2022]",
+        "EVENT NAME": "Settlement Over Credit Card Practices",
+        "description": "Chase faced legal challenges regarding certain credit card practices, leading to settlements and impacting customer trust.",
+        "weight": -10
+      },
+      {
+        "timeframe": "[October 2022]",
+        "EVENT NAME": "Introduction of Chase Sapphire Lounge",
+        "description": "Chase opened its first Sapphire Lounge, offering exclusive access to cardholders and enhancing the travel experience.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[January 2023]",
+        "EVENT NAME": "Enhancement of Freedom Flex Categories",
+        "description": "Chase expanded the 5% cash back categories for the Freedom Flex card, providing more earning opportunities for cardholders.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[May 2023]",
+        "EVENT NAME": "Launch of Chase Dining Platform",
+        "description": "Chase introduced a dining platform offering exclusive reservations and experiences for cardholders, enhancing lifestyle benefits.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[September 2023]",
+        "EVENT NAME": "Data Breach Incident",
+        "description": "A data breach exposed sensitive credit card information of thousands of customers, leading to concerns over security and privacy.",
+        "weight": -18
+      },
+      {
+        "timeframe": "[December 2023]",
+        "EVENT NAME": "Introduction of My Chase Plan",
+        "description": "Chase launched 'My Chase Plan,' allowing cardholders to split large purchases into fixed monthly payments, providing more payment flexibility.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[April 2024]",
+        "EVENT NAME": "Partnership with DoorDash",
+        "description": "Chase partnered with DoorDash to offer complimentary DashPass memberships to cardholders, adding value through food delivery benefits.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[August 2024]",
+        "EVENT NAME": "Launch of Chase Offers Platform",
+        "description": "Chase introduced the 'Chase Offers' platform, providing personalized deals and discounts to cardholders, enhancing the value proposition.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[November 2024]",
+        "EVENT NAME": "Introduction of Chase First Banking",
+        "description": "Chase launched 'Chase First Banking,' a debit card and account designed for kids, aiming to attract families and foster early financial literacy.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[February 2025]",
+        "EVENT NAME": "Enhancement of Ultimate Rewards Portal",
+        "description": "Chase upgraded its Ultimate Rewards portal, offering more redemption options and a user-friendly interface, improving the customer experience.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[June 2025]",
+        "EVENT NAME": "Introduction of Chase Slate Edge",
+        "description": "Chase introduced the Slate Edge card, focusing on low interest rates and credit-building features, appealing to consumers seeking financial flexibility.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[October 2025]",
+        "EVENT NAME": "Partnership with Peloton",
+        "description": "Chase partnered with Peloton to offer statement credits and bonus points on fitness memberships and equipment purchases, tapping into the health and wellness market.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[January 2020]",
+        "EVENT NAME": "Launch of United Business Card",
+        "description": "Chase introduced the United Business Card, offering strong bonus categories and benefits for United Airlines flyers, attracting small business owners seeking travel rewards.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[October 2020]",
+        "EVENT NAME": "Introduction of Chase Freedom Flex",
+        "description": "Chase launched the Freedom Flex card, featuring rotating 5% cash back categories and no annual fee, appealing to consumers seeking versatile cash back options.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[March 2021]",
+        "EVENT NAME": "Enhancement of Sapphire Preferred Bonus",
+        "description": "Chase increased the sign-up bonus for the Sapphire Preferred card to 100,000 points, attracting new customers interested in travel rewards.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[August 2021]",
+        "EVENT NAME": "Partnership with Instacart",
+        "description": "Chase partnered with Instacart to offer statement credits and accelerated points on grocery deliveries, catering to the growing demand for online grocery services.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[November 2021]",
+        "EVENT NAME": "Introduction of Aeroplan Credit Card",
+        "description": "Chase launched the Aeroplan Credit Card, providing unique benefits for Air Canada travelers and expanding its airline credit card portfolio.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[February 2022]",
+        "EVENT NAME": "Launch of Pay Yourself Back Feature",
+        "description": "Chase introduced the 'Pay Yourself Back' feature, allowing cardholders to redeem points for statement credits on everyday purchases, increasing redemption flexibility.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[July 2022]",
+        "EVENT NAME": "Settlement Over Credit Card Practices",
+        "description": "Chase faced legal challenges regarding certain credit card practices, leading to settlements and impacting customer trust.",
+        "weight": -10
+      },
+      {
+        "timeframe": "[October 2022]",
+        "EVENT NAME": "Introduction of Chase Sapphire Lounge",
+        "description": "Chase opened its first Sapphire Lounge, offering exclusive access to cardholders and enhancing the travel experience.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[January 2023]",
+        "EVENT NAME": "Enhancement of Freedom Flex Categories",
+        "description": "Chase expanded the 5% cash back categories for the Freedom Flex card, providing more earning opportunities for cardholders.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[May 2023]",
+        "EVENT NAME": "Launch of Chase Dining Platform",
+        "description": "Chase introduced a dining platform offering exclusive reservations and experiences for cardholders, enhancing lifestyle benefits.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[September 2023]",
+        "EVENT NAME": "Data Breach Incident",
+        "description": "A data breach exposed sensitive credit card information of thousands of customers, leading to concerns over security and privacy.",
+        "weight": -18
+      },
+      {
+        "timeframe": "[December 2023]",
+        "EVENT NAME": "Introduction of My Chase Plan",
+        "description": "Chase launched 'My Chase Plan,' allowing cardholders to split large purchases into fixed monthly payments, providing more payment flexibility.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[April 2024]",
+        "EVENT NAME": "Partnership with DoorDash",
+        "description": "Chase partnered with DoorDash to offer complimentary DashPass memberships to cardholders, adding value through food delivery benefits.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[August 2024]",
+        "EVENT NAME": "Launch of Chase Offers Platform",
+        "description": "Chase introduced the 'Chase Offers' platform, providing personalized deals and discounts to cardholders, enhancing the value proposition.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[November 2024]",
+        "EVENT NAME": "Introduction of Chase First Banking",
+        "description": "Chase launched 'Chase First Banking,' a debit card and account designed for kids, aiming to attract families and foster early financial literacy.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[February 2025]",
+        "EVENT NAME": "Enhancement of Ultimate Rewards Portal",
+        "description": "Chase upgraded its Ultimate Rewards portal, offering more redemption options and a user-friendly interface, improving the customer experience.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[June 2025]",
+        "EVENT NAME": "Introduction of Chase Slate Edge",
+        "description": "Chase introduced the Slate Edge card, focusing on low interest rates and credit-building features, appealing to consumers seeking financial flexibility.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[October 2025]",
+        "EVENT NAME": "Partnership with Peloton",
+        "description": "Chase partnered with Peloton to offer statement credits and bonus points on fitness memberships and equipment purchases, tapping into the health and wellness market.",
+        "weight": 12
+      }
+    ]
+  }
+  

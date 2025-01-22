@@ -1,0 +1,119 @@
+{
+    "Capital One": [
+      {
+        "timeframe": "[December 2021 - Ongoing]",
+        "EVENT NAME": "Elimination of Overdraft and NSF Fees",
+        "description": "Capital One became the first major U.S. bank to completely eliminate overdraft and insufficient-fund fees, enhancing customer satisfaction and attracting new customers seeking more transparent banking.",
+        "weight": 18
+      },
+      {
+        "timeframe": "[July 2024 - Ongoing]",
+        "EVENT NAME": "$265 Billion Community Benefits Plan",
+        "description": "Capital One announced a five-year plan committing $265 billion towards lending, philanthropy, and investments to support low-and-moderate-income communities, enhancing its appeal to socially conscious consumers.",
+        "weight": 20
+      },
+      {
+        "timeframe": "[February 2024 - Ongoing]",
+        "EVENT NAME": "Proposed Acquisition of Discover Financial Services",
+        "description": "Capital One proposed a $35.3 billion acquisition of Discover Financial Services, aiming to expand its consumer base and become the largest U.S. credit card issuer.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[October 2024 - Ongoing]",
+        "EVENT NAME": "Antitrust Investigation into Discover Acquisition",
+        "description": "An investigation into Capital One's proposed acquisition of Discover Financial Services may negatively impact consumer trust and retention.",
+        "weight": -10
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "CFPB Lawsuit Over Savings Accounts",
+        "description": "The Consumer Financial Protection Bureau filed a lawsuit alleging deceptive practices that caused customers to lose $2 billion in interest, potentially leading to consumer distrust.",
+        "weight": -15
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "360 Checking Account Bonus",
+        "description": "Capital One offered a $250 bonus for new 360 Checking accounts, requiring two direct deposits of $500 or more within 75 days, likely attracting new customers.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "360 Performance Savings Account Bonus",
+        "description": "New 360 Performance Savings account holders could earn up to $1,500 by depositing specified amounts, incentivizing account openings.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[March 2020 - Ongoing]",
+        "EVENT NAME": "Cloud Migration Completion",
+        "description": "Capital One completed its migration to a cloud-first infrastructure, providing enhanced digital banking experiences and attracting tech-savvy consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[May 2020]",
+        "EVENT NAME": "Customer Support During COVID-19",
+        "description": "Capital One implemented measures to assist customers affected by the COVID-19 pandemic, including financial relief options, retaining existing customers and attracting new ones.",
+        "weight": 17
+      },
+      {
+        "timeframe": "[Late 2020 - Ongoing]",
+        "EVENT NAME": "E-commerce and Fraud Protection Innovations",
+        "description": "Capital One introduced advanced fraud detection and prevention tools for e-commerce transactions, increasing trust among online shoppers.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[June 2020]",
+        "EVENT NAME": "Commitment to Diversity and Inclusion",
+        "description": "Capital One reaffirmed its commitment to diversity, inclusion, and belonging, improving its reputation and attracting socially conscious consumers.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[December 2021]",
+        "EVENT NAME": "Venture X Rewards Credit Card Launch",
+        "description": "Capital One launched the Venture X Rewards Credit Card with substantial welcome bonuses and travel perks, appealing to affluent consumers.",
+        "weight": 18
+      },
+      {
+        "timeframe": "[July 2024]",
+        "EVENT NAME": "Fraud Prevention in E-commerce",
+        "description": "Capital One enhanced its fraud prevention measures for online transactions, attracting customers who value secure digital banking.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[April 2024]",
+        "EVENT NAME": "Fortune 100 Best Companies to Work For",
+        "description": "Capital One ranked 15th on Fortune's 100 Best Companies to Work For, boosting its reputation and appealing to employees and consumers.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[November 2021]",
+        "EVENT NAME": "$3.5 Million in Grant Funding",
+        "description": "Capital One awarded over $3.5 million in grants to nonprofit organizations, appealing to socially conscious customers.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[December 2024 - Ongoing]",
+        "EVENT NAME": "Special Meetings for Merger Approval",
+        "description": "Capital One announced special meetings for stockholder votes on its Discover Financial Services merger, attracting attention from financial industry stakeholders.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Annual Report Release",
+        "description": "Capital One released its annual report detailing financial performance and initiatives, improving transparency and trust among consumers.",
+        "weight": 8
+      },
+      {
+        "timeframe": "[October 2023 - Ongoing]",
+        "EVENT NAME": "Student Loan Repayment Resumption",
+        "description": "Capital One adapted strategies to accommodate consumers facing financial strain from student loan repayments, retaining customers.",
+        "weight": 6
+      },
+      {
+        "timeframe": "[August 2021 - Present]",
+        "EVENT NAME": "Green Energy Investments",
+        "description": "Capital One promoted eco-friendly practices and green energy investments, appealing to environmentally conscious consumers.",
+        "weight": 10
+      }
+    ]
+  }
+  

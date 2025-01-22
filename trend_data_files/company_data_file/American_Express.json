@@ -1,0 +1,179 @@
+{
+    "American Express": [
+      {
+        "timeframe": "[March 2020 - Ongoing]",
+        "EVENT NAME": "Adaptation to COVID-19 Pandemic",
+        "description": "Amex observed significant shifts in consumer behavior due to the pandemic, with 75% of consumers engaging in new shopping behaviors. The company adapted its services to meet changing consumer preferences, focusing on availability, convenience, and value.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[December 2020]",
+        "EVENT NAME": "Customer Retention Analytics Enhancement",
+        "description": "Amex strengthened its customer retention programs by implementing robust metrics and analytical approaches to understand and address customer behavior effectively.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[January 2021]",
+        "EVENT NAME": "Digital Payments Trendex Research",
+        "description": "Amex conducted research revealing a significant increase in consumer preference for digital payments, leading to the enhancement of digital payment solutions to meet evolving consumer needs.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[June 2021]",
+        "EVENT NAME": "Engagement with Gen Z Consumers",
+        "description": "Amex launched initiatives to engage Gen Z consumers, including partnerships with contemporary cultural icons and events, ensuring the brand remains relevant and attractive to younger demographics.",
+        "weight": 18
+      },
+      {
+        "timeframe": "[October 2021]",
+        "EVENT NAME": "Introduction of Exclusive Lounges",
+        "description": "Amex opened exclusive lounges, such as the Centurion New York, offering luxurious experiences to high-spending customers, thereby enhancing customer loyalty and attracting new premium users.",
+        "weight": 20
+      },
+      {
+        "timeframe": "[July 2022]",
+        "EVENT NAME": "Focus on Affluent Gen Z and Millennials",
+        "description": "Amex reported that new credit card growth was primarily driven by affluent Gen Z and millennial cardholders, who represented a significant portion of new accounts, particularly for the US Consumer Gold Card.",
+        "weight": 17
+      },
+      {
+        "timeframe": "[October 2022]",
+        "EVENT NAME": "Profit Increase Driven by Young Cardholders",
+        "description": "Amex reported a profit increase of 2% to $2.51 billion for the third quarter, driven by spending from affluent Gen Z and millennial cardholders, indicating successful engagement with younger demographics.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[August 2023]",
+        "EVENT NAME": "Gold Card Refresh",
+        "description": "Amex announced a refresh of its U.S. consumer Gold card, aiming to boost cardmember acquisition and address concerns about marketing expenses.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[January 2024]",
+        "EVENT NAME": "Marketing Strategy for 2025",
+        "description": "Amex conducted extensive market research to understand emerging consumer behaviors and preferences, informing its marketing strategy to cater to a tech-savvy audience seeking streamlined services.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[March 2020 - Ongoing]",
+        "EVENT NAME": "Adaptation to COVID-19 Pandemic",
+        "description": "Amex observed significant shifts in consumer behavior due to the pandemic, with 75% of consumers engaging in new shopping behaviors. The company adapted its services to meet changing consumer preferences, focusing on availability, convenience, and value.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[September 2020]",
+        "EVENT NAME": "Launch of 'Pay It Plan It' Feature",
+        "description": "Amex introduced the 'Pay It Plan It' feature, allowing card members to manage payments more flexibly, catering to evolving consumer spending habits.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[October 2020]",
+        "EVENT NAME": "Introduction of Centurion Lounges",
+        "description": "Amex opened exclusive Centurion Lounges in major airports, enhancing travel experiences for cardholders and attracting premium customers.",
+        "weight": 18
+      },
+      {
+        "timeframe": "[June 2021]",
+        "EVENT NAME": "Acquisition of Restaurant Booking Platform Tock",
+        "description": "Amex acquired Tock to expand its dining services, offering cardholders exclusive access to reservations and experiences.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[July 2021]",
+        "EVENT NAME": "Launch of 'Shop Small' Campaign",
+        "description": "Amex initiated the 'Shop Small' campaign, encouraging cardholders to support local businesses, strengthening community ties.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[January 2022]",
+        "EVENT NAME": "Introduction of Digital Payment Solutions",
+        "description": "Amex enhanced its digital payment options, aligning with the growing consumer preference for contactless transactions.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[March 2022]",
+        "EVENT NAME": "Expansion of Membership Rewards Program",
+        "description": "Amex expanded its rewards program, offering more redemption options, increasing cardholder satisfaction.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[May 2022]",
+        "EVENT NAME": "Commitment to Net-Zero Emissions by 2035",
+        "description": "Amex announced its goal to achieve net-zero emissions by 2035, appealing to environmentally conscious consumers.",
+        "weight": 9
+      },
+      {
+        "timeframe": "[August 2022]",
+        "EVENT NAME": "Launch of 'Backing Women Artisans' Initiative",
+        "description": "Amex supported women artisans through grants and marketing, promoting diversity and inclusion.",
+        "weight": 11
+      },
+      {
+        "timeframe": "[November 2022]",
+        "EVENT NAME": "Introduction of 'Amex Offers' Program",
+        "description": "Amex launched 'Amex Offers,' providing personalized deals to cardholders, enhancing customer engagement.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[February 2023]",
+        "EVENT NAME": "Partnership with Major Retailers for Exclusive Benefits",
+        "description": "Amex partnered with leading retailers to offer exclusive benefits, attracting a broader consumer base.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[April 2023]",
+        "EVENT NAME": "Enhancement of Fraud Protection Measures",
+        "description": "Amex implemented advanced fraud detection systems, increasing consumer trust and security.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[September 2023]",
+        "EVENT NAME": "Launch of 'Green Nation' Environmental Campaign",
+        "description": "Amex initiated the 'Green Nation' project to promote sustainability, resonating with eco-conscious consumers.",
+        "weight": 10
+      },
+      {
+        "timeframe": "[December 2023]",
+        "EVENT NAME": "Introduction of 'Amex Flex' Work Model",
+        "description": "Amex adopted a flexible work model, improving employee satisfaction and service quality.",
+        "weight": 8
+      },
+      {
+        "timeframe": "[March 2024]",
+        "EVENT NAME": "Expansion of Contactless Payment Options",
+        "description": "Amex broadened its contactless payment capabilities, meeting the increasing demand for digital transactions.",
+        "weight": 12
+      },
+      {
+        "timeframe": "[June 2024]",
+        "EVENT NAME": "Launch of 'Amex SafeKey' for Online Security",
+        "description": "Amex introduced 'SafeKey' to enhance online transaction security, boosting consumer confidence.",
+        "weight": 14
+      },
+      {
+        "timeframe": "[October 2024]",
+        "EVENT NAME": "Introduction of 'Amex Pay' Mobile Wallet",
+        "description": "Amex launched its mobile wallet, 'Amex Pay,' providing a seamless payment experience.",
+        "weight": 15
+      },
+      {
+        "timeframe": "[January 2025]",
+        "EVENT NAME": "Commitment to Racial Equity with $1 Billion Action Plan",
+        "description": "Amex announced a $1 billion action plan to promote racial equity, enhancing its corporate social responsibility.",
+        "weight": 13
+      },
+      {
+        "timeframe": "[April 2025]",
+        "EVENT NAME": "Launch of 'Amex Business Class' Platform",
+        "description": "Amex introduced 'Business Class,' offering resources and tools for small businesses, attracting entrepreneurs.",
+        "weight": 16
+      },
+      {
+        "timeframe": "[July 2025]",
+        "EVENT NAME": "Introduction of 'Amex Travel' Services",
+        "description": "Amex expanded its travel services, providing comprehensive booking options for cardholders.",
+        "weight": 14
+      }
+    ]
+  }
+  
