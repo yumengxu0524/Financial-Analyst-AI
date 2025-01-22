@@ -5,17 +5,17 @@ from pydantic import BaseModel
 from Agent_1_data_retrival import Agent1
 from Agent_2_market_trends import MarketTrendsAgent
 from Agent_3_performance_analysis import Agent3PerformanceAnalysis
-from Agent_4_marketing_AI import Agent4_marketing_AI
+from Agent_4_external_events_AI import Agent4_external_events_AI
+from Agent_5_internal_events_AI import Agent5_internal_events_AI
 import json
 
 from dotenv import load_dotenv
 load_dotenv()
 
-FINANCIAL_VARIABLES_JSON = "/Users/xuyumeng/Desktop/Discover/Financial-Analyst-AI/financial_variables.json"
-
+FINANCIAL_VARIABLES_JSON = "C:/Users/ymx19/DISCOVER/financial_variables.json"
 
 # Initialize agents with necessary configurations
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "sk-g8hvV0zoMOD29zq0zhV9n4MIwAmSoh65iJgEybbpIeT3BlbkFJ3YTkPDnHR-hzrrZzLdIy7H6-dKcP3I1YYbnJisnqkA"
 ALPHAVANTAGE_API_KEY  = "MUW1G1BPCMPUOLWJ"
 BASE_URL = "https://www.alphavantage.co/query"
 
@@ -23,9 +23,6 @@ agent1 = Agent1(
     json_file_path=FINANCIAL_VARIABLES_JSON,
     openai_api_key=OPENAI_API_KEY,
 )
-
-
-market_trends_agent = MarketTrendsAgent()
 
 app = FastAPI()
 
@@ -37,10 +34,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+market_trends_agent = MarketTrendsAgent()
 
-# Initialize Agent 3
-agent3 = Agent3PerformanceAnalysis(openai_api_key=OPENAI_API_KEY)
-agent4 = Agent4_marketing_AI(openai_api_key=OPENAI_API_KEY)
+# Initialize Agent 3,4,5
+agent3 = Agent3PerformanceAnalysis()
+agent4 = Agent4_external_events_AI()
+agent5 = Agent5_internal_events_AI()
 
 @app.websocket("/ws/agent1")
 async def websocket_agent1(websocket: WebSocket):
@@ -236,6 +235,110 @@ async def websocket_agent3(websocket: WebSocket):
     except WebSocketDisconnect:
         print("[Agent 3] WebSocket disconnected.")
 
+@app.websocket("/ws/agent4")
+async def websocket_agent4(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            print(f"[Agent 4] Received data: {data}")  # Log received data
+            
+            try:
+                request = json.loads(data)
+                company_name = request.get("company", "").strip()
+                question = request.get("question", "").strip()
+
+                if not company_name:
+                    error_message = "Company name is required."
+                    print(f"[Agent 4] Error: {error_message}")
+                    await websocket.send_text(json.dumps({"error": error_message}))
+                    continue
+
+                # Provide the file path for trends data to Agent 4
+                events_file = "trend_data_files/all_events.json"
+                agent_3_file = "trend_data_files/agent_3_output.json"
+                # Perform analysis
+                analysis_result = await agent4.generate_analysis(events_file, agent_3_file, company_name, question)
+                print(f"[Agent 4] Analysis Result: {analysis_result}")  # Log analysis result
+
+                # Send response
+                await websocket.send_text(json.dumps(analysis_result))
+
+            except json.JSONDecodeError as e:
+                error_message = f"JSON decode error: {e}"
+                print(f"[Agent 4] Error: {error_message}")
+                await websocket.send_text(json.dumps({"error": error_message}))
+            except Exception as e:
+                error_message = f"Unexpected error: {e}"
+                print(f"[Agent 4] Error: {error_message}")
+                await websocket.send_text(json.dumps({"error": error_message}))
+
+    except WebSocketDisconnect:
+        print("[Agent 4] WebSocket disconnected.")
+
+COMPANY_FILE_MAP = {
+    "american express": "trend_data_files/company_data_file/American_Express.json",
+    "amx": "trend_data_files/company_data_file/American_Express.json",
+    "amex": "trend_data_files/company_data_file/American_Express.json",
+    "bank of america": "trend_data_files/company_data_file/Bank_of_American.json",
+    "boa": "trend_data_files/company_data_file/Bank_of_American.json",
+    "capital one": "trend_data_files/company_data_file/Capital_One.json",
+    "c1": "trend_data_files/company_data_file/Capital_One.json",
+    "chase": "trend_data_files/company_data_file/Chase.json",
+    "discover": "trend_data_files/company_data_file/Discover.json",
+    "dfs": "trend_data_files/company_data_file/Discover.json",
+    "wells fargo": "trend_data_files/company_data_file/Wells_Fargo.json",
+    "wf": "trend_data_files/company_data_file/Wells_Fargo.json"
+}
+
+@app.websocket("/ws/agent5")
+async def websocket_agent5(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            print(f"[Agent 5] Received data: {data}")  # Log received data
+            
+            try:
+                request = json.loads(data)
+                company_name = request.get("company", "").strip().lower()  # Normalize company name to lowercase
+                question = request.get("question", "").strip()
+
+                if not company_name:
+                    error_message = "Company name is required."
+                    print(f"[Agent 5] Error: {error_message}")
+                    await websocket.send_text(json.dumps({"error": error_message}))
+                    continue
+
+                # Fetch the file path based on the company name
+                I_events_file = COMPANY_FILE_MAP.get(company_name)
+                if not I_events_file:
+                    error_message = f"Company name '{company_name}' is not recognized."
+                    print(f"[Agent 5] Error: {error_message}")
+                    await websocket.send_text(json.dumps({"error": error_message}))
+                    continue
+
+                # Static file for Agent 3 analysis
+                agent_3_file = "trend_data_files/agent_3_output.json"
+
+                # Perform analysis
+                analysis_result = await agent4.generate_analysis(I_events_file, agent_3_file, company_name, question)
+                print(f"[Agent 5] Analysis Result: {analysis_result}")  # Log analysis result
+
+                # Send the response to the WebSocket client
+                await websocket.send_text(json.dumps(analysis_result))
+
+            except json.JSONDecodeError as e:
+                error_message = f"JSON decode error: {e}"
+                print(f"[Agent 5] Error: {error_message}")
+                await websocket.send_text(json.dumps({"error": error_message}))
+            except Exception as e:
+                error_message = f"Unexpected error: {e}"
+                print(f"[Agent 5] Error: {error_message}")
+                await websocket.send_text(json.dumps({"error": error_message}))
+
+    except WebSocketDisconnect:
+        print("[Agent 5] WebSocket disconnected.")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -279,6 +382,12 @@ async def get_index():
                     alert("Please enter both a company name and a question.");
                     return;
                 }
+                ws.send(JSON.stringify({ company, question }));
+            }
+        </script>
+    </body>
+    </html>
+    """
                 ws.send(JSON.stringify({ company, question }));
             }
         </script>
