@@ -8,6 +8,7 @@ import json
 import logging
 import os
 import time
+import random
 
 # Configure logging
 logging.basicConfig(
@@ -18,15 +19,13 @@ logging.basicConfig(
     ]
 )
 
-#OPENAI_API_KEY = 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
-
 
 class MarketTrendsAgent:
     def __init__(self):
         # Initialize pytrends API
         self.pytrends = TrendReq(hl='en-US', tz=360)
         # Initialize OpenAI API client
-        self.client = AsyncOpenAI(api_key="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")
+        self.client = AsyncOpenAI(api_key="sk-g8hvV0zoMOD29zq0zhV9n4MIwAmSoh65iJgEybbpIeT3BlbkFJ3YTkPDnHR-hzrrZzLdIy7H6-dKcP3I1YYbnJisnqkA")
 
     async def generate_keywords(self, question: str) -> list:
         """
@@ -68,6 +67,9 @@ class MarketTrendsAgent:
                     raise ValueError("The output is not a valid JSON array.")
                 
                 keywords = json.loads(content)
+                # Limit to 4 keywords
+                keywords = keywords[:5]
+                #keywords =['Sapphire Preferred benefit','Sapphire Preferred','Sapphire Reserve','Sapphire Reserve benefit', 'Credit Card']
             except json.JSONDecodeError as json_err:
                 print(f"Malformed JSON detected in AI response: {content}")
                 raise json_err
@@ -177,7 +179,10 @@ class MarketTrendsAgent:
             return {"error": f"Failed to fetch trend data for keyword '{keyword}' with company '{company}': {str(e)}"}
         
         finally:
-            time.sleep(5) 
+            # Sleep for a ra~ndom time to avoid rate limiting
+            sleep_duration = random.uniform(5, 15)  # Random sleep between 5 and 15 seconds
+            logging.info(f"Sleeping for {sleep_duration:.2f} seconds to avoid rate limiting.")
+            time.sleep(sleep_duration)
 
     def generate_trend_graph(self, trends: dict, title: str = "Google Trends Analysis") -> str:
         """
