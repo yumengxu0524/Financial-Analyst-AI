@@ -1,0 +1,208 @@
+{
+  "Global Events": [
+    {
+      "timeframe": "[February 2020 - June 2022]",
+      "factor": "COVID-19 Pandemic",
+      "description": "Led to increased online spending, reduced travel, and higher delinquencies in some credit card portfolios.",
+      "weight": -10
+    },
+    {
+      "timeframe": "[April 2020 - March 2021]",
+      "factor": "Stimulus Checks",
+      "description": "Increased disposable income, reducing credit card balances temporarily.",
+      "weight": -15
+    },
+    {
+      "timeframe": "[February 2022 - Present]",
+      "factor": "War in Ukraine",
+      "description": "Increased energy prices, impacting disposable income and credit card spending.",
+      "weight": -12
+    },
+    {
+      "timeframe": "[Late 2020 - Present]",
+      "factor": "Global Supply Chain Disruptions",
+      "description": "Led to higher prices for goods, increasing credit card balances.",
+      "weight": 10
+    },
+    {
+      "timeframe": "[Mid-2022 - Present]",
+      "factor": "China’s Economic Slowdown",
+      "description": "Reduced global demand and slowed credit card spending on imported goods.",
+      "weight": -5
+    },
+    {
+      "timeframe": "[March 2023 - Present]",
+      "factor": "Bank Failures",
+      "description": "Reduced consumer confidence, leading to conservative credit card spending.",
+      "weight": -8
+    }
+  ],
+  "Financial Policies": [
+    {
+      "timeframe": "[March 2022 - Present]",
+      "factor": "Federal Reserve Interest Rate Increases",
+      "description": "Raised credit card APRs, increasing consumer debt burdens.",
+      "weight": -20
+    },
+    {
+      "timeframe": "[June 2021 - June 2022]",
+      "factor": "Inflation Surge",
+      "description": "Reduced purchasing power, leading to higher credit card usage for essentials.",
+      "weight": 5
+    },
+    {
+      "timeframe": "[November 2021 - March 2022]",
+      "factor": "Quantitative Easing Reduction",
+      "description": "Tightened credit markets and impacted consumer borrowing behavior.",
+      "weight": -10
+    },
+    {
+      "timeframe": "[October 2021 - June 2023]",
+      "factor": "Debt Ceiling Crises",
+      "description": "Created uncertainty, reducing consumer confidence and discretionary credit spending.",
+      "weight": -12
+    },
+    {
+      "timeframe": "[2018 - Present]",
+      "factor": "Trade Wars (e.g., US-China)",
+      "description": "Increased costs of imported goods, raising consumer credit usage.",
+      "weight": 8
+    }
+  ],
+  "Market and Consumer Trends": [
+    {
+      "timeframe": "[March 2020 - Late 2021]",
+      "factor": "Remote Work Boom",
+      "description": "Shifted credit card spending from travel and commuting to home improvement and technology.",
+      "weight": 10
+    },
+    {
+      "timeframe": "[2021 - Present]",
+      "factor": "Gig Economy Growth",
+      "description": "Increased demand for flexible credit options among gig workers.",
+      "weight": 8
+    },
+    {
+      "timeframe": "[Late 2020 - Present]",
+      "factor": "Buy Now, Pay Later Services",
+      "description": "Reduced reliance on traditional credit cards, especially among younger consumers.",
+      "weight": -10
+    },
+    {
+      "timeframe": "[2020 - Present]",
+      "factor": "Wealth Inequality Growth",
+      "description": "Widened credit card usage patterns, with higher balances among lower-income groups.",
+      "weight": -5
+    },
+    {
+      "timeframe": "[2021 - Present]",
+      "factor": "Luxury Goods Resurgence Post-COVID",
+      "description": "Increased premium credit card spending among affluent customers.",
+      "weight": 15
+    },
+    {
+      "timeframe": "[Mid-2022 - Present]",
+      "factor": "Credit Card Debt Increases",
+      "description": "Record-high balances due to rising costs and higher interest rates.",
+      "weight": -15
+    },
+    {
+      "timeframe": "[Summer 2022 - Present]",
+      "factor": "Travel Rebound Post-Pandemic",
+      "description": "Boosted credit card spending on travel and experiences.",
+      "weight": 20
+    },
+    {
+      "timeframe": "[Late 2020 - Present]",
+      "factor": "E-commerce Growth",
+      "description": "Accelerated credit card transactions through online platforms.",
+      "weight": 18
+    }
+  ],
+  "Technological Innovations": [
+    {
+      "timeframe": "[June 2020 - Present]",
+      "factor": "AI and Fraud Detection",
+      "description": "Enhanced credit card fraud monitoring and security.",
+      "weight": 10
+    },
+    {
+      "timeframe": "[2021 - Present]",
+      "factor": "Digital Payment Adoption",
+      "description": "Increased reliance on credit cards through apps like Apple Pay and Google Pay.",
+      "weight": 15
+    },
+    {
+      "timeframe": "[2021 - Present]",
+      "factor": "5G Rollout",
+      "description": "Improved mobile payments and credit card processing speeds.",
+      "weight": 8
+    },
+    {
+      "timeframe": "[2020 - Present]",
+      "factor": "Subscription Box Services",
+      "description": "Boosted recurring credit card charges for convenience.",
+      "weight": 12
+    },
+    {
+      "timeframe": "[2022 - Present]",
+      "factor": "Buy Now, Pay Later Innovations",
+      "description": "Shifted younger consumers away from traditional credit cards.",
+      "weight": -8
+    }
+  ],
+  "Health and Lifestyle": [
+    {
+      "timeframe": "[March 2020 - Present]",
+      "factor": "Fitness-at-Home Trend",
+      "description": "Shifted spending to home fitness equipment and subscriptions.",
+      "weight": 5
+    },
+    {
+      "timeframe": "[December 2020 - Mid-2021]",
+      "factor": "Vaccine Rollouts",
+      "description": "Boosted travel and dining spending on credit cards as restrictions eased.",
+      "weight": 18
+    },
+    {
+      "timeframe": "[2020 - Present]",
+      "factor": "Mental Health Awareness",
+      "description": "Increased spending on therapy and wellness services via credit cards.",
+      "weight": 8
+    }
+  ],
+  "Miscellaneous": [
+    {
+      "timeframe": "[October 2023 - Present]",
+      "factor": "Student Loan Repayment Resumption",
+      "description": "Reduced discretionary credit card spending among affected consumers.",
+      "weight": -18
+    },
+    {
+      "timeframe": "[2021 - Present]",
+      "factor": "Urban Migration Reversal",
+      "description": "Changed spending patterns, increasing suburban credit card usage.",
+      "weight": 7
+    },
+    {
+      "timeframe": "[August 2021 - Present]",
+      "factor": "Climate Change Awareness",
+      "description": "Increased credit card spending on eco-friendly products.",
+      "weight": 5
+    },
+    {
+      "timeframe": "[Late 2021 - Present]",
+      "factor": "Social Media Marketing Boom",
+      "description": "Increased impulsive purchases via credit cards driven by targeted ads.",
+      "weight": 12
+    },
+    {
+      "timeframe": "[2021 - Present]",
+      "factor": "Green Energy Investments",
+      "description": "Higher credit card usage for home improvements and EV-related purchases.",
+      "weight": 10
+    }
+  ]
+}
+
+  
