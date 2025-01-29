@@ -89,7 +89,7 @@ class Agent3PerformanceAnalysis:
 
                 data[key]["trend_data"] = filtered_data        
         
-        def check_token_count(data: Dict[str, Any], max_tokens: int = 7000) -> bool:
+        def check_token_count(data: Dict[str, Any], max_tokens: int = 6000) -> bool:
             """
             Check the number of tokens in trends_data to ensure it does not exceed the limit.
             
@@ -180,7 +180,6 @@ class Agent3PerformanceAnalysis:
                 "\n2. Seasonality and Correlations (explain seasonal patterns, correlations, and notable events, including their impact on consumer behavior)."
                 "\n3. Recommendations (specific actions to take during high or low trends)."
                 "\n4. Key Trends with Timeframes (list specific trends with exact timeframes, descriptions, and percentage changes, structured like this:"
-                '\n- {"timeframe": "[Dec 2021 - Feb 2022]", "description": "Venture card Google trend search increased by 20%."}).'
             )
 
             
@@ -249,4 +248,5 @@ class Agent3PerformanceAnalysis:
         except Exception as e:
             print(f"Error generating performance analysis: {e}")
             return {"error": str(e)}
+
 
