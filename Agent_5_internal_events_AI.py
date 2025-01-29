@@ -88,12 +88,21 @@ class Agent5_internal_events_AI:
 
             if "\n3. Recommendations\n" in content:
                 formatted_response["recommendations"] = content.split("\n3. Recommendations\n")[1].strip()
-
+            # Save analysis to JSON file
+            output_path = "trend_data_files/agent_5_output.json"
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            with open(output_path, "w") as file:
+                json.dump(formatted_response, file, indent=2)
             return formatted_response
 
         except Exception as e:
             print(f"Error generating performance analysis: {e}")
             return {"error": str(e)}
+
+
+
+
+
 
 
 
