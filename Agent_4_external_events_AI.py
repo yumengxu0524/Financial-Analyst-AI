@@ -38,14 +38,17 @@ class Agent4_external_events_AI:
             # Prepare the system prompt
             system_prompt = (
                 "You are an expert in consumer behavior, credit card business, marketing, risk analysis. "
+                "your training data includes trend summary data and world events data."
                 "Your goal is to analyze impacts of major world or demestic events such as COVID 19, inflation included in the file to explain the google search trends of credit card related products or business activities. "
                 "Focus on explaining the trends, highlighting potential causes, and do not over react to the impact of some events. "
                 "For each world business or social event, try to explain the correlation with the trends and explain why the trend is increasing or decreasing."
                 "Consider some events might have immediate impact, some might have long term impacts."
                 "Try to Structure your response as follows: "
-                "\n1. Summary of events impact to the trends "
-                "\n2. Key Insights "
-                "\n3. Recommendations"
+                "\n1. Summary of events (summary of event impact to the trend) "
+                "\n2. Key Insights (what are the key insights you can find between the events and the trends, any strong correlation?)"
+                "\n3. Recommendations (which event has the strongest correlation with the trend, any new opportunities)"
+                "\n4. Key events and trends with Timeframes (list specific events and correlated trends with exact timeframes, events descriptions, and trend percentage changes, structured like this:"
+                '\n- {"timeframe": "[Jan 2020 - Sep 2021]", "description": "Venture card Google trend search decreased by 40% and remain low, which could casue by the COVID 19 event"}).'
             )
 
             # Format the trends data as input for ChatGPT
@@ -72,33 +75,42 @@ class Agent4_external_events_AI:
             )
             content = response.choices[0].message.content.strip()
 
-            # Ensure the response always includes at least raw_content
             formatted_response = {
                 "summary": None,
                 "insights": None,
                 "recommendations": None,
-                "raw_content": content
+                "Key_events_trends_Timeframes": []
             }
 
-            try:
-                if "\n1. Summary of Events Impact to the Trends:\n" in content:
-                    formatted_response["summary"] = content.split("\n1. Summary of Events Impact to the Trends:\n")[1].split("\n2. Key Insights:\n")[0].strip()
+            # Use regex for safer extraction
+            summary_match = re.search(r"\n1\. Summary of Events Impact to the Trends:\n(.*?)\n2\. Key Insights:\n", content, re.DOTALL)
+            if summary_match:
+                formatted_response["summary"] = summary_match.group(1).strip()
 
-                if "\n2. Key Insights:\n" in content:
-                    formatted_response["insights"] = content.split("\n2. Key Insights:\n")[1].split("\n3. Recommendations:\n")[0].strip()
+            insights_match = re.search(r"\n2\. Key Insights:\n(.*?)\n3\. Recommendations:\n", content, re.DOTALL)
+            if insights_match:
+                formatted_response["insights"] = insights_match.group(1).strip()
 
-                if "\n3. Recommendations:\n" in content:
-                    formatted_response["recommendations"] = content.split("\n3. Recommendations:\n")[1].strip()
-            except Exception as e:
-                print(f"Error parsing structured content: {e}")
+            recommendations_match = re.search(r"\n3\. Recommendations:\n(.*?)\n4\. Key events and trends with Timeframes:", content, re.DOTALL)
+            if recommendations_match:
+                formatted_response["recommendations"] = recommendations_match.group(1).strip()
+
+            if "\n4. Key events and trends with Timeframes:" in content:
+                trends_raw = content.split("\n4. Key events and trends with Timeframes:")[1].strip()
+                for line in trends_raw.split("\n-"):
+                    if line.strip():
+                        trend = line.strip().lstrip("-").strip()
+                        try:
+                            formatted_response["Key_events_trends_Timeframes"].append(json.loads(trend))
+                        except json.JSONDecodeError:
+                            formatted_response["Key_events_trends_Timeframes"].append({"description": trend})
 
             return formatted_response
+
 
         except Exception as e:
             print(f"Error generating performance analysis: {e}")
             return {"error": str(e)}
-
-
 
 
 
