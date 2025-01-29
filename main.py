@@ -2,15 +2,19 @@ from fastapi import FastAPI,  WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from fastapi.responses import FileResponse
 from Agent_1_data_retrival import Agent1
 from Agent_2_market_trends import MarketTrendsAgent
 from Agent_3_performance_analysis import Agent3PerformanceAnalysis
 from Agent_4_external_events_AI import Agent4_external_events_AI
 from Agent_5_internal_events_AI import Agent5_internal_events_AI
 import json
+from fastapi.staticfiles import StaticFiles
+from typing import Optional
 
 from dotenv import load_dotenv
 load_dotenv()
+
 
 FINANCIAL_VARIABLES_JSON = "C:/Users/ymx19/DISCOVER/financial_variables.json"
 
@@ -25,6 +29,7 @@ agent1 = Agent1(
 )
 
 app = FastAPI()
+app.mount("/trend_data_files", StaticFiles(directory="trend_data_files"), name="trend_data_files")
 
 # Add CORS middleware to allow frontend communication
 app.add_middleware(
@@ -100,6 +105,7 @@ class AnalysisRequest(BaseModel):
     time_range: str
 
 
+
 @app.get("/")
 async def root():
     """
@@ -107,6 +113,13 @@ async def root():
     """
     return {"message": "Financial Analysis API is running!"}
 
+@app.get("/trend_data_files/all_trends.json")
+async def get_trend_file():
+    """
+    Endpoint to serve the all_trends.json file.
+    """
+    file_path = "trend_data_files/all_trends.json"
+    return FileResponse(file_path)
 
 def serialize_trend_data(trend_data):
     """
@@ -137,7 +150,7 @@ def validate_trend_data(trend_data):
 
 
 @app.websocket("/ws/agent2")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_agent2(websocket: WebSocket):
     await websocket.accept()
     try:
         while True:
@@ -146,40 +159,35 @@ async def websocket_endpoint(websocket: WebSocket):
                 request = json.loads(data)
                 company = request.get("company", "").strip()
                 question = request.get("question", "").strip()
-                compare_companies = request.get("compare_companies", [])
                 timeframe = request.get("timeframe", "today 12-m")
 
                 if not question:
                     await websocket.send_text(json.dumps({"error": "A question is required."}))
                     continue
+                # ---- STEP 1: Get trends data ------------------------------------------------
+                # Analyze trends and fetch the data
+                primary_trends = await market_trends_agent.analyze_trends(company, question, timeframe)
 
-                if not company and not compare_companies:
-                    await websocket.send_text(json.dumps({"error": "Provide a company or companies for analysis."}))
+                if "error" in primary_trends:
+                    await websocket.send_text(json.dumps({"error": primary_trends["error"]}))
                     continue
-
-                trends_to_compare = {}
-                individual_graphs = {}
-
-                # Analyze the primary company
-                if company:
-                    primary_trends = await market_trends_agent.analyze_trends(company, question, timeframe)
-                    trend_data = primary_trends.get("trends", {})
-                    validated_trend_data = validate_trend_data(trend_data)
-                    if validated_trend_data:
-                        trends_to_compare[company] = validated_trend_data
-                        individual_graphs.update(primary_trends.get("graphs", {}))
-
-                if trends_to_compare:
-                    response = {
-                        "text_output": f"Market trends for {company} analyzed successfully.",
-                        "individual_graphs": individual_graphs
-                    }
-                    print("Response sent to frontend:", response)  # Debugging
-                    await websocket.send_text(json.dumps(response))
-                else:
-                    await websocket.send_text(json.dumps({
-                        "error": "No valid trend data available for the provided companies."
-                    }))
+                # ---- STEP 2: Load events data from all_events.json -------------------------
+                # You can load this file once per request (as shown) or once at startup
+                # (caching it as a global variable if it's not changing).
+                try:
+                    with open("trend_data_files/all_events.json", "r") as f:
+                        events_data = json.load(f)
+                except FileNotFoundError:
+                    events_data = {"error": "all_events.json not found."}
+                except json.JSONDecodeError:
+                    events_data = {"error": "Invalid JSON format in all_events.json."}
+                # Send trends data directly in WebSocket response
+                response = {
+                    "text_output": f"Market trends for {company} analyzed successfully.",
+                    "trends": primary_trends["trends_data"],  # Include trends directly
+                    "eventsData": events_data   # The global events data
+                }
+                await websocket.send_text(json.dumps(response))
             except Exception as e:
                 await websocket.send_text(json.dumps({"error": f"Failed to process request: {str(e)}"}))
     except WebSocketDisconnect:
@@ -213,15 +221,37 @@ async def websocket_agent3(websocket: WebSocket):
                     await websocket.send_text(json.dumps({"error": error_message}))
                     continue
 
-                # Provide the file path for trends data to Agent 3
+                # File paths for trends and events
                 trends_file = "trend_data_files/all_trends.json"
+                agent_3_file = "trend_data_files/agent_3_output.json"
+                events_file = "trend_data_files/all_events.json"
 
-                # Perform analysis
-                analysis_result = await agent3.generate_analysis(trends_file, company_name, question)
-                print(f"[Agent 3] Analysis Result: {analysis_result}")  # Log analysis result
+                # Perform Agent 3 analysis
+                agent3_result = await agent3.generate_analysis(trends_file, company_name, question)
+                print(f"[Agent 3] Analysis Result: {agent3_result}")  # Log Agent 3 result
 
-                # Send response
-                await websocket.send_text(json.dumps(analysis_result))
+                # Save Agent 3 result to file if necessary
+                with open(agent_3_file, "w") as f:
+                    json.dump(agent3_result, f, indent=4)
+
+                # If Agent 3 fails, send only its error
+                if "error" in agent3_result:
+                    await websocket.send_text(json.dumps(agent3_result))
+                    continue
+
+                # Perform Agent 4 analysis using the saved file
+                agent4_result = await agent4.generate_analysis(events_file, agent_3_file, company_name, question)
+                print(f"[Agent 4] Analysis Result: {agent4_result}")  # Log Agent 4 result
+
+                # Combine Agent 3 and Agent 4 results
+                combined_result = {
+                    "agent3_analysis": agent3_result,
+                    "agent4_analysis": agent4_result,
+                }
+                print(f"[Agent 3] Combined data sent successfully.")  # Log combined data
+
+                # Send combined response
+                await websocket.send_text(json.dumps(combined_result))
 
             except json.JSONDecodeError as e:
                 error_message = f"JSON decode error: {e}"
@@ -235,46 +265,7 @@ async def websocket_agent3(websocket: WebSocket):
     except WebSocketDisconnect:
         print("[Agent 3] WebSocket disconnected.")
 
-@app.websocket("/ws/agent4")
-async def websocket_agent4(websocket: WebSocket):
-    await websocket.accept()
-    try:
-        while True:
-            data = await websocket.receive_text()
-            print(f"[Agent 4] Received data: {data}")  # Log received data
-            
-            try:
-                request = json.loads(data)
-                company_name = request.get("company", "").strip()
-                question = request.get("question", "").strip()
 
-                if not company_name:
-                    error_message = "Company name is required."
-                    print(f"[Agent 4] Error: {error_message}")
-                    await websocket.send_text(json.dumps({"error": error_message}))
-                    continue
-
-                # Provide the file path for trends data to Agent 4
-                events_file = "trend_data_files/all_events.json"
-                agent_3_file = "trend_data_files/agent_3_output.json"
-                # Perform analysis
-                analysis_result = await agent4.generate_analysis(events_file, agent_3_file, company_name, question)
-                print(f"[Agent 4] Analysis Result: {analysis_result}")  # Log analysis result
-
-                # Send response
-                await websocket.send_text(json.dumps(analysis_result))
-
-            except json.JSONDecodeError as e:
-                error_message = f"JSON decode error: {e}"
-                print(f"[Agent 4] Error: {error_message}")
-                await websocket.send_text(json.dumps({"error": error_message}))
-            except Exception as e:
-                error_message = f"Unexpected error: {e}"
-                print(f"[Agent 4] Error: {error_message}")
-                await websocket.send_text(json.dumps({"error": error_message}))
-
-    except WebSocketDisconnect:
-        print("[Agent 4] WebSocket disconnected.")
 
 COMPANY_FILE_MAP = {
     "american express": "trend_data_files/company_data_file/American_Express.json",
@@ -382,12 +373,6 @@ async def get_index():
                     alert("Please enter both a company name and a question.");
                     return;
                 }
-                ws.send(JSON.stringify({ company, question }));
-            }
-        </script>
-    </body>
-    </html>
-    """
                 ws.send(JSON.stringify({ company, question }));
             }
         </script>
