@@ -1,206 +1,322 @@
 {
   "Global Events": [
     {
-      "timeframe": "[February 2020 - June 2022]",
+      "Impact_start_dt": "2020-02-01",
+      "Impact_end_dt": "2022-06-01",
       "factor": "COVID-19 Pandemic",
       "description": "Led to increased online spending, reduced travel, and higher delinquencies in some credit card portfolios.",
       "weight": -10
     },
     {
-      "timeframe": "[April 2020 - March 2021]",
+      "Impact_start_dt": "2020-04-01",
+      "Impact_end_dt": "2021-03-01",
       "factor": "Stimulus Checks",
       "description": "Increased disposable income, reducing credit card balances temporarily.",
       "weight": -15
     },
     {
-      "timeframe": "[February 2022 - Present]",
+      "Impact_start_dt": "2022-02-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "War in Ukraine",
       "description": "Increased energy prices, impacting disposable income and credit card spending.",
       "weight": -12
     },
     {
-      "timeframe": "[Late 2020 - Present]",
+      "Impact_start_dt": "2020-10-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Global Supply Chain Disruptions",
       "description": "Led to higher prices for goods, increasing credit card balances.",
       "weight": 10
     },
     {
-      "timeframe": "[Mid-2022 - Present]",
+      "Impact_start_dt": "2022-06-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "China’s Economic Slowdown",
       "description": "Reduced global demand and slowed credit card spending on imported goods.",
       "weight": -5
     },
     {
-      "timeframe": "[March 2023 - Present]",
+      "Impact_start_dt": "2023-03-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Bank Failures",
       "description": "Reduced consumer confidence, leading to conservative credit card spending.",
       "weight": -8
+    },
+    {
+      "Impact_start_dt": "2023-09-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Resurgence of COVID-19 Variants",
+      "description": "Renewed travel restrictions and some supply chain disruptions, affecting consumer spending patterns.",
+      "weight": -6
+    },
+    {
+      "Impact_start_dt": "2024-01-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Global Recession Fears",
+      "description": "Heightened risk aversion among consumers, leading to reduced discretionary credit card spending.",
+      "weight": -10
     }
   ],
   "Financial Policies": [
     {
-      "timeframe": "[March 2022 - Present]",
+      "Impact_start_dt": "2022-03-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Federal Reserve Interest Rate Increases",
       "description": "Raised credit card APRs, increasing consumer debt burdens.",
       "weight": -20
     },
     {
-      "timeframe": "[June 2021 - June 2022]",
+      "Impact_start_dt": "2021-06-01",
+      "Impact_end_dt": "2022-06-01",
       "factor": "Inflation Surge",
       "description": "Reduced purchasing power, leading to higher credit card usage for essentials.",
       "weight": 5
     },
     {
-      "timeframe": "[November 2021 - March 2022]",
+      "Impact_start_dt": "2021-11-01",
+      "Impact_end_dt": "2022-03-01",
       "factor": "Quantitative Easing Reduction",
       "description": "Tightened credit markets and impacted consumer borrowing behavior.",
       "weight": -10
     },
     {
-      "timeframe": "[October 2021 - June 2023]",
+      "Impact_start_dt": "2021-10-01",
+      "Impact_end_dt": "2023-06-01",
       "factor": "Debt Ceiling Crises",
       "description": "Created uncertainty, reducing consumer confidence and discretionary credit spending.",
       "weight": -12
     },
     {
-      "timeframe": "[2018 - Present]",
+      "Impact_start_dt": "2018-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Trade Wars (e.g., US-China)",
       "description": "Increased costs of imported goods, raising consumer credit usage.",
       "weight": 8
+    },
+    {
+      "Impact_start_dt": "2023-07-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Credit Card Late Fee Reduction Rules (CFPB)",
+      "description": "Proposed regulations capping late fees, potentially impacting revenue models for credit card issuers.",
+      "weight": -12
+    },
+    {
+      "Impact_start_dt": "2023-08-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Bank Capital Requirements Increase",
+      "description": "Higher capital buffers for large U.S. banks may influence credit availability and rates.",
+      "weight": -8
     }
   ],
   "Market and Consumer Trends": [
     {
-      "timeframe": "[March 2020 - Late 2021]",
+      "Impact_start_dt": "2020-03-01",
+      "Impact_end_dt": "2021-12-01",
       "factor": "Remote Work Boom",
       "description": "Shifted credit card spending from travel and commuting to home improvement and technology.",
       "weight": 10
     },
     {
-      "timeframe": "[2021 - Present]",
+      "Impact_start_dt": "2021-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Gig Economy Growth",
       "description": "Increased demand for flexible credit options among gig workers.",
       "weight": 8
     },
     {
-      "timeframe": "[Late 2020 - Present]",
+      "Impact_start_dt": "2020-10-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Buy Now, Pay Later Services",
       "description": "Reduced reliance on traditional credit cards, especially among younger consumers.",
       "weight": -10
     },
     {
-      "timeframe": "[2020 - Present]",
+      "Impact_start_dt": "2020-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Wealth Inequality Growth",
       "description": "Widened credit card usage patterns, with higher balances among lower-income groups.",
       "weight": -5
     },
     {
-      "timeframe": "[2021 - Present]",
+      "Impact_start_dt": "2021-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Luxury Goods Resurgence Post-COVID",
       "description": "Increased premium credit card spending among affluent customers.",
       "weight": 15
     },
     {
-      "timeframe": "[Mid-2022 - Present]",
+      "Impact_start_dt": "2022-06-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Credit Card Debt Increases",
       "description": "Record-high balances due to rising costs and higher interest rates.",
       "weight": -15
     },
     {
-      "timeframe": "[Summer 2022 - Present]",
+      "Impact_start_dt": "2022-06-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Travel Rebound Post-Pandemic",
       "description": "Boosted credit card spending on travel and experiences.",
       "weight": 20
     },
     {
-      "timeframe": "[Late 2020 - Present]",
+      "Impact_start_dt": "2020-10-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "E-commerce Growth",
       "description": "Accelerated credit card transactions through online platforms.",
       "weight": 18
+    },
+    {
+      "Impact_start_dt": "2023-01-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Shift from Cash to Digital Payments",
+      "description": "Further acceleration of contactless and online transactions, increasing credit card usage.",
+      "weight": 12
+    },
+    {
+      "Impact_start_dt": "2023-09-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Corporate Layoffs in Tech",
+      "description": "Reduced consumer confidence in major metro areas, dampening credit card spending growth.",
+      "weight": -5
     }
   ],
   "Technological Innovations": [
     {
-      "timeframe": "[June 2020 - Present]",
+      "Impact_start_dt": "2020-06-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "AI and Fraud Detection",
       "description": "Enhanced credit card fraud monitoring and security.",
       "weight": 10
     },
     {
-      "timeframe": "[2021 - Present]",
+      "Impact_start_dt": "2021-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Digital Payment Adoption",
       "description": "Increased reliance on credit cards through apps like Apple Pay and Google Pay.",
       "weight": 15
     },
     {
-      "timeframe": "[2021 - Present]",
+      "Impact_start_dt": "2021-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "5G Rollout",
       "description": "Improved mobile payments and credit card processing speeds.",
       "weight": 8
     },
     {
-      "timeframe": "[2020 - Present]",
+      "Impact_start_dt": "2020-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Subscription Box Services",
       "description": "Boosted recurring credit card charges for convenience.",
       "weight": 12
     },
     {
-      "timeframe": "[2022 - Present]",
+      "Impact_start_dt": "2022-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Buy Now, Pay Later Innovations",
       "description": "Shifted younger consumers away from traditional credit cards.",
       "weight": -8
+    },
+    {
+      "Impact_start_dt": "2023-05-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Crypto-Linked Credit Cards Emergence",
+      "description": "Cards offering rewards in digital assets attract crypto-savvy consumers but involve market volatility.",
+      "weight": 5
+    },
+    {
+      "Impact_start_dt": "2024-01-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Biometric Authentication",
+      "description": "Fingerprint and facial recognition for credit card transactions, potentially boosting consumer trust.",
+      "weight": 10
     }
   ],
   "Health and Lifestyle": [
     {
-      "timeframe": "[March 2020 - Present]",
+      "Impact_start_dt": "2020-03-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Fitness-at-Home Trend",
       "description": "Shifted spending to home fitness equipment and subscriptions.",
       "weight": 5
     },
     {
-      "timeframe": "[December 2020 - Mid-2021]",
+      "Impact_start_dt": "2020-12-01",
+      "Impact_end_dt": "2021-06-01",
       "factor": "Vaccine Rollouts",
       "description": "Boosted travel and dining spending on credit cards as restrictions eased.",
       "weight": 18
     },
     {
-      "timeframe": "[2020 - Present]",
+      "Impact_start_dt": "2020-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Mental Health Awareness",
       "description": "Increased spending on therapy and wellness services via credit cards.",
       "weight": 8
+    },
+    {
+      "Impact_start_dt": "2024-01-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Rising Healthcare Costs",
+      "description": "Growing reliance on credit cards to cover out-of-pocket medical expenses.",
+      "weight": -7
+    },
+    {
+      "Impact_start_dt": "2023-11-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Rise in Wellness Subscriptions",
+      "description": "Increased recurring credit card charges for mental health apps, fitness services, and telehealth.",
+      "weight": 6
     }
   ],
   "Miscellaneous": [
     {
-      "timeframe": "[October 2023 - Present]",
+      "Impact_start_dt": "2023-10-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Student Loan Repayment Resumption",
       "description": "Reduced discretionary credit card spending among affected consumers.",
       "weight": -18
     },
     {
-      "timeframe": "[2021 - Present]",
+      "Impact_start_dt": "2021-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Urban Migration Reversal",
       "description": "Changed spending patterns, increasing suburban credit card usage.",
       "weight": 7
     },
     {
-      "timeframe": "[August 2021 - Present]",
+      "Impact_start_dt": "2021-08-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Climate Change Awareness",
       "description": "Increased credit card spending on eco-friendly products.",
       "weight": 5
     },
     {
-      "timeframe": "[Late 2021 - Present]",
+      "Impact_start_dt": "2021-10-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Social Media Marketing Boom",
       "description": "Increased impulsive purchases via credit cards driven by targeted ads.",
       "weight": 12
     },
     {
-      "timeframe": "[2021 - Present]",
+      "Impact_start_dt": "2021-01-01",
+      "Impact_end_dt": "2025-01-27",
       "factor": "Green Energy Investments",
       "description": "Higher credit card usage for home improvements and EV-related purchases.",
       "weight": 10
+    },
+    {
+      "Impact_start_dt": "2024-10-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Potential Government Shutdown",
+      "description": "Uncertainty surrounding federal funding erodes consumer confidence, affecting credit card usage.",
+      "weight": -10
+    },
+    {
+      "Impact_start_dt": "2025-01-01",
+      "Impact_end_dt": "2025-01-27",
+      "factor": "Housing Market Correction",
+      "description": "Tighter household budgets and reduced home equity spending, influencing credit card reliance.",
+      "weight": -8
     }
   ]
 }
