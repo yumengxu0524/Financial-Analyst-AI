@@ -1,0 +1,32 @@
+{
+    "Capital One Venture Card": {
+        "search_term": "Capital One Venture Card",
+        "average_interest": 51.30916030534351,
+        "peak_interest": 100,
+        "latest_interest": 89
+    },
+    "Capital One Savor Card": {
+        "search_term": "Capital One Savor Card",
+        "average_interest": 43.06870229007634,
+        "peak_interest": 100,
+        "latest_interest": 87
+    },
+    "Capital One Venture Credit Card": {
+        "search_term": "Capital One Venture Credit Card",
+        "average_interest": 45.98091603053435,
+        "peak_interest": 100,
+        "latest_interest": 87
+    },
+    "Capital One Savor Credit Card": {
+        "search_term": "Capital One Savor Credit Card",
+        "average_interest": 39.20992366412214,
+        "peak_interest": 100,
+        "latest_interest": 85
+    },
+    "Capital One Capital One Venture": {
+        "search_term": "Capital One Capital One Venture",
+        "average_interest": 44.595419847328245,
+        "peak_interest": 100,
+        "latest_interest": 80
+    }
+}
