@@ -1,0 +1,198 @@
+import requests
+from bs4 import BeautifulSoup
+import json
+import logging
+import os
+import time
+import random
+import schedule
+import nltk
+from pymongo import MongoClient
+from openai import AsyncOpenAI
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+# Initialize NLP resources
+nltk.download("punkt")
+
+class CreditCardAI:
+    def __init__(self):
+        self.client = AsyncOpenAI(api_key="")
+        self.mongo_client = MongoClient("mongodb://localhost:27017/")
+        self.db = self.mongo_client["credit_card_db"]
+        self.cards_collection = self.db["credit_cards"]
+        self.headers = {"User-Agent": "Mozilla/5.0"}
+        self.base_dir = "credit_card_data"
+        os.makedirs(self.base_dir, exist_ok=True)
+
+    async def fetch_credit_card_data(self, url: str):
+        """
+        Scrape credit card information from a given URL.
+        """
+        try:
+            response = requests.get(url, headers=self.headers, timeout=10)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+
+            # Extract relevant data
+            card_info = {
+                "url": url,
+                "title": soup.find("title").text.strip() if soup.find("title") else "No Title Found",
+                "text_content": self.clean_text(soup.get_text()),
+            }
+
+            # Process extracted data with OpenAI
+            structured_data = await self.process_with_gpt(card_info["text_content"])
+            structured_data["url"] = url
+
+            # Store data in MongoDB
+            self.store_in_mongodb(structured_data)
+
+            return structured_data
+
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error fetching URL {url}: {str(e)}")
+            return {"error": str(e)}
+
+    def clean_text(self, text):
+        """Cleans up extracted text."""
+        return " ".join(text.split())
+
+    async def process_with_gpt(self, text):
+        """
+        Use OpenAI GPT to extract and structure relevant credit card details.
+        """
+        try:
+            system_prompt = (
+                "You are an AI that extracts structured credit card information from raw text. "
+                "Return a JSON object with fields: 'Card Name', 'Issuer', 'Annual Fee', 'APR', 'Late Payment Fee', 'Rewards', 'Benefits'."
+            )
+
+            response = await self.client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": text},
+                ],
+                max_tokens=500,
+                temperature=0.5,
+            )
+
+            content = response.choices[0].message.content.strip()
+            structured_data = json.loads(content)
+            return structured_data
+
+        except Exception as e:
+            logging.error(f"Error processing data with OpenAI: {str(e)}")
+            return {"error": str(e)}
+
+    def store_in_mongodb(self, structured_data):
+        """
+        Store structured credit card data into MongoDB.
+        """
+        if structured_data:
+            self.cards_collection.update_one(
+                {"Card Name": structured_data["Card Name"]}, {"$set": structured_data}, upsert=True
+            )
+            logging.info(f"Stored {structured_data['Card Name']} in MongoDB.")
+
+    async def automate_data_collection(self, urls):
+        """
+        Automate periodic credit card data fetching and updating.
+        """
+        for url in urls:
+            await self.fetch_credit_card_data(url)
+            time.sleep(random.uniform(2, 5))
+
+    def compare_credit_cards(self):
+        """
+        Compare credit cards stored in MongoDB based on key financial terms.
+        """
+        cards = list(self.cards_collection.find({}, {"_id": 0}))  # Exclude MongoDB ID
+        if not cards:
+            logging.warning("No credit cards found in database for comparison.")
+            return
+
+        # Print card details for manual comparison
+        logging.info(f"Comparing {len(cards)} credit cards.")
+        for card in cards:
+            print(json.dumps(card, indent=4))
+
+    def recommend_best_card(self, user_preference):
+        """
+        Recommend the best credit card based on user preferences using NLP.
+        """
+        cards = list(self.cards_collection.find({}, {"_id": 0}))  # Fetch stored cards
+        if not cards:
+            return "No credit cards available for recommendation."
+
+        # Extract descriptions
+        card_names = [card["Card Name"] for card in cards]
+        descriptions = [f"{card['Rewards']} {card['Benefits']}" for card in cards]
+
+        # Vectorize descriptions and compute similarity
+        vectorizer = TfidfVectorizer()
+        vectors = vectorizer.fit_transform([user_preference] + descriptions)
+        similarity_scores = cosine_similarity(vectors[0], vectors[1:]).flatten()
+
+        # Recommend best-matching card
+        best_match_idx = similarity_scores.argmax()
+        return f"Best recommended card: {card_names[best_match_idx]} (Similarity Score: {similarity_scores[best_match_idx]:.2f})"
+
+    def web_crawler(self, seed_url):
+        """
+        Discover new credit card pages from a given website.
+        """
+        try:
+            response = requests.get(seed_url, headers=self.headers, timeout=10)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+
+            links = [a["href"] for a in soup.find_all("a", href=True) if "credit-card" in a["href"]]
+            full_urls = [requests.compat.urljoin(seed_url, link) for link in links]
+            return list(set(full_urls))
+
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error during web crawling: {str(e)}")
+            return []
+
+    def schedule_data_update(self, urls):
+        """
+        Schedule the AI to fetch new credit card data daily.
+        """
+        schedule.every().day.at("02:00").do(lambda: asyncio.run(self.automate_data_collection(urls)))
+
+        while True:
+            schedule.run_pending()
+            time.sleep(60)
+
+
+# Example Usage
+if __name__ == "__main__":
+    urls = [
+        "https://cardpointers.com/cards/american-express-gold-card/",
+        "https://www.capitalone.com/credit-cards/platinum/"
+    ]
+
+    credit_card_ai = CreditCardAI()
+
+    # Fetch and store data
+    import asyncio
+    asyncio.run(credit_card_ai.automate_data_collection(urls))
+
+    # Compare stored credit cards
+    credit_card_ai.compare_credit_cards()
+
+    # Recommend best credit card
+    user_input = "I want a card with high travel rewards and no foreign transaction fees."
+    print(credit_card_ai.recommend_best_card(user_input))
+
+    # Web crawler to find new credit card pages
+    new_cards = credit_card_ai.web_crawler("https://www.capitalone.com/credit-cards/")
+    print(f"Discovered new cards: {new_cards}")
+
+    # Schedule automated updates
+    credit_card_ai.schedule_data_update(urls)
