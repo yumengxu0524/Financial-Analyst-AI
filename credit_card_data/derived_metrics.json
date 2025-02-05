@@ -1,0 +1,253 @@
+[
+    {
+      "name": "bonus_to_annual_fee_ratio",
+      "formula": "(Numeric signupBonusAmount) ÷ (annualFee + 1)",
+      "explanation": "Measures the signup bonus bang-for-the-buck relative to the annual fee."
+    },
+    {
+      "name": "effective_reward_rate",
+      "formula": "baseSpendEarnValuation ÷ baseSpendAmount",
+      "explanation": "Indicates how many reward units you earn per dollar spent."
+    },
+    {
+      "name": "benefit_count",
+      "formula": "Count(benefit array)",
+      "explanation": "A higher count may signal a richer set of perks."
+    },
+    {
+      "name": "spend_bonus_category_count",
+      "formula": "Count(spendBonusCategory array)",
+      "explanation": "Indicates how many spend-specific bonus opportunities exist."
+    },
+    {
+      "name": "avg_spend_bonus_multiplier",
+      "formula": "Sum(earnMultiplier in spendBonusCategory) ÷ (spend_bonus_category_count)",
+      "explanation": "Provides an average bonus multiplier across spending categories."
+    },
+    {
+      "name": "total_spend_bonus_potential",
+      "formula": "Sum(earnMultiplier values, optionally weighted by spendLimit)",
+      "explanation": "Gives a sense of the overall bonus power in spending."
+    },
+    {
+      "name": "trusted_traveler_flag",
+      "formula": "Derived from isTrustedTraveler and trustedTraveler text",
+      "explanation": "Flags cards with travel-related fee credits."
+    },
+    {
+      "name": "lounge_access_flag",
+      "formula": "Derived from isLoungeAccess",
+      "explanation": "Indicates whether a card offers lounge access."
+    },
+    {
+      "name": "free_checked_bag_flag",
+      "formula": "Derived from isFreeCheckedBag",
+      "explanation": "Identifies cards that offer free checked bags."
+    },
+    {
+      "name": "signup_fee_waived_flag",
+      "formula": "Derived from isSignupAnnualFeeWaived",
+      "explanation": "Shows if the signup fee is waived."
+    },
+    {
+      "name": "fx_fee_impact",
+      "formula": "fxFee × isFxFee",
+      "explanation": "Quantifies the potential cost of foreign transactions."
+    },
+    {
+      "name": "numeric_signup_bonus",
+      "formula": "Convert signupBonusAmount to a number (or 0 if blank)",
+      "explanation": "Allows quantitative comparisons and ratio calculations."
+    },
+    {
+      "name": "signup_bonus_spend_efficiency",
+      "formula": "(Numeric signupBonusAmount) ÷ (signupBonusSpend + 1)",
+      "explanation": "Measures bonus size per dollar required to qualify."
+    },
+    {
+      "name": "signup_bonus_time_factor",
+      "formula": "signupBonusLength (normalized to a common time unit)",
+      "explanation": "Indicates how fast you must spend to earn the bonus."
+    },
+    {
+      "name": "benefit_desirability_score",
+      "formula": "Count(benefits that mention 'Credit', 'Insurance', or 'Upgrade')",
+      "explanation": "A simple proxy for the perceived value in benefits."
+    },
+    {
+      "name": "annual_spend_offer_count",
+      "formula": "Count(annualSpend array)",
+      "explanation": "Shows if the card offers ongoing annual rewards."
+    },
+    {
+      "name": "credit_range_score",
+      "formula": "Map(creditRange: 'Good'=1, 'Good to Excellent'=2, 'Excellent'=3)",
+      "explanation": "Provides a numerical score for eligibility targeting."
+    },
+    {
+      "name": "card_active_flag",
+      "formula": "Derived from isActive",
+      "explanation": "Indicates whether the card is active and should be promoted."
+    },
+    {
+      "name": "base_reward_efficiency",
+      "formula": "baseSpendEarnCashValue ÷ (baseSpendAmount + 1)",
+      "explanation": "Shows how much cash value you earn relative to spending."
+    },
+    {
+      "name": "effective_reward_valuation",
+      "formula": "baseSpendEarnValuation × baseSpendAmount",
+      "explanation": "A composite measure of the spending reward factor."
+    },
+    {
+      "name": "annual_fee_cost_efficiency",
+      "formula": "(Numeric signupBonusAmount + Benefit Value Score) ÷ (annualFee + 1)",
+      "explanation": "Estimates overall value per dollar fee (requires a benefit scoring system)."
+    },
+    {
+      "name": "benefit_diversity_index",
+      "formula": "Count(unique benefit categories parsed from benefit titles)",
+      "explanation": "Higher diversity may appeal to broader customer segments."
+    },
+    {
+      "name": "spend_bonus_diversity",
+      "formula": "Count(distinct spendBonusCategoryGroup values)",
+      "explanation": "Measures how many different spending areas are rewarded."
+    },
+    {
+      "name": "avg_spend_bonus_limit",
+      "formula": "Average(spendLimit for spendBonusCategory items with a limit)",
+      "explanation": "Shows if bonus multipliers are capped."
+    },
+    {
+      "name": "spend_bonus_limit_penetration",
+      "formula": "Percentage(spendBonusCategory items where isSpendLimit = 1)",
+      "explanation": "Indicates how many bonus categories have spending caps."
+    },
+    {
+      "name": "composite_card_score",
+      "formula": "Weighted sum(bonus_to_annual_fee_ratio, benefit_count, avg_spend_bonus_multiplier, etc.)",
+      "explanation": "Helps rank cards overall for marketing purposes."
+    },
+    {
+      "name": "fx_fee_presence",
+      "formula": "Boolean: (isFxFee == 1 and fxFee > 0)",
+      "explanation": "Important for cards marketed to international travelers."
+    },
+    {
+      "name": "base_reward_currency_factor",
+      "formula": "Derived from baseSpendEarnCurrency (e.g., 'cashback' scores higher than 'points')",
+      "explanation": "Helps segment cards based on reward currency."
+    },
+    {
+      "name": "card_network",
+      "formula": "Derived from cardNetwork",
+      "explanation": "Useful for market segmentation by network (Amex, Visa, etc.)."
+    },
+    {
+      "name": "url_presence_flag",
+      "formula": "1 if cardUrl is nonempty, else 0",
+      "explanation": "Indicates if the card has an online landing page."
+    },
+    {
+      "name": "signup_bonus_desc_length",
+      "formula": "Character count of signupBonusDesc",
+      "explanation": "May hint at the level of detail provided in bonus explanations."
+    },
+    {
+      "name": "trusted_traveler_presence",
+      "formula": "1 if trustedTraveler text is nonempty, else 0",
+      "explanation": "Flags additional travel-related value."
+    },
+    {
+      "name": "spend_to_bonus_velocity",
+      "formula": "signupBonusSpend ÷ (signupBonusAmount + 1)",
+      "explanation": "Measures how steep the bonus requirements are relative to the bonus offered."
+    },
+    {
+      "name": "benefit_update_frequency",
+      "formula": "Count(benefit items mentioning 'annual', 'monthly', or 'quarterly' in their description)",
+      "explanation": "Indicates recurring benefits."
+    },
+    {
+      "name": "spend_bonus_multiplier_range",
+      "formula": "Max(earnMultiplier) - Min(earnMultiplier) in spendBonusCategory",
+      "explanation": "Measures the variability in bonus rewards across spending categories."
+    },
+    {
+      "name": "spend_bonus_multiplier_std",
+      "formula": "Standard deviation of earnMultiplier values in spendBonusCategory",
+      "explanation": "Gauges the consistency in bonus multipliers."
+    },
+    {
+      "name": "effective_annual_fee",
+      "formula": "(annualFee - signupAnnualFee if signup fee is waived, else annualFee)",
+      "explanation": "Adjusts the fee metric for waived signup fees."
+    },
+    {
+      "name": "benefit_text_complexity",
+      "formula": "Average word count of benefitDesc fields",
+      "explanation": "A proxy for how detailed or complex the benefits are described."
+    },
+    {
+      "name": "benefit_relevance_index",
+      "formula": "Percentage(benefit items including keywords like 'travel', 'dining', or 'insurance')",
+      "explanation": "Helps match card features to specific customer interests."
+    },
+    {
+      "name": "spend_bonus_coverage_ratio",
+      "formula": "(spend_bonus_category_count) ÷ (Total major spending categories in market)",
+      "explanation": "Shows how comprehensively a card covers key spend areas."
+    },
+    {
+      "name": "relative_base_spend_volume",
+      "formula": "Normalized value of baseSpendAmount across the dataset",
+      "explanation": "Identifies cards that encourage higher spending per transaction."
+    },
+    {
+      "name": "base_reward_conversion_factor",
+      "formula": "baseSpendEarnCashValue ÷ baseSpendEarnValuation",
+      "explanation": "Indicates how readily points convert into cash value."
+    },
+    {
+      "name": "signup_bonus_length_adjusted_ratio",
+      "formula": "signupBonusAmount ÷ (signupBonusLength + 1)",
+      "explanation": "Reflects bonus size adjusted for the required period of spending."
+    },
+    {
+      "name": "overall_reward_potential",
+      "formula": "numeric_signup_bonus + (baseSpendEarnValuation × baseSpendAmount) + total_spend_bonus_potential",
+      "explanation": "A composite measure of rewards potential."
+    },
+    {
+      "name": "fee_burden_factor",
+      "formula": "(annualFee + signupAnnualFee) ÷ (benefit_count + 1)",
+      "explanation": "Estimates how costly a card is relative to its benefits."
+    },
+    {
+      "name": "loyalty_enhancement_score",
+      "formula": "Derived from the presence/magnitude of annualSpend offers",
+      "explanation": "Measures incentives for continued card usage."
+    },
+    {
+      "name": "benefit_redundancy_index",
+      "formula": "Count(duplicate or similar benefit items)",
+      "explanation": "Too many similar benefits may be less appealing than diverse ones."
+    },
+    {
+      "name": "spend_bonus_text_clarity",
+      "formula": "Average character length of spendBonusDesc per bonus category",
+      "explanation": "Indicates how concisely bonus terms are communicated."
+    },
+    {
+      "name": "card_premiumness_indicator",
+      "formula": "Derived from annualFee and benefit quality",
+      "explanation": "Helps segment premium versus mainstream products."
+    },
+    {
+      "name": "customer_acquisition_appeal",
+      "formula": "Composite score of signupBonusAmount, annualFee, benefit_count, and trusted traveler/lounge flags",
+      "explanation": "Summarizes the overall marketing appeal of the card for new customers."
+    }
+  ]
+  
