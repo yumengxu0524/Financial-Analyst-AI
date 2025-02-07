@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)file:///C:/Users/ymx19/DISCOVER/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./Financial Analysis AI_files/chart.js.download"></script>
+<script src="./Financial Analysis AI_files/chartjs-plugin-annotation.min.js.download"></script>
+
+
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Analysis AI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output, .error {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .output {
+            border: 1px solid #ddd;
+        }
+        .error {
+            background-color: #ffdddd;
+            color: #a94442;
+            font-weight: bold;
+        }
+        .separator {
+            margin: 30px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        #annotationTooltip {
+            position: absolute;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            display: none;
+            z-index: 9999;
+        }
+        /* Styles for Agent 9 */
+        /* Make the card selection container a flex container so that the selects are arranged in one row */
+        #cardSelectionContainer {
+            display: flex;
+            gap: 10px;      /* space between select boxes */
+            margin-bottom: 15px;
+        }
+        #cardSelectionContainer select {
+            flex: 1;        /* each select takes equal width */
+            margin: 0;      /* remove extra margins */
+        }
+
+        /* Make each transaction row a flex container so that input fields are arranged horizontally */
+        .transactionRow {
+            display: flex;
+            gap: 10px;      /* space between inputs */
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .transactionRow input {
+            flex: 1;        /* each input takes equal width */
+            margin: 0;      /* remove extra margins */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Financial Analysis AI</h1>
+        <p>
+            This platform provides two AI agents to assist you:
+        </p>
+        <ul>
+            <li>
+                <strong>Agent 1:</strong> This agent retrieves financial data for a specific company. Enter a company name 
+                and a quarter to analyze its financial performance, or choose annual data for yearly reports.
+            </li>
+            <li>
+                <strong>Agent 2:</strong> This agent compares market trends. You can ask a question, provide a company 
+                name, and optionally compare multiple companies over a chosen time period.
+            </li>
+            <li>
+                <strong>Agent 3:</strong> This agent specializes in time series and seasonal trend analysis. Provide a company name, and it will uncover seasonality patterns, correlations across different data points, and summarize the insights for both human readers and Agent 4 &amp; 5.
+            </li>
+            <li>
+                <strong>Agent 4:</strong> This agent focuses on interpreting the output from Agent 3, integrating world and social events into the analysis. It delivers actionable insights of the market trends by explaining what happened, when it happened, and its impact, ensuring easy consumption for end-users and commandar AI Agent.
+            </li>
+            <li>
+                <strong>Agent 5:</strong> This agent focuses on interpreting the output from Agent 3, integrating company events including promotions or lawsuits into the analysis. It delivers actionable insights of the market trends by explaining what happened, when it happened, and its impact, ensuring easy consumption for end-users and commandar AI Agent.
+            </li>
+            <li>
+                <strong>Agent 8.1,8.2,8.3 and 9:</strong> The multi-AI network provide an enviorment where multiple AI agents work together to build an AI-powered advisor that analyzes your transaction details alongside comprehensive credit card data to deliver personalized, reward-maximizing card recommendations in real time.
+            </li>
+        </ul>
+
+        <!-- Agent 1 Form -->
+        <h2>Financial Data Retrieval</h2>
+        <form id="agent1Form" onsubmit="return false;">
+            <div class="form-group">
+                <label for="agent1Company">Company Name:</label>
+                <input type="text" id="agent1Company" placeholder="e.g., Capital One">
+            </div>
+            <div class="form-group">
+                <label for="agent1TimeRange">Time Range (e.g., 2020 Q1 to 2024 Q2):</label>
+                <input type="text" id="agent1TimeRange" placeholder="e.g., 2020 Q1 to 2024 Q2">
+            </div>
+            <div class="form-group">
+                <label for="agent1SheetType">Select Financial Sheet:</label>
+                <select id="agent1SheetType">
+                    <option value="INCOME_STATEMENT">Income Statement</option>
+                    <option value="BALANCE_SHEET">Balance Sheet</option>
+                    <option value="CASH_FLOW">Cash Flow</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="agent1Quarter">Select Quarter:</label>
+                <select id="agent1Quarter">
+                    <!-- Populated dynamically -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="agent1Annual">Retrieve Annual Data:</label>
+                <select id="agent1Annual">
+                    <option value="false" selected="">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="agent1Question">Ask a Question:</label>
+                <textarea id="agent1Question" rows="3" placeholder="e.g., What is the net income and total revenue?"></textarea>
+            </div>
+            <button type="button" onclick="submitAgent1()">Submit</button>
+        </form>
+        <div id="agent1Output" class="output" style="display: none;"></div>
+        <div id="agent1Error" class="error" style="display: none;"></div>
+
+        <div class="separator"></div>
+
+        <!-- Agent 2 Form -->
+        <h2>Market Trends Analysis</h2>
+        <form id="agent2Form" onsubmit="return false;">
+            <div class="form-group">
+                <label for="agent2Company">Company Name:</label>
+                <input type="text" id="agent2Company" placeholder="e.g., Capital One">
+            </div>
+            <div class="form-group">
+                <label for="agent2Question">What kinds of market trends are you looking for?</label>
+                <textarea id="agent2Question" rows="4" placeholder="Enter your question here..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="agent2Timeframe">Select Time Range:</label>
+                <select id="agent2Timeframe">
+                    <option value="all">Lifetime</option>
+                    <option value="today 10-y">10 Years</option>
+                    <option value="today 5-y">5 Years</option>
+                    <option value="today 12-m" selected="">1 Year</option>
+                    <option value="today 1-m">1 Month</option>
+                    <option value="now 7-d">1 Week</option>
+                </select>
+            </div>
+            <button type="button" onclick="submitAgent2()">Submit</button>
+        </form>
+        <div id="agent2Output" class="output" style="display: block;"><h3>Market Trends Analysis:</h3><p>Market trends for Capital One analyzed successfully.</p></div>
+        <div id="agent2Error" class="error" style="display: none;"></div>
+        <div>
+            <h3>Select Event Categories to Display</h3>
+            <label><input type="checkbox" class="event-category" value="Global Events" checked="">Global Events</label>
+            <label><input type="checkbox" class="event-category" value="Financial Policies" checked="">Financial Policies</label>
+            <label><input type="checkbox" class="event-category" value="Market and Consumer Trends" checked="">Market/Consumer</label>
+            <label><input type="checkbox" class="event-category" value="Technological Innovations" checked="">Tech Innovations</label>
+            <label><input type="checkbox" class="event-category" value="Health and Lifestyle" checked="">Health &amp; Lifestyle</label>
+            <label><input type="checkbox" class="event-category" value="Miscellaneous" checked="">Miscellaneous</label>
+            <button type="button" onclick="updateEventChart()">Update Chart</button>
+        </div>
+        <!-- Chart Container -->
+        <div id="combinedGraphContainer" style="width: 100%; height: 400px;"><canvas width="990" height="440" style="display: block; box-sizing: border-box; height: 400px; width: 900px;"></canvas></div>
+        <div id="annotationTooltip"></div>
+        <!-- Agent 3 Output -->
+        <div id="agent3Output" class="output" style="display: block;"><h3>Combined Analysis (Agent 3 + Agent 4)</h3><h4>Agent 3 Analysis</h4><h5>Seasonality and Correlations:</h5><p>The data shows some seasonality with peaks often occurring at the start of the year and troughs in the middle of the year. This could be due to consumers' financial behavior, possibly related to tax season or holiday spending aftermath. There is a strong correlation between the different search terms, implying that interest in one is likely to result in interest in the others. The drastic drop in 2020 can likely be attributed to the global pandemic's onset, which may have caused consumers to pull back on credit card spending and research.</p><h5>Recommendations:</h5><p>During high trends (usually at the start of the year), the company can capitalize on the increased interest by offering promotions or incentives to drive card sign-ups. During low trends, the focus can shift to brand awareness and customer retention strategies. Additionally, it would be beneficial to invest more in rewards program marketing, as "Capital One Venture card rewards" consistently shows growth.</p><h5>Key Trends with Timeframes:</h5><div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;"><p><strong>Description:</strong> Capital One Venture card: A growth of 57% was observed from the start of 2020 (54) to the start of 2025 (85).</p></div><div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;"><p><strong>Description:</strong> Capital One Capital One Venture card: There was a growth of 60% from the start of 2020 (53) to the start of 2025 (85).</p></div><div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;"><p><strong>Description:</strong> Capital One Venture credit card: The trend data showed a significant growth of 108% from the start of 2020 (37) to the start of 2025 (77).</p></div><div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;"><p><strong>Description:</strong> Capital One Venture card rewards: This trend data showed the most significant growth of 88% from the start of 2020 (40) to the start of 2025 (75).</p></div><h4>Agent 4 Analysis</h4><h5>Key Insights:</h5><p>The data reveals a strong correlation between world events and trends in Google searches for Capital One's Venture card. The COVID-19 pandemic and global recession fears resulted in reduced credit card spending and research, leading to a decrease in Google searches for the Venture card. In contrast, the surge in digital payment adoption and AI resulted in increased card usage, leading to an increase in Google searches. Interestingly, the Venture card rewards-related search term consistently showed growth despite the volatile global events, indicating that consumers still value rewards programs during uncertain times.</p></div>
+        <!-- Agent 4 Output -->
+        <div id="agent4Output" class="output" style="display: none;"></div>
+        <!-- Agent 5 Output -->
+        <div id="agent5Output" class="output" style="display: none;"></div>
+
+        <div class="separator"></div>
+
+        <!-- Offer Winner Analysis (Agent 9) -->
+        <h2>Offer Winner Analysis</h2>
+        <form id="agent9Form" onsubmit="return false;">
+            <div class="form-group">
+                <label>Select up to 4 Credit Cards:</label>
+                <div id="cardSelectionContainer">
+                    <select id="cardSelect1"><option value="">--Select a Card--</option><option value="aacfu-biz-plat">aacfu-biz-plat</option><option value="aacfu-cashback">aacfu-cashback</option><option value="aacfu-lowrate">aacfu-lowrate</option><option value="aacfu-rewards">aacfu-rewards</option><option value="aacfu-secured">aacfu-secured</option><option value="aacfu-starter">aacfu-starter</option><option value="abbybank-biz-business">abbybank-biz-business</option><option value="abbybank-biz-cashpreffered">abbybank-biz-cashpreffered</option><option value="abbybank-biz-community">abbybank-biz-community</option><option value="abbybank-biz-company">abbybank-biz-company</option><option value="abbybank-biz-real">abbybank-biz-real</option><option value="abbybank-biz-smartrewards">abbybank-biz-smartrewards</option><option value="abbybank-college">abbybank-college</option><option value="abbybank-everyday">abbybank-everyday</option><option value="abbybank-maxcashpreferred">abbybank-maxcashpreferred</option><option value="abbybank-maxcashsecured">abbybank-maxcashsecured</option><option value="abbybank-platinum">abbybank-platinum</option><option value="abbybank-reserve">abbybank-reserve</option><option value="abbybank-secured">abbybank-secured</option><option value="abbybank-travel">abbybank-travel</option><option value="amex-biz-corporategold">amex-biz-corporategold</option><option value="amex-biz-corporategreen">amex-biz-corporategreen</option><option value="amex-biz-corporateplatinum">amex-biz-corporateplatinum</option><option value="amex-blue">amex-blue</option><option value="amex-centurion">amex-centurion</option><option value="amex-clear">amex-clear</option><option value="amex-deltablue">amex-deltablue</option><option value="amex-deltagold">amex-deltagold</option><option value="amex-deltaplatinum">amex-deltaplatinum</option><option value="amex-deltareserve">amex-deltareserve</option><option value="amex-everyday">amex-everyday</option><option value="amex-everydaypreferred">amex-everydaypreferred</option><option value="amex-gold">amex-gold</option><option value="amex-green">amex-green</option><option value="amex-hiltonaspire">amex-hiltonaspire</option><option value="amex-hiltonsurpass">amex-hiltonsurpass</option><option value="amex-marriotbonvoyamex">amex-marriotbonvoyamex</option><option value="amex-marriottbonvoybevy">amex-marriottbonvoybevy</option><option value="amex-marriottbonvoybrilliant">amex-marriottbonvoybrilliant</option><option value="amex-morganstanleyplatinum">amex-morganstanleyplatinum</option><option value="amex-one">amex-one</option><option value="amex-platinum">amex-platinum</option><option value="amex-zync">amex-zync</option><option value="barclays-viewmastercard">barclays-viewmastercard</option><option value="boa-customizedcashrewards">boa-customizedcashrewards</option><option value="boa-customizedcashrewardssecured">boa-customizedcashrewardssecured</option><option value="boa-customizedcashrewardsstudents">boa-customizedcashrewardsstudents</option><option value="boa-elitevisa">boa-elitevisa</option><option value="boa-premiumrewards">boa-premiumrewards</option><option value="boa-premiumrewardselite">boa-premiumrewardselite</option><option value="boa-travelrewards">boa-travelrewards</option><option value="boa-travelrewardssecured">boa-travelrewardssecured</option><option value="boa-travelrewardsstudents">boa-travelrewardsstudents</option><option value="boa-unlimitedcashrewards">boa-unlimitedcashrewards</option><option value="boa-unlimitedcashrewardssecured">boa-unlimitedcashrewardssecured</option><option value="boa-unlimitedcashrewardsstudents">boa-unlimitedcashrewardsstudents</option><option value="boa-visaplatplus">boa-visaplatplus</option><option value="capitalone-platinum">capitalone-platinum</option><option value="capitalone-platinumsecured">capitalone-platinumsecured</option><option value="capitalone-quicksilver">capitalone-quicksilver</option><option value="capitalone-venture">capitalone-venture</option><option value="capitalone-walmartrewards">capitalone-walmartrewards</option><option value="cardless-simon">cardless-simon</option><option value="cardless-tapmiles">cardless-tapmiles</option><option value="charlesschwab-amexplat">charlesschwab-amexplat</option><option value="charlesschwab-investorcard">charlesschwab-investorcard</option><option value="chase-biz-ihgpremier">chase-biz-ihgpremier</option><option value="chase-biz-ihgrewards">chase-biz-ihgrewards</option><option value="chase-freedom">chase-freedom</option><option value="chase-freedomflex">chase-freedomflex</option><option value="chase-freedomrise">chase-freedomrise</option><option value="chase-freedomstudent">chase-freedomstudent</option><option value="chase-freedomunlimited">chase-freedomunlimited</option><option value="chase-ihgpremier">chase-ihgpremier</option><option value="chase-ihgrewardsclassic">chase-ihgrewardsclassic</option><option value="chase-ihgrewardsselect">chase-ihgrewardsselect</option><option value="chase-ihgtraveler">chase-ihgtraveler</option><option value="chase-sapphire">chase-sapphire</option><option value="chase-sapphirepreferred">chase-sapphirepreferred</option><option value="chase-sapphirereserve">chase-sapphirereserve</option><option value="chase-slate">chase-slate</option><option value="citi-aaadvantagemileup">citi-aaadvantagemileup</option><option value="citi-bloomingdales">citi-bloomingdales</option><option value="citi-macysamex">citi-macysamex</option><option value="comenity-breadcashback">comenity-breadcashback</option><option value="comenity-breadrewardsamex">comenity-breadrewardsamex</option><option value="creditone-americanexpress">creditone-americanexpress</option><option value="creditone-nascaramericanexpress">creditone-nascaramericanexpress</option><option value="discover-biz-itbusiness">discover-biz-itbusiness</option><option value="discover-cashback">discover-cashback</option><option value="discover-chrome">discover-chrome</option><option value="discover-nhl">discover-nhl</option><option value="discover-secured">discover-secured</option><option value="discover-studentcashback">discover-studentcashback</option><option value="discover-studentchrome">discover-studentchrome</option><option value="discover-travel">discover-travel</option><option value="firstelectronic-avianca">firstelectronic-avianca</option><option value="firstelectronic-aviancaelite">firstelectronic-aviancaelite</option><option value="fnbo-traveliteamex">fnbo-traveliteamex</option><option value="nfcu-biz-gobizrewards">nfcu-biz-gobizrewards</option><option value="nfcu-cashrewards">nfcu-cashrewards</option><option value="nfcu-cashrewardsplus">nfcu-cashrewardsplus</option><option value="nfcu-flagshiprewards">nfcu-flagshiprewards</option><option value="nfcu-gorewards">nfcu-gorewards</option><option value="nfcu-morerewardsamex">nfcu-morerewardsamex</option><option value="nfcu-nrewards">nfcu-nrewards</option><option value="nfcu-platinum">nfcu-platinum</option><option value="penfed-pathfinderamex">penfed-pathfinderamex</option><option value="pnc-biz-businessoptionsvisa">pnc-biz-businessoptionsvisa</option><option value="pnc-biz-cashrewardsvisabusiness">pnc-biz-cashrewardsvisabusiness</option><option value="pnc-biz-pointsvisabusiness">pnc-biz-pointsvisabusiness</option><option value="pnc-biz-travelrewardsvisabusiness">pnc-biz-travelrewardsvisabusiness</option><option value="pnc-biz-visabusiness">pnc-biz-visabusiness</option><option value="pnc-cashbuilder">pnc-cashbuilder</option><option value="pnc-cashrewardsvisa">pnc-cashrewardsvisa</option><option value="pnc-cashunlimited">pnc-cashunlimited</option><option value="pnc-corevisa">pnc-corevisa</option><option value="pnc-pointsvisa">pnc-pointsvisa</option><option value="pnc-premiertravelervisa">pnc-premiertravelervisa</option><option value="pnc-securedvisa">pnc-securedvisa</option><option value="synchrony-plusworld">synchrony-plusworld</option><option value="synchrony-preferredworld">synchrony-preferredworld</option><option value="synchrony-premierworld">synchrony-premierworld</option><option value="usaa-cashbackrewardsplusamex">usaa-cashbackrewardsplusamex</option><option value="usaa-eaglenavigator">usaa-eaglenavigator</option><option value="usaa-limitlesscashback">usaa-limitlesscashback</option><option value="usaa-militaryaffiliateamex">usaa-militaryaffiliateamex</option><option value="usaa-militaryaffiliatevisa">usaa-militaryaffiliatevisa</option><option value="usaa-preferredcashrewardsvisa">usaa-preferredcashrewardsvisa</option><option value="usaa-rateadvantagevisaplatinum">usaa-rateadvantagevisaplatinum</option><option value="usaa-rewardsamex">usaa-rewardsamex</option><option value="usaa-rewardsvisa">usaa-rewardsvisa</option><option value="usaa-securedamex">usaa-securedamex</option><option value="usaa-securedvisaplatinum">usaa-securedvisaplatinum</option><option value="usbank-altitudeconnect">usbank-altitudeconnect</option><option value="usbank-altitudego">usbank-altitudego</option><option value="usbank-altitudegosecuredvisa">usbank-altitudegosecuredvisa</option><option value="usbank-biz-altitudeconnect">usbank-biz-altitudeconnect</option><option value="usbank-biz-altitudepower">usbank-biz-altitudepower</option><option value="usbank-biz-cashrewards">usbank-biz-cashrewards</option><option value="usbank-biz-flexperksbiztravel">usbank-biz-flexperksbiztravel</option><option value="usbank-biz-leverage">usbank-biz-leverage</option><option value="usbank-biz-platinum">usbank-biz-platinum</option><option value="usbank-biz-selectrewards">usbank-biz-selectrewards</option><option value="usbank-biz-triplecash">usbank-biz-triplecash</option><option value="usbank-cash365">usbank-cash365</option><option value="usbank-cashplus">usbank-cashplus</option><option value="usbank-cashplussecuredvisa">usbank-cashplussecuredvisa</option><option value="usbank-cashrewardsvisa">usbank-cashrewardsvisa</option><option value="usbank-collegevisa">usbank-collegevisa</option><option value="usbank-flexperksgoldamex">usbank-flexperksgoldamex</option><option value="usbank-flexperksselectplus">usbank-flexperksselectplus</option><option value="usbank-flexperkstravelrewards">usbank-flexperkstravelrewards</option><option value="usbank-infinite">usbank-infinite</option><option value="usbank-perksplusvisa">usbank-perksplusvisa</option><option value="usbank-platinum">usbank-platinum</option><option value="usbank-securedvisa">usbank-securedvisa</option><option value="usbank-shoppercashrewards">usbank-shoppercashrewards</option><option value="usbank-smartly">usbank-smartly</option><option value="wellsfargo-activecash">wellsfargo-activecash</option><option value="wellsfargo-advisors">wellsfargo-advisors</option><option value="wellsfargo-attune">wellsfargo-attune</option><option value="wellsfargo-autograph">wellsfargo-autograph</option><option value="wellsfargo-autographjourney">wellsfargo-autographjourney</option><option value="wellsfargo-biz-elite">wellsfargo-biz-elite</option><option value="wellsfargo-biz-platinum">wellsfargo-biz-platinum</option><option value="wellsfargo-biz-secured">wellsfargo-biz-secured</option><option value="wellsfargo-biz-signify">wellsfargo-biz-signify</option><option value="wellsfargo-carrier">wellsfargo-carrier</option><option value="wellsfargo-cashbackcollege">wellsfargo-cashbackcollege</option><option value="wellsfargo-cashwise">wellsfargo-cashwise</option><option value="wellsfargo-dillards">wellsfargo-dillards</option><option value="wellsfargo-dillardselite">wellsfargo-dillardselite</option><option value="wellsfargo-homeprojects">wellsfargo-homeprojects</option><option value="wellsfargo-jewelryadvantage">wellsfargo-jewelryadvantage</option><option value="wellsfargo-microcenter">wellsfargo-microcenter</option><option value="wellsfargo-platinumvisa">wellsfargo-platinumvisa</option><option value="wellsfargo-propel365">wellsfargo-propel365</option><option value="wellsfargo-propelamex">wellsfargo-propelamex</option><option value="wellsfargo-propelworldamex">wellsfargo-propelworldamex</option><option value="wellsfargo-reflect">wellsfargo-reflect</option><option value="wellsfargo-rewards">wellsfargo-rewards</option><option value="wellsfargo-secured">wellsfargo-secured</option><option value="wellsfargo-visasignature">wellsfargo-visasignature</option></select>
+                    <select id="cardSelect2"><option value="">--Select a Card--</option><option value="aacfu-biz-plat">aacfu-biz-plat</option><option value="aacfu-cashback">aacfu-cashback</option><option value="aacfu-lowrate">aacfu-lowrate</option><option value="aacfu-rewards">aacfu-rewards</option><option value="aacfu-secured">aacfu-secured</option><option value="aacfu-starter">aacfu-starter</option><option value="abbybank-biz-business">abbybank-biz-business</option><option value="abbybank-biz-cashpreffered">abbybank-biz-cashpreffered</option><option value="abbybank-biz-community">abbybank-biz-community</option><option value="abbybank-biz-company">abbybank-biz-company</option><option value="abbybank-biz-real">abbybank-biz-real</option><option value="abbybank-biz-smartrewards">abbybank-biz-smartrewards</option><option value="abbybank-college">abbybank-college</option><option value="abbybank-everyday">abbybank-everyday</option><option value="abbybank-maxcashpreferred">abbybank-maxcashpreferred</option><option value="abbybank-maxcashsecured">abbybank-maxcashsecured</option><option value="abbybank-platinum">abbybank-platinum</option><option value="abbybank-reserve">abbybank-reserve</option><option value="abbybank-secured">abbybank-secured</option><option value="abbybank-travel">abbybank-travel</option><option value="amex-biz-corporategold">amex-biz-corporategold</option><option value="amex-biz-corporategreen">amex-biz-corporategreen</option><option value="amex-biz-corporateplatinum">amex-biz-corporateplatinum</option><option value="amex-blue">amex-blue</option><option value="amex-centurion">amex-centurion</option><option value="amex-clear">amex-clear</option><option value="amex-deltablue">amex-deltablue</option><option value="amex-deltagold">amex-deltagold</option><option value="amex-deltaplatinum">amex-deltaplatinum</option><option value="amex-deltareserve">amex-deltareserve</option><option value="amex-everyday">amex-everyday</option><option value="amex-everydaypreferred">amex-everydaypreferred</option><option value="amex-gold">amex-gold</option><option value="amex-green">amex-green</option><option value="amex-hiltonaspire">amex-hiltonaspire</option><option value="amex-hiltonsurpass">amex-hiltonsurpass</option><option value="amex-marriotbonvoyamex">amex-marriotbonvoyamex</option><option value="amex-marriottbonvoybevy">amex-marriottbonvoybevy</option><option value="amex-marriottbonvoybrilliant">amex-marriottbonvoybrilliant</option><option value="amex-morganstanleyplatinum">amex-morganstanleyplatinum</option><option value="amex-one">amex-one</option><option value="amex-platinum">amex-platinum</option><option value="amex-zync">amex-zync</option><option value="barclays-viewmastercard">barclays-viewmastercard</option><option value="boa-customizedcashrewards">boa-customizedcashrewards</option><option value="boa-customizedcashrewardssecured">boa-customizedcashrewardssecured</option><option value="boa-customizedcashrewardsstudents">boa-customizedcashrewardsstudents</option><option value="boa-elitevisa">boa-elitevisa</option><option value="boa-premiumrewards">boa-premiumrewards</option><option value="boa-premiumrewardselite">boa-premiumrewardselite</option><option value="boa-travelrewards">boa-travelrewards</option><option value="boa-travelrewardssecured">boa-travelrewardssecured</option><option value="boa-travelrewardsstudents">boa-travelrewardsstudents</option><option value="boa-unlimitedcashrewards">boa-unlimitedcashrewards</option><option value="boa-unlimitedcashrewardssecured">boa-unlimitedcashrewardssecured</option><option value="boa-unlimitedcashrewardsstudents">boa-unlimitedcashrewardsstudents</option><option value="boa-visaplatplus">boa-visaplatplus</option><option value="capitalone-platinum">capitalone-platinum</option><option value="capitalone-platinumsecured">capitalone-platinumsecured</option><option value="capitalone-quicksilver">capitalone-quicksilver</option><option value="capitalone-venture">capitalone-venture</option><option value="capitalone-walmartrewards">capitalone-walmartrewards</option><option value="cardless-simon">cardless-simon</option><option value="cardless-tapmiles">cardless-tapmiles</option><option value="charlesschwab-amexplat">charlesschwab-amexplat</option><option value="charlesschwab-investorcard">charlesschwab-investorcard</option><option value="chase-biz-ihgpremier">chase-biz-ihgpremier</option><option value="chase-biz-ihgrewards">chase-biz-ihgrewards</option><option value="chase-freedom">chase-freedom</option><option value="chase-freedomflex">chase-freedomflex</option><option value="chase-freedomrise">chase-freedomrise</option><option value="chase-freedomstudent">chase-freedomstudent</option><option value="chase-freedomunlimited">chase-freedomunlimited</option><option value="chase-ihgpremier">chase-ihgpremier</option><option value="chase-ihgrewardsclassic">chase-ihgrewardsclassic</option><option value="chase-ihgrewardsselect">chase-ihgrewardsselect</option><option value="chase-ihgtraveler">chase-ihgtraveler</option><option value="chase-sapphire">chase-sapphire</option><option value="chase-sapphirepreferred">chase-sapphirepreferred</option><option value="chase-sapphirereserve">chase-sapphirereserve</option><option value="chase-slate">chase-slate</option><option value="citi-aaadvantagemileup">citi-aaadvantagemileup</option><option value="citi-bloomingdales">citi-bloomingdales</option><option value="citi-macysamex">citi-macysamex</option><option value="comenity-breadcashback">comenity-breadcashback</option><option value="comenity-breadrewardsamex">comenity-breadrewardsamex</option><option value="creditone-americanexpress">creditone-americanexpress</option><option value="creditone-nascaramericanexpress">creditone-nascaramericanexpress</option><option value="discover-biz-itbusiness">discover-biz-itbusiness</option><option value="discover-cashback">discover-cashback</option><option value="discover-chrome">discover-chrome</option><option value="discover-nhl">discover-nhl</option><option value="discover-secured">discover-secured</option><option value="discover-studentcashback">discover-studentcashback</option><option value="discover-studentchrome">discover-studentchrome</option><option value="discover-travel">discover-travel</option><option value="firstelectronic-avianca">firstelectronic-avianca</option><option value="firstelectronic-aviancaelite">firstelectronic-aviancaelite</option><option value="fnbo-traveliteamex">fnbo-traveliteamex</option><option value="nfcu-biz-gobizrewards">nfcu-biz-gobizrewards</option><option value="nfcu-cashrewards">nfcu-cashrewards</option><option value="nfcu-cashrewardsplus">nfcu-cashrewardsplus</option><option value="nfcu-flagshiprewards">nfcu-flagshiprewards</option><option value="nfcu-gorewards">nfcu-gorewards</option><option value="nfcu-morerewardsamex">nfcu-morerewardsamex</option><option value="nfcu-nrewards">nfcu-nrewards</option><option value="nfcu-platinum">nfcu-platinum</option><option value="penfed-pathfinderamex">penfed-pathfinderamex</option><option value="pnc-biz-businessoptionsvisa">pnc-biz-businessoptionsvisa</option><option value="pnc-biz-cashrewardsvisabusiness">pnc-biz-cashrewardsvisabusiness</option><option value="pnc-biz-pointsvisabusiness">pnc-biz-pointsvisabusiness</option><option value="pnc-biz-travelrewardsvisabusiness">pnc-biz-travelrewardsvisabusiness</option><option value="pnc-biz-visabusiness">pnc-biz-visabusiness</option><option value="pnc-cashbuilder">pnc-cashbuilder</option><option value="pnc-cashrewardsvisa">pnc-cashrewardsvisa</option><option value="pnc-cashunlimited">pnc-cashunlimited</option><option value="pnc-corevisa">pnc-corevisa</option><option value="pnc-pointsvisa">pnc-pointsvisa</option><option value="pnc-premiertravelervisa">pnc-premiertravelervisa</option><option value="pnc-securedvisa">pnc-securedvisa</option><option value="synchrony-plusworld">synchrony-plusworld</option><option value="synchrony-preferredworld">synchrony-preferredworld</option><option value="synchrony-premierworld">synchrony-premierworld</option><option value="usaa-cashbackrewardsplusamex">usaa-cashbackrewardsplusamex</option><option value="usaa-eaglenavigator">usaa-eaglenavigator</option><option value="usaa-limitlesscashback">usaa-limitlesscashback</option><option value="usaa-militaryaffiliateamex">usaa-militaryaffiliateamex</option><option value="usaa-militaryaffiliatevisa">usaa-militaryaffiliatevisa</option><option value="usaa-preferredcashrewardsvisa">usaa-preferredcashrewardsvisa</option><option value="usaa-rateadvantagevisaplatinum">usaa-rateadvantagevisaplatinum</option><option value="usaa-rewardsamex">usaa-rewardsamex</option><option value="usaa-rewardsvisa">usaa-rewardsvisa</option><option value="usaa-securedamex">usaa-securedamex</option><option value="usaa-securedvisaplatinum">usaa-securedvisaplatinum</option><option value="usbank-altitudeconnect">usbank-altitudeconnect</option><option value="usbank-altitudego">usbank-altitudego</option><option value="usbank-altitudegosecuredvisa">usbank-altitudegosecuredvisa</option><option value="usbank-biz-altitudeconnect">usbank-biz-altitudeconnect</option><option value="usbank-biz-altitudepower">usbank-biz-altitudepower</option><option value="usbank-biz-cashrewards">usbank-biz-cashrewards</option><option value="usbank-biz-flexperksbiztravel">usbank-biz-flexperksbiztravel</option><option value="usbank-biz-leverage">usbank-biz-leverage</option><option value="usbank-biz-platinum">usbank-biz-platinum</option><option value="usbank-biz-selectrewards">usbank-biz-selectrewards</option><option value="usbank-biz-triplecash">usbank-biz-triplecash</option><option value="usbank-cash365">usbank-cash365</option><option value="usbank-cashplus">usbank-cashplus</option><option value="usbank-cashplussecuredvisa">usbank-cashplussecuredvisa</option><option value="usbank-cashrewardsvisa">usbank-cashrewardsvisa</option><option value="usbank-collegevisa">usbank-collegevisa</option><option value="usbank-flexperksgoldamex">usbank-flexperksgoldamex</option><option value="usbank-flexperksselectplus">usbank-flexperksselectplus</option><option value="usbank-flexperkstravelrewards">usbank-flexperkstravelrewards</option><option value="usbank-infinite">usbank-infinite</option><option value="usbank-perksplusvisa">usbank-perksplusvisa</option><option value="usbank-platinum">usbank-platinum</option><option value="usbank-securedvisa">usbank-securedvisa</option><option value="usbank-shoppercashrewards">usbank-shoppercashrewards</option><option value="usbank-smartly">usbank-smartly</option><option value="wellsfargo-activecash">wellsfargo-activecash</option><option value="wellsfargo-advisors">wellsfargo-advisors</option><option value="wellsfargo-attune">wellsfargo-attune</option><option value="wellsfargo-autograph">wellsfargo-autograph</option><option value="wellsfargo-autographjourney">wellsfargo-autographjourney</option><option value="wellsfargo-biz-elite">wellsfargo-biz-elite</option><option value="wellsfargo-biz-platinum">wellsfargo-biz-platinum</option><option value="wellsfargo-biz-secured">wellsfargo-biz-secured</option><option value="wellsfargo-biz-signify">wellsfargo-biz-signify</option><option value="wellsfargo-carrier">wellsfargo-carrier</option><option value="wellsfargo-cashbackcollege">wellsfargo-cashbackcollege</option><option value="wellsfargo-cashwise">wellsfargo-cashwise</option><option value="wellsfargo-dillards">wellsfargo-dillards</option><option value="wellsfargo-dillardselite">wellsfargo-dillardselite</option><option value="wellsfargo-homeprojects">wellsfargo-homeprojects</option><option value="wellsfargo-jewelryadvantage">wellsfargo-jewelryadvantage</option><option value="wellsfargo-microcenter">wellsfargo-microcenter</option><option value="wellsfargo-platinumvisa">wellsfargo-platinumvisa</option><option value="wellsfargo-propel365">wellsfargo-propel365</option><option value="wellsfargo-propelamex">wellsfargo-propelamex</option><option value="wellsfargo-propelworldamex">wellsfargo-propelworldamex</option><option value="wellsfargo-reflect">wellsfargo-reflect</option><option value="wellsfargo-rewards">wellsfargo-rewards</option><option value="wellsfargo-secured">wellsfargo-secured</option><option value="wellsfargo-visasignature">wellsfargo-visasignature</option></select>
+                    <select id="cardSelect3"><option value="">--Select a Card--</option><option value="aacfu-biz-plat">aacfu-biz-plat</option><option value="aacfu-cashback">aacfu-cashback</option><option value="aacfu-lowrate">aacfu-lowrate</option><option value="aacfu-rewards">aacfu-rewards</option><option value="aacfu-secured">aacfu-secured</option><option value="aacfu-starter">aacfu-starter</option><option value="abbybank-biz-business">abbybank-biz-business</option><option value="abbybank-biz-cashpreffered">abbybank-biz-cashpreffered</option><option value="abbybank-biz-community">abbybank-biz-community</option><option value="abbybank-biz-company">abbybank-biz-company</option><option value="abbybank-biz-real">abbybank-biz-real</option><option value="abbybank-biz-smartrewards">abbybank-biz-smartrewards</option><option value="abbybank-college">abbybank-college</option><option value="abbybank-everyday">abbybank-everyday</option><option value="abbybank-maxcashpreferred">abbybank-maxcashpreferred</option><option value="abbybank-maxcashsecured">abbybank-maxcashsecured</option><option value="abbybank-platinum">abbybank-platinum</option><option value="abbybank-reserve">abbybank-reserve</option><option value="abbybank-secured">abbybank-secured</option><option value="abbybank-travel">abbybank-travel</option><option value="amex-biz-corporategold">amex-biz-corporategold</option><option value="amex-biz-corporategreen">amex-biz-corporategreen</option><option value="amex-biz-corporateplatinum">amex-biz-corporateplatinum</option><option value="amex-blue">amex-blue</option><option value="amex-centurion">amex-centurion</option><option value="amex-clear">amex-clear</option><option value="amex-deltablue">amex-deltablue</option><option value="amex-deltagold">amex-deltagold</option><option value="amex-deltaplatinum">amex-deltaplatinum</option><option value="amex-deltareserve">amex-deltareserve</option><option value="amex-everyday">amex-everyday</option><option value="amex-everydaypreferred">amex-everydaypreferred</option><option value="amex-gold">amex-gold</option><option value="amex-green">amex-green</option><option value="amex-hiltonaspire">amex-hiltonaspire</option><option value="amex-hiltonsurpass">amex-hiltonsurpass</option><option value="amex-marriotbonvoyamex">amex-marriotbonvoyamex</option><option value="amex-marriottbonvoybevy">amex-marriottbonvoybevy</option><option value="amex-marriottbonvoybrilliant">amex-marriottbonvoybrilliant</option><option value="amex-morganstanleyplatinum">amex-morganstanleyplatinum</option><option value="amex-one">amex-one</option><option value="amex-platinum">amex-platinum</option><option value="amex-zync">amex-zync</option><option value="barclays-viewmastercard">barclays-viewmastercard</option><option value="boa-customizedcashrewards">boa-customizedcashrewards</option><option value="boa-customizedcashrewardssecured">boa-customizedcashrewardssecured</option><option value="boa-customizedcashrewardsstudents">boa-customizedcashrewardsstudents</option><option value="boa-elitevisa">boa-elitevisa</option><option value="boa-premiumrewards">boa-premiumrewards</option><option value="boa-premiumrewardselite">boa-premiumrewardselite</option><option value="boa-travelrewards">boa-travelrewards</option><option value="boa-travelrewardssecured">boa-travelrewardssecured</option><option value="boa-travelrewardsstudents">boa-travelrewardsstudents</option><option value="boa-unlimitedcashrewards">boa-unlimitedcashrewards</option><option value="boa-unlimitedcashrewardssecured">boa-unlimitedcashrewardssecured</option><option value="boa-unlimitedcashrewardsstudents">boa-unlimitedcashrewardsstudents</option><option value="boa-visaplatplus">boa-visaplatplus</option><option value="capitalone-platinum">capitalone-platinum</option><option value="capitalone-platinumsecured">capitalone-platinumsecured</option><option value="capitalone-quicksilver">capitalone-quicksilver</option><option value="capitalone-venture">capitalone-venture</option><option value="capitalone-walmartrewards">capitalone-walmartrewards</option><option value="cardless-simon">cardless-simon</option><option value="cardless-tapmiles">cardless-tapmiles</option><option value="charlesschwab-amexplat">charlesschwab-amexplat</option><option value="charlesschwab-investorcard">charlesschwab-investorcard</option><option value="chase-biz-ihgpremier">chase-biz-ihgpremier</option><option value="chase-biz-ihgrewards">chase-biz-ihgrewards</option><option value="chase-freedom">chase-freedom</option><option value="chase-freedomflex">chase-freedomflex</option><option value="chase-freedomrise">chase-freedomrise</option><option value="chase-freedomstudent">chase-freedomstudent</option><option value="chase-freedomunlimited">chase-freedomunlimited</option><option value="chase-ihgpremier">chase-ihgpremier</option><option value="chase-ihgrewardsclassic">chase-ihgrewardsclassic</option><option value="chase-ihgrewardsselect">chase-ihgrewardsselect</option><option value="chase-ihgtraveler">chase-ihgtraveler</option><option value="chase-sapphire">chase-sapphire</option><option value="chase-sapphirepreferred">chase-sapphirepreferred</option><option value="chase-sapphirereserve">chase-sapphirereserve</option><option value="chase-slate">chase-slate</option><option value="citi-aaadvantagemileup">citi-aaadvantagemileup</option><option value="citi-bloomingdales">citi-bloomingdales</option><option value="citi-macysamex">citi-macysamex</option><option value="comenity-breadcashback">comenity-breadcashback</option><option value="comenity-breadrewardsamex">comenity-breadrewardsamex</option><option value="creditone-americanexpress">creditone-americanexpress</option><option value="creditone-nascaramericanexpress">creditone-nascaramericanexpress</option><option value="discover-biz-itbusiness">discover-biz-itbusiness</option><option value="discover-cashback">discover-cashback</option><option value="discover-chrome">discover-chrome</option><option value="discover-nhl">discover-nhl</option><option value="discover-secured">discover-secured</option><option value="discover-studentcashback">discover-studentcashback</option><option value="discover-studentchrome">discover-studentchrome</option><option value="discover-travel">discover-travel</option><option value="firstelectronic-avianca">firstelectronic-avianca</option><option value="firstelectronic-aviancaelite">firstelectronic-aviancaelite</option><option value="fnbo-traveliteamex">fnbo-traveliteamex</option><option value="nfcu-biz-gobizrewards">nfcu-biz-gobizrewards</option><option value="nfcu-cashrewards">nfcu-cashrewards</option><option value="nfcu-cashrewardsplus">nfcu-cashrewardsplus</option><option value="nfcu-flagshiprewards">nfcu-flagshiprewards</option><option value="nfcu-gorewards">nfcu-gorewards</option><option value="nfcu-morerewardsamex">nfcu-morerewardsamex</option><option value="nfcu-nrewards">nfcu-nrewards</option><option value="nfcu-platinum">nfcu-platinum</option><option value="penfed-pathfinderamex">penfed-pathfinderamex</option><option value="pnc-biz-businessoptionsvisa">pnc-biz-businessoptionsvisa</option><option value="pnc-biz-cashrewardsvisabusiness">pnc-biz-cashrewardsvisabusiness</option><option value="pnc-biz-pointsvisabusiness">pnc-biz-pointsvisabusiness</option><option value="pnc-biz-travelrewardsvisabusiness">pnc-biz-travelrewardsvisabusiness</option><option value="pnc-biz-visabusiness">pnc-biz-visabusiness</option><option value="pnc-cashbuilder">pnc-cashbuilder</option><option value="pnc-cashrewardsvisa">pnc-cashrewardsvisa</option><option value="pnc-cashunlimited">pnc-cashunlimited</option><option value="pnc-corevisa">pnc-corevisa</option><option value="pnc-pointsvisa">pnc-pointsvisa</option><option value="pnc-premiertravelervisa">pnc-premiertravelervisa</option><option value="pnc-securedvisa">pnc-securedvisa</option><option value="synchrony-plusworld">synchrony-plusworld</option><option value="synchrony-preferredworld">synchrony-preferredworld</option><option value="synchrony-premierworld">synchrony-premierworld</option><option value="usaa-cashbackrewardsplusamex">usaa-cashbackrewardsplusamex</option><option value="usaa-eaglenavigator">usaa-eaglenavigator</option><option value="usaa-limitlesscashback">usaa-limitlesscashback</option><option value="usaa-militaryaffiliateamex">usaa-militaryaffiliateamex</option><option value="usaa-militaryaffiliatevisa">usaa-militaryaffiliatevisa</option><option value="usaa-preferredcashrewardsvisa">usaa-preferredcashrewardsvisa</option><option value="usaa-rateadvantagevisaplatinum">usaa-rateadvantagevisaplatinum</option><option value="usaa-rewardsamex">usaa-rewardsamex</option><option value="usaa-rewardsvisa">usaa-rewardsvisa</option><option value="usaa-securedamex">usaa-securedamex</option><option value="usaa-securedvisaplatinum">usaa-securedvisaplatinum</option><option value="usbank-altitudeconnect">usbank-altitudeconnect</option><option value="usbank-altitudego">usbank-altitudego</option><option value="usbank-altitudegosecuredvisa">usbank-altitudegosecuredvisa</option><option value="usbank-biz-altitudeconnect">usbank-biz-altitudeconnect</option><option value="usbank-biz-altitudepower">usbank-biz-altitudepower</option><option value="usbank-biz-cashrewards">usbank-biz-cashrewards</option><option value="usbank-biz-flexperksbiztravel">usbank-biz-flexperksbiztravel</option><option value="usbank-biz-leverage">usbank-biz-leverage</option><option value="usbank-biz-platinum">usbank-biz-platinum</option><option value="usbank-biz-selectrewards">usbank-biz-selectrewards</option><option value="usbank-biz-triplecash">usbank-biz-triplecash</option><option value="usbank-cash365">usbank-cash365</option><option value="usbank-cashplus">usbank-cashplus</option><option value="usbank-cashplussecuredvisa">usbank-cashplussecuredvisa</option><option value="usbank-cashrewardsvisa">usbank-cashrewardsvisa</option><option value="usbank-collegevisa">usbank-collegevisa</option><option value="usbank-flexperksgoldamex">usbank-flexperksgoldamex</option><option value="usbank-flexperksselectplus">usbank-flexperksselectplus</option><option value="usbank-flexperkstravelrewards">usbank-flexperkstravelrewards</option><option value="usbank-infinite">usbank-infinite</option><option value="usbank-perksplusvisa">usbank-perksplusvisa</option><option value="usbank-platinum">usbank-platinum</option><option value="usbank-securedvisa">usbank-securedvisa</option><option value="usbank-shoppercashrewards">usbank-shoppercashrewards</option><option value="usbank-smartly">usbank-smartly</option><option value="wellsfargo-activecash">wellsfargo-activecash</option><option value="wellsfargo-advisors">wellsfargo-advisors</option><option value="wellsfargo-attune">wellsfargo-attune</option><option value="wellsfargo-autograph">wellsfargo-autograph</option><option value="wellsfargo-autographjourney">wellsfargo-autographjourney</option><option value="wellsfargo-biz-elite">wellsfargo-biz-elite</option><option value="wellsfargo-biz-platinum">wellsfargo-biz-platinum</option><option value="wellsfargo-biz-secured">wellsfargo-biz-secured</option><option value="wellsfargo-biz-signify">wellsfargo-biz-signify</option><option value="wellsfargo-carrier">wellsfargo-carrier</option><option value="wellsfargo-cashbackcollege">wellsfargo-cashbackcollege</option><option value="wellsfargo-cashwise">wellsfargo-cashwise</option><option value="wellsfargo-dillards">wellsfargo-dillards</option><option value="wellsfargo-dillardselite">wellsfargo-dillardselite</option><option value="wellsfargo-homeprojects">wellsfargo-homeprojects</option><option value="wellsfargo-jewelryadvantage">wellsfargo-jewelryadvantage</option><option value="wellsfargo-microcenter">wellsfargo-microcenter</option><option value="wellsfargo-platinumvisa">wellsfargo-platinumvisa</option><option value="wellsfargo-propel365">wellsfargo-propel365</option><option value="wellsfargo-propelamex">wellsfargo-propelamex</option><option value="wellsfargo-propelworldamex">wellsfargo-propelworldamex</option><option value="wellsfargo-reflect">wellsfargo-reflect</option><option value="wellsfargo-rewards">wellsfargo-rewards</option><option value="wellsfargo-secured">wellsfargo-secured</option><option value="wellsfargo-visasignature">wellsfargo-visasignature</option></select>
+                    <select id="cardSelect4"><option value="">--Select a Card--</option><option value="aacfu-biz-plat">aacfu-biz-plat</option><option value="aacfu-cashback">aacfu-cashback</option><option value="aacfu-lowrate">aacfu-lowrate</option><option value="aacfu-rewards">aacfu-rewards</option><option value="aacfu-secured">aacfu-secured</option><option value="aacfu-starter">aacfu-starter</option><option value="abbybank-biz-business">abbybank-biz-business</option><option value="abbybank-biz-cashpreffered">abbybank-biz-cashpreffered</option><option value="abbybank-biz-community">abbybank-biz-community</option><option value="abbybank-biz-company">abbybank-biz-company</option><option value="abbybank-biz-real">abbybank-biz-real</option><option value="abbybank-biz-smartrewards">abbybank-biz-smartrewards</option><option value="abbybank-college">abbybank-college</option><option value="abbybank-everyday">abbybank-everyday</option><option value="abbybank-maxcashpreferred">abbybank-maxcashpreferred</option><option value="abbybank-maxcashsecured">abbybank-maxcashsecured</option><option value="abbybank-platinum">abbybank-platinum</option><option value="abbybank-reserve">abbybank-reserve</option><option value="abbybank-secured">abbybank-secured</option><option value="abbybank-travel">abbybank-travel</option><option value="amex-biz-corporategold">amex-biz-corporategold</option><option value="amex-biz-corporategreen">amex-biz-corporategreen</option><option value="amex-biz-corporateplatinum">amex-biz-corporateplatinum</option><option value="amex-blue">amex-blue</option><option value="amex-centurion">amex-centurion</option><option value="amex-clear">amex-clear</option><option value="amex-deltablue">amex-deltablue</option><option value="amex-deltagold">amex-deltagold</option><option value="amex-deltaplatinum">amex-deltaplatinum</option><option value="amex-deltareserve">amex-deltareserve</option><option value="amex-everyday">amex-everyday</option><option value="amex-everydaypreferred">amex-everydaypreferred</option><option value="amex-gold">amex-gold</option><option value="amex-green">amex-green</option><option value="amex-hiltonaspire">amex-hiltonaspire</option><option value="amex-hiltonsurpass">amex-hiltonsurpass</option><option value="amex-marriotbonvoyamex">amex-marriotbonvoyamex</option><option value="amex-marriottbonvoybevy">amex-marriottbonvoybevy</option><option value="amex-marriottbonvoybrilliant">amex-marriottbonvoybrilliant</option><option value="amex-morganstanleyplatinum">amex-morganstanleyplatinum</option><option value="amex-one">amex-one</option><option value="amex-platinum">amex-platinum</option><option value="amex-zync">amex-zync</option><option value="barclays-viewmastercard">barclays-viewmastercard</option><option value="boa-customizedcashrewards">boa-customizedcashrewards</option><option value="boa-customizedcashrewardssecured">boa-customizedcashrewardssecured</option><option value="boa-customizedcashrewardsstudents">boa-customizedcashrewardsstudents</option><option value="boa-elitevisa">boa-elitevisa</option><option value="boa-premiumrewards">boa-premiumrewards</option><option value="boa-premiumrewardselite">boa-premiumrewardselite</option><option value="boa-travelrewards">boa-travelrewards</option><option value="boa-travelrewardssecured">boa-travelrewardssecured</option><option value="boa-travelrewardsstudents">boa-travelrewardsstudents</option><option value="boa-unlimitedcashrewards">boa-unlimitedcashrewards</option><option value="boa-unlimitedcashrewardssecured">boa-unlimitedcashrewardssecured</option><option value="boa-unlimitedcashrewardsstudents">boa-unlimitedcashrewardsstudents</option><option value="boa-visaplatplus">boa-visaplatplus</option><option value="capitalone-platinum">capitalone-platinum</option><option value="capitalone-platinumsecured">capitalone-platinumsecured</option><option value="capitalone-quicksilver">capitalone-quicksilver</option><option value="capitalone-venture">capitalone-venture</option><option value="capitalone-walmartrewards">capitalone-walmartrewards</option><option value="cardless-simon">cardless-simon</option><option value="cardless-tapmiles">cardless-tapmiles</option><option value="charlesschwab-amexplat">charlesschwab-amexplat</option><option value="charlesschwab-investorcard">charlesschwab-investorcard</option><option value="chase-biz-ihgpremier">chase-biz-ihgpremier</option><option value="chase-biz-ihgrewards">chase-biz-ihgrewards</option><option value="chase-freedom">chase-freedom</option><option value="chase-freedomflex">chase-freedomflex</option><option value="chase-freedomrise">chase-freedomrise</option><option value="chase-freedomstudent">chase-freedomstudent</option><option value="chase-freedomunlimited">chase-freedomunlimited</option><option value="chase-ihgpremier">chase-ihgpremier</option><option value="chase-ihgrewardsclassic">chase-ihgrewardsclassic</option><option value="chase-ihgrewardsselect">chase-ihgrewardsselect</option><option value="chase-ihgtraveler">chase-ihgtraveler</option><option value="chase-sapphire">chase-sapphire</option><option value="chase-sapphirepreferred">chase-sapphirepreferred</option><option value="chase-sapphirereserve">chase-sapphirereserve</option><option value="chase-slate">chase-slate</option><option value="citi-aaadvantagemileup">citi-aaadvantagemileup</option><option value="citi-bloomingdales">citi-bloomingdales</option><option value="citi-macysamex">citi-macysamex</option><option value="comenity-breadcashback">comenity-breadcashback</option><option value="comenity-breadrewardsamex">comenity-breadrewardsamex</option><option value="creditone-americanexpress">creditone-americanexpress</option><option value="creditone-nascaramericanexpress">creditone-nascaramericanexpress</option><option value="discover-biz-itbusiness">discover-biz-itbusiness</option><option value="discover-cashback">discover-cashback</option><option value="discover-chrome">discover-chrome</option><option value="discover-nhl">discover-nhl</option><option value="discover-secured">discover-secured</option><option value="discover-studentcashback">discover-studentcashback</option><option value="discover-studentchrome">discover-studentchrome</option><option value="discover-travel">discover-travel</option><option value="firstelectronic-avianca">firstelectronic-avianca</option><option value="firstelectronic-aviancaelite">firstelectronic-aviancaelite</option><option value="fnbo-traveliteamex">fnbo-traveliteamex</option><option value="nfcu-biz-gobizrewards">nfcu-biz-gobizrewards</option><option value="nfcu-cashrewards">nfcu-cashrewards</option><option value="nfcu-cashrewardsplus">nfcu-cashrewardsplus</option><option value="nfcu-flagshiprewards">nfcu-flagshiprewards</option><option value="nfcu-gorewards">nfcu-gorewards</option><option value="nfcu-morerewardsamex">nfcu-morerewardsamex</option><option value="nfcu-nrewards">nfcu-nrewards</option><option value="nfcu-platinum">nfcu-platinum</option><option value="penfed-pathfinderamex">penfed-pathfinderamex</option><option value="pnc-biz-businessoptionsvisa">pnc-biz-businessoptionsvisa</option><option value="pnc-biz-cashrewardsvisabusiness">pnc-biz-cashrewardsvisabusiness</option><option value="pnc-biz-pointsvisabusiness">pnc-biz-pointsvisabusiness</option><option value="pnc-biz-travelrewardsvisabusiness">pnc-biz-travelrewardsvisabusiness</option><option value="pnc-biz-visabusiness">pnc-biz-visabusiness</option><option value="pnc-cashbuilder">pnc-cashbuilder</option><option value="pnc-cashrewardsvisa">pnc-cashrewardsvisa</option><option value="pnc-cashunlimited">pnc-cashunlimited</option><option value="pnc-corevisa">pnc-corevisa</option><option value="pnc-pointsvisa">pnc-pointsvisa</option><option value="pnc-premiertravelervisa">pnc-premiertravelervisa</option><option value="pnc-securedvisa">pnc-securedvisa</option><option value="synchrony-plusworld">synchrony-plusworld</option><option value="synchrony-preferredworld">synchrony-preferredworld</option><option value="synchrony-premierworld">synchrony-premierworld</option><option value="usaa-cashbackrewardsplusamex">usaa-cashbackrewardsplusamex</option><option value="usaa-eaglenavigator">usaa-eaglenavigator</option><option value="usaa-limitlesscashback">usaa-limitlesscashback</option><option value="usaa-militaryaffiliateamex">usaa-militaryaffiliateamex</option><option value="usaa-militaryaffiliatevisa">usaa-militaryaffiliatevisa</option><option value="usaa-preferredcashrewardsvisa">usaa-preferredcashrewardsvisa</option><option value="usaa-rateadvantagevisaplatinum">usaa-rateadvantagevisaplatinum</option><option value="usaa-rewardsamex">usaa-rewardsamex</option><option value="usaa-rewardsvisa">usaa-rewardsvisa</option><option value="usaa-securedamex">usaa-securedamex</option><option value="usaa-securedvisaplatinum">usaa-securedvisaplatinum</option><option value="usbank-altitudeconnect">usbank-altitudeconnect</option><option value="usbank-altitudego">usbank-altitudego</option><option value="usbank-altitudegosecuredvisa">usbank-altitudegosecuredvisa</option><option value="usbank-biz-altitudeconnect">usbank-biz-altitudeconnect</option><option value="usbank-biz-altitudepower">usbank-biz-altitudepower</option><option value="usbank-biz-cashrewards">usbank-biz-cashrewards</option><option value="usbank-biz-flexperksbiztravel">usbank-biz-flexperksbiztravel</option><option value="usbank-biz-leverage">usbank-biz-leverage</option><option value="usbank-biz-platinum">usbank-biz-platinum</option><option value="usbank-biz-selectrewards">usbank-biz-selectrewards</option><option value="usbank-biz-triplecash">usbank-biz-triplecash</option><option value="usbank-cash365">usbank-cash365</option><option value="usbank-cashplus">usbank-cashplus</option><option value="usbank-cashplussecuredvisa">usbank-cashplussecuredvisa</option><option value="usbank-cashrewardsvisa">usbank-cashrewardsvisa</option><option value="usbank-collegevisa">usbank-collegevisa</option><option value="usbank-flexperksgoldamex">usbank-flexperksgoldamex</option><option value="usbank-flexperksselectplus">usbank-flexperksselectplus</option><option value="usbank-flexperkstravelrewards">usbank-flexperkstravelrewards</option><option value="usbank-infinite">usbank-infinite</option><option value="usbank-perksplusvisa">usbank-perksplusvisa</option><option value="usbank-platinum">usbank-platinum</option><option value="usbank-securedvisa">usbank-securedvisa</option><option value="usbank-shoppercashrewards">usbank-shoppercashrewards</option><option value="usbank-smartly">usbank-smartly</option><option value="wellsfargo-activecash">wellsfargo-activecash</option><option value="wellsfargo-advisors">wellsfargo-advisors</option><option value="wellsfargo-attune">wellsfargo-attune</option><option value="wellsfargo-autograph">wellsfargo-autograph</option><option value="wellsfargo-autographjourney">wellsfargo-autographjourney</option><option value="wellsfargo-biz-elite">wellsfargo-biz-elite</option><option value="wellsfargo-biz-platinum">wellsfargo-biz-platinum</option><option value="wellsfargo-biz-secured">wellsfargo-biz-secured</option><option value="wellsfargo-biz-signify">wellsfargo-biz-signify</option><option value="wellsfargo-carrier">wellsfargo-carrier</option><option value="wellsfargo-cashbackcollege">wellsfargo-cashbackcollege</option><option value="wellsfargo-cashwise">wellsfargo-cashwise</option><option value="wellsfargo-dillards">wellsfargo-dillards</option><option value="wellsfargo-dillardselite">wellsfargo-dillardselite</option><option value="wellsfargo-homeprojects">wellsfargo-homeprojects</option><option value="wellsfargo-jewelryadvantage">wellsfargo-jewelryadvantage</option><option value="wellsfargo-microcenter">wellsfargo-microcenter</option><option value="wellsfargo-platinumvisa">wellsfargo-platinumvisa</option><option value="wellsfargo-propel365">wellsfargo-propel365</option><option value="wellsfargo-propelamex">wellsfargo-propelamex</option><option value="wellsfargo-propelworldamex">wellsfargo-propelworldamex</option><option value="wellsfargo-reflect">wellsfargo-reflect</option><option value="wellsfargo-rewards">wellsfargo-rewards</option><option value="wellsfargo-secured">wellsfargo-secured</option><option value="wellsfargo-visasignature">wellsfargo-visasignature</option></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Transactions:</label>
+                <div id="transactionsContainer"><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="groceries">
+                    <input type="number" class="transAmount" placeholder="Amount" value="150">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$150 at Trader Joe&#39;s">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Trader Joe&#39;s">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="groceries">
+                    <input type="number" class="transAmount" placeholder="Amount" value="200">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$200 at Costco">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Costco">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="groceries">
+                    <input type="number" class="transAmount" placeholder="Amount" value="50">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$50 at Mariano&#39;s">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Mariano&#39;s">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="restaurant">
+                    <input type="number" class="transAmount" placeholder="Amount" value="75">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$75 dinner at a local restaurant">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Local Restaurant">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="gas">
+                    <input type="number" class="transAmount" placeholder="Amount" value="100">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$100 fuel purchase">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Shell">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="uber">
+                    <input type="number" class="transAmount" placeholder="Amount" value="80">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$80 spent on Uber rides">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Uber">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="travel">
+                    <input type="number" class="transAmount" placeholder="Amount" value="250">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$150 utility bills">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="ComEd">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="entertainment">
+                    <input type="number" class="transAmount" placeholder="Amount" value="120">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$120 for movies/events">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="AMC Theatres">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="online shopping">
+                    <input type="number" class="transAmount" placeholder="Amount" value="200">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$200 on online shopping">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Amazon">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="cellphone">
+                    <input type="number" class="transAmount" placeholder="Amount" value="80">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$80 cellphone bill">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="Verizon">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div><div class="transactionRow">
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="health">
+                    <input type="number" class="transAmount" placeholder="Amount" value="100">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe&#39;s)" value="$100 on healthcare/medications">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe&#39;s)" value="CVS Pharmacy">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                </div></div>
+                <button type="button" onclick="addTransactionRow()">Add Transaction</button>
+            </div>
+            <button type="button" onclick="submitAgent9()">Submit Offer Winner Analysis</button>
+        </form>
+        <div id="agent9Output" class="output" style="display: block;"><h3>Offer Winner Analysis Results</h3><h4>Transaction Results</h4>
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 1</h5>
+                <p><strong>Category:</strong> groceries</p>
+                <p><strong>Amount:</strong> $150</p>
+                <p><strong>Description:</strong> $150 at Trader Joe's</p>
+                <p><strong>Merchant:</strong> Trader Joe's</p>
+                <p><strong>Recommended Card:</strong> amex-gold</p>
+                <p><strong>Explanation:</strong><br>Based on the transaction details and rewards points structure of each card, it would be most beneficial to use the "American Express® Gold" card for your grocery purchase at Trader Joe's. This card offers a 4x multiplier for grocery store purchases. Your $150 transaction can earn you 600 reward points. The other cards do not specifically list grocery stores as a bonus category.<br><br>Recommended Card Key: amex-gold</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 2</h5>
+                <p><strong>Category:</strong> groceries</p>
+                <p><strong>Amount:</strong> $200</p>
+                <p><strong>Description:</strong> $200 at Costco</p>
+                <p><strong>Merchant:</strong> Costco</p>
+                <p><strong>Recommended Card:</strong> amex-gold</p>
+                <p><strong>Explanation:</strong><br>Based on the information provided for the four credit cards, only two cards have a groceries spend bonus category – American Express® Gold and Chase Sapphire Preferred®. These two cards have the same rewards rate of "4.0x" for groceries. However, the American Express® Gold card has a cap of up to $25,000 in purchases per year in this category while the Chase Sapphire Preferred® has no cap mentioned.<br><br>However, since Costco is a wholesale club, purchases there may not fall into the "groceries" category for either of these cards. The Bank of America Elite Visa Infinite does not specifically mention a grocery reward category, but it does offer 2.0x points for every $1 spent on all purchases. The Venture Rewards card does not have a specific grocery reward or wholesale club category either, providing 2.0x rewards on all purchases.<br><br>Without knowing the exact reward policies for the groceries category for each card (especially considering that Costco is a wholesale club), the safest recommendation would be the Bank of America Elite Visa Infinite or Venture Rewards card which both provide 2x points for all purchases, including those at Costco. However, the cards' reward values are not directly comparable because they use different reward currencies (points vs. 'miles').<br><br>Given that, based on the base reward efficiency (which shows how much cash value you earn relative to spending), the most beneficial card for a purchase at Costco would be the American Express® Gold, with a base reward efficiency of 0.5999994000006 compared to the Chase Sapphire Preferred®'s 0.9999990000010001.<br><br>But again, these estimates are based on the assumption that the grocery bonus category will apply to purchases at Costco.<br><br>Recommended Card Key: amex-gold</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 3</h5>
+                <p><strong>Category:</strong> groceries</p>
+                <p><strong>Amount:</strong> $50</p>
+                <p><strong>Description:</strong> $50 at Mariano's</p>
+                <p><strong>Merchant:</strong> Mariano's</p>
+                <p><strong>Recommended Card:</strong> amex-gold</p>
+                <p><strong>Explanation:</strong><br>Based on the information provided, the 'American Express® Gold' card would yield the highest rewards for this specific transaction. This is because the 'American Express® Gold' card provides a 4x multiplier on grocery purchases at U.S. supermarkets, meaning a $50 transaction would earn you 200 points. This card has a high average spend bonus multiplier (3.25), and a spend bonus category that includes grocery stores, which is ideal for your transaction at Mariano's.<br><br>Recommended Card Key: amex-gold</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 4</h5>
+                <p><strong>Category:</strong> restaurant</p>
+                <p><strong>Amount:</strong> $75</p>
+                <p><strong>Description:</strong> $75 dinner at a local restaurant</p>
+                <p><strong>Merchant:</strong> Local Restaurant</p>
+                <p><strong>Recommended Card:</strong> amex-gold</p>
+                <p><strong>Explanation:</strong><br>Based on the data provided, the American Express® Gold card would offer the highest rewards for a $75 spend in a restaurant. <br><br>The American Express® Gold offers 4x reward points on dining. This means a $75 spend at a restaurant would earn 300 points. In comparison, the Venture Rewards card from Capital One and the Chase Sapphire Preferred® card both offer only 3x points on dining, which would mean earning 225 points on a $75 spent. The Bank of America Elite Visa Infinite card offers 2x points on dining, yielding 150 points on a $75 spend.<br><br>Additional advantages of the American Express® Gold card include $120 in annual dining credits and a high overall reward potential, among other benefits.<br><br>Recommended Card Key: amex-gold</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 5</h5>
+                <p><strong>Category:</strong> gas</p>
+                <p><strong>Amount:</strong> $100</p>
+                <p><strong>Description:</strong> $100 fuel purchase</p>
+                <p><strong>Merchant:</strong> Shell</p>
+                <p><strong>Recommended Card:</strong> amex-gold</p>
+                <p><strong>Explanation:</strong><br>Based on the provided summaries and user's query, none of the four credit cards discussed above directly offer any spend bonus multiplier specifically for gas spends. Consequently, gas purchases would fall under base spending, and points or cashback would be accumulated at the base reward rate. <br><br>Now, let's examine each card based on their base reward rate:<br><br>1. American Express® Gold: Effective reward rate is 2.199998 (~2.2). Therefore, a $100 fuel purchase at Shell will yield approximately $2.20 in rewards.<br>2. Venture Rewards: Effective reward rate is 0.899999 (~0.9). Therefore, a $100 fuel purchase at Shell will yield approximately $0.90 in rewards.<br>3. Chase Sapphire Preferred®: Effective reward rate is 1.999998 (~2.0). Therefore, a $100 fuel purchase at Shell will yield approximately $2.00 in rewards.<br>4. Bank of America Elite Visa: Effective reward rate is 0.6666662 (~0.67). Therefore, a $100 fuel purchase at Shell will yield approximately $0.67 in rewards.<br><br>Based on the above analysis, the American Express® Gold card, with an effective reward rate of approximately 2.2, would yield the highest reward ($2.20) for a $100 fuel purchase at Shell.<br><br>Recommended Card Key: amex-gold</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 6</h5>
+                <p><strong>Category:</strong> uber</p>
+                <p><strong>Amount:</strong> $80</p>
+                <p><strong>Description:</strong> $80 spent on Uber rides</p>
+                <p><strong>Merchant:</strong> Uber</p>
+                <p><strong>Recommended Card:</strong> amex-gold</p>
+                <p><strong>Explanation:</strong><br>Out of the three credit cards you provided, the American Express® Gold card has an Uber cash benefit, which states that you'll receive up to $10 in Uber Cash each month for Uber Eats orders or Uber rides in the U.S. This means for a transaction of $80, the American Express® Gold card will provide $10 back, leading to the highest effective reward compared to the other cards. <br><br>Please note that the reward is capped at $10 per month regardless of the amount spent over this limit.<br><br>Recommended Card Key: amex-gold</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 7</h5>
+                <p><strong>Category:</strong> travel</p>
+                <p><strong>Amount:</strong> $250</p>
+                <p><strong>Description:</strong> $150 utility bills</p>
+                <p><strong>Merchant:</strong> ComEd</p>
+                <p><strong>Recommended Card:</strong> chase-sapphirepreferred</p>
+                <p><strong>Explanation:</strong><br>From the given list of credit cards and their benefit details, we can calculate which card yields the highest rewards for a $250 spend on travel/utility bills.<br><br>1. American Express® Gold: It offers up to 4x rewards on travel but does not specify utilities. Therefore, the best-case scenario would yield 250 * 4 = 1000 points. <br><br>2. Venture Rewards: There are no explicit rewards for travel/utility bills. The base reward rate is approximately 0.9 points per dollar spent so the spending would yield around 250 * 0.9 = 225 points.<br><br>3. Chase Sapphire Preferred®: This card offers 2x rewards on travel, which would yield 250 * 2 = 500 points. There is no indication if utility bills would earn the same.<br><br>4. Bank of America Elite Visa Infinite: It offers 2x rewards on travel, also yielding 250 * 2 = 500 points. Again, no explicit mention of utility bills.<br><br>Given these calculations and assuming that a utility bill will not achieve the full travel category reward, the card that offers the most reward points with less restriction is the Bank of America Elite Visa Infinite and Chase Sapphire Preferred with 500 points each. <br><br>However, considering the composite card score, which is a measure of the card's overall attractiveness, Bank of America Elite Visa Infinite scores significantly lower than Chase Sapphire Preferred® due to having no benefit details provided and a higher annual fee. <br><br>Given these considerations, I would recommend the Chase Sapphire Preferred® card as it provides a decent amount of rewards on travel expenses, along with other numerous benefits.<br><br>Recommended Card Key: chase-sapphirepreferred</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 8</h5>
+                <p><strong>Category:</strong> entertainment</p>
+                <p><strong>Amount:</strong> $120</p>
+                <p><strong>Description:</strong> $120 for movies/events</p>
+                <p><strong>Merchant:</strong> AMC Theatres</p>
+                <p><strong>Recommended Card:</strong> capitalone-venture</p>
+                <p><strong>Explanation:</strong><br>Among the provided cards, the Bank of America Elite Visa Infinite offers the highest rewards for transactions in the entertainment category. However, the card's specific benefits are not provided, which makes definitive comparisons challenging. <br><br>In this case, we can make a suggestion based on the average spending bonus multiplier for each card - this is essentially the reward points you get per dollar spent.<br><br>1. American Express® Gold: Average spend bonus multiplier is 3.25. However, none of the spending bonus categories specifically mention entertainment.<br><br>2. Venture Rewards: Average spend bonus multiplier is 5.0. This card focuses on travel and dining, and doesn't seem to include entertainment specifically.<br><br>3. Chase Sapphire Preferred®: Average spend bonus multiplier is 3.5. This card offers bonus for travel and dining, not entertainment.<br><br>4. Bank of America Elite Visa Infinite: Average spend bonus multiplier is 2.0. Although no detailed benefits are provided, the card does offer a 2-points-per-dollar spend in dining and travel categories. It's unclear if entertainment falls under this card's travel category.<br><br>In terms of highest potential rewards from the spending bonus, the Venture Rewards card offers the highest multiplier. But as it's unclear which, if any, of these cards will consider AMC Theatres as either a dining or travel expense , it's difficult to make a definitive reward comparison specifically for an entertainment spending at AMC Theatres. <br><br>Recommended Card Key: capitalone-venture</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 9</h5>
+                <p><strong>Category:</strong> online shopping</p>
+                <p><strong>Amount:</strong> $200</p>
+                <p><strong>Description:</strong> $200 on online shopping</p>
+                <p><strong>Merchant:</strong> Amazon</p>
+                <p><strong>Recommended Card:</strong> amex-gold</p>
+                <p><strong>Explanation:</strong><br>Based on the information available in the card summaries, none of the cards - American Express® Gold, Venture Rewards, Chase Sapphire Preferred®, or Bank of America Elite Visa Infinite - specifically list online shopping or Amazon as a bonus spending category. Therefore, we'll have to analyze which card gives the highest base reward rate.<br><br>1. American Express® Gold has an effective reward rate of 2.19%, which translates into a return of $4.4 for a $200 purchase.<br>2. CapitalOne Venture Rewards has a reward rate of 0.89%, which is around $1.78 for a $200 purchase.<br>3. Chase Sapphire Preferred® has a reward rate of 1.99% or around $3.98 for a $200 purchase.<br>4. Bank of America Elite Visa Infinite has a reward rate of 0.66% or $1.32 for a $200 purchase.<br><br>Looking at these calculations, the American Express® Gold card provides the highest rewards for your $200 purchase in the online shopping category at Amazon.<br><br>Recommended Card Key: amex-gold</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 10</h5>
+                <p><strong>Category:</strong> cellphone</p>
+                <p><strong>Amount:</strong> $80</p>
+                <p><strong>Description:</strong> $80 cellphone bill</p>
+                <p><strong>Merchant:</strong> Verizon</p>
+                <p><strong>Recommended Card:</strong> None</p>
+                <p><strong>Explanation:</strong><br>None of the credit cards provided offer specific rewards for "cellphone" as a spending category. All cards reward "dining" and "travel" purchases, but "cellphone" bills do not fall under these categories. Based on the information provided, all cards would yield the same base rewards rate for this kind of transaction, unless other factors such as specific promotions or bonuses apply. Therefore, it would be best to choose a card based on other preferences you might have, such as annual fee, signup bonus, or other benefits.<br><br>Recommended Card Key: None</p>
+                </div>
+            
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction 11</h5>
+                <p><strong>Category:</strong> health</p>
+                <p><strong>Amount:</strong> $100</p>
+                <p><strong>Description:</strong> $100 on healthcare/medications</p>
+                <p><strong>Merchant:</strong> CVS Pharmacy</p>
+                <p><strong>Recommended Card:</strong> chase-sapphirepreferred</p>
+                <p><strong>Explanation:</strong><br>Based on the information provided and the specific user query, none of the four credit cards - American Express® Gold (amex-gold), Venture Rewards (capitalone-venture), Chase Sapphire Preferred® (chase-sapphirepreferred), and Bank of America Elite Visa Infinite (boa-elitevisa) - explicitly mention a bonus category for healthcare or pharmacy spend. <br><br>However, each card has a base earn rate on purchases. The card that offers the highest base earn rate would be the optimal choice for the user's transaction at CVS Pharmacy in the health category.<br><br>With a base reward rate of 1.9999980000020001, the "Chase Sapphire Preferred®" card appears to yield the maximum rewards on this spend category among the listed cards.<br><br>Recommended Card Key: chase-sapphirepreferred</p>
+                </div>
+            <h4>Aggregated Scores</h4><ul><li><strong>amex-gold:</strong> $855</li><li><strong>chase-sapphirepreferred:</strong> $350</li><li><strong>capitalone-venture:</strong> $120</li><li><strong>None:</strong> $80</li></ul><h4>Transaction Details by Card</h4><h5>amex-gold</h5><ul><li>$150 at Trader Joe's - $150</li><li>$200 at Costco - $200</li><li>$50 at Mariano's - $50</li><li>$75 dinner at a local restaurant - $75</li><li>$100 fuel purchase - $100</li><li>$80 spent on Uber rides - $80</li><li>$200 on online shopping - $200</li></ul><h5>chase-sapphirepreferred</h5><ul><li>$150 utility bills - $250</li><li>$100 on healthcare/medications - $100</li></ul><h5>capitalone-venture</h5><ul><li>$120 for movies/events - $120</li></ul><h5>None</h5><ul><li>$80 cellphone bill - $80</li></ul></div>
+        <div id="agent9Graph" class="output" style="display: block;"><h3>Graph</h3><img src="./Financial Analysis AI_files/plot.png" alt="Plot"></div>
+    </div>
+
+    <script>
+        // ----------------- Existing WebSocket Code for Agents 1-5 -----------------
+
+        // WebSocket for Agent 1
+        const wsAgent1 = new WebSocket("ws://127.0.0.1:8000/ws/agent1");
+        wsAgent1.onopen = () => console.log("Agent 1 WebSocket connection established.");
+        wsAgent1.onclose = () => console.log("Agent 1 WebSocket connection closed.");
+        wsAgent1.onerror = () => {
+            const errorDiv = document.getElementById("agent1Error");
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Agent 1 WebSocket connection error.";
+        };
+        wsAgent1.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const outputDiv = document.getElementById("agent1Output");
+            const errorDiv = document.getElementById("agent1Error");
+            outputDiv.style.display = "none";
+            errorDiv.style.display = "none";
+            if (data.error) {
+                errorDiv.style.display = "block";
+                errorDiv.textContent = data.error;
+            } else {
+                outputDiv.style.display = "block";
+                if (data.financial_data && data.financial_data.length > 0) {
+                    outputDiv.innerHTML = `<h3>Financial Data:</h3><pre>${JSON.stringify(data.financial_data, null, 2)}</pre>`;
+                } else {
+                    outputDiv.innerHTML = `<h3>Financial Data:</h3><p>No financial data available for the given parameters.</p>`;
+                }
+            }
+        };
+        function submitAgent1() {
+            const company = document.getElementById("agent1Company").value.trim();
+            const timeRange = document.getElementById("agent1TimeRange").value.trim();
+            const quarter = document.getElementById("agent1Quarter").value.trim();
+            const annual = document.getElementById("agent1Annual").value === "true";
+            const question = document.getElementById("agent1Question").value.trim();
+            if (!company || !timeRange || !question) {
+                alert("Please enter the company name, time range, and question for Agent 1.");
+                return;
+            }
+            wsAgent1.send(JSON.stringify({ company, time_range: timeRange, quarter, annual, question }));
+        }
+
+        // WebSocket for Agent 2
+        let globalTrendsData = null;
+        let globalEventsData = null;
+        const wsAgent2 = new WebSocket("ws://127.0.0.1:8000/ws/agent2");
+        wsAgent2.onopen = () => console.log("Agent 2 WebSocket connection established.");
+        wsAgent2.onclose = () => console.log("Agent 2 WebSocket connection closed.");
+        wsAgent2.onerror = () => {
+            const errorDiv = document.getElementById("agent2Error");
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Agent 2 WebSocket connection error.";
+        };
+        wsAgent2.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const outputDiv = document.getElementById("agent2Output");
+            const errorDiv = document.getElementById("agent2Error");
+            const combinedGraphContainer = document.getElementById("combinedGraphContainer");
+            outputDiv.style.display = "none";
+            errorDiv.style.display = "none";
+            combinedGraphContainer.innerHTML = "";
+            if (data.error) {
+                errorDiv.style.display = "block";
+                errorDiv.textContent = data.error;
+            } else {
+                outputDiv.style.display = "block";
+                outputDiv.innerHTML = `<h3>Market Trends Analysis:</h3><p>${data.text_output}</p>`;
+                if (data.trends) {
+                    globalTrendsData = data.trends;
+                    globalEventsData = data.eventsData;
+                    renderCombinedGraph(data.trends, data.eventsData);
+                } else {
+                    outputDiv.innerHTML += `<p>No valid trend data available.</p>`;
+                }
+                console.log("Agent 2 completed successfully. Triggering Agent 3...");
+                submitAgent3FromAgent2();
+            }
+        };
+        function submitAgent2() {
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
+            const timeframe = document.getElementById("agent2Timeframe").value;
+            if (!company) {
+                alert("Please enter a company name for Agent 2.");
+                return;
+            }
+            wsAgent2.send(JSON.stringify({ company, question, timeframe }));
+        }
+
+        // Chart/Annotation Logic
+        function getColor(index) {
+            const colors = [
+                "rgba(75, 192, 192, 1)",
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)"
+            ];
+            return colors[index % colors.length];
+        }
+        function updateEventChart() {
+            if (!globalTrendsData || !globalEventsData) {
+                console.warn("No data available to re-render.");
+                return;
+            }
+            const checkboxes = document.querySelectorAll(".event-category");
+            const selectedCategories = [];
+            checkboxes.forEach(cb => { if (cb.checked) { selectedCategories.push(cb.value); } });
+            console.log("Selected categories:", selectedCategories);
+            let filteredEvents = {};
+            selectedCategories.forEach(cat => { if (Array.isArray(globalEventsData[cat])) { filteredEvents[cat] = globalEventsData[cat]; } });
+            console.log("filteredEvents:", filteredEvents);
+            document.getElementById("combinedGraphContainer").innerHTML = "";
+            renderCombinedGraph(globalTrendsData, filteredEvents);
+        }
+        function renderCombinedGraph(trends, eventsData) {
+            if (!trends || Object.keys(trends).length === 0) {
+                console.warn("No trends available for rendering.");
+                return;
+            }
+            const firstTrendKey = Object.keys(trends)[0];
+            const labels = Object.keys(trends[firstTrendKey]?.trend_data || {});
+            if (!labels.length) {
+                console.warn("No valid dates available for rendering the graph.");
+                return;
+            }
+            const datasets = Object.entries(trends).map(([keyword, data], index) => ({
+                label: keyword,
+                data: Object.values(data.trend_data || {}),
+                borderColor: getColor(index),
+                fill: false
+            }));
+            const ctx = document.createElement("canvas");
+            document.getElementById("combinedGraphContainer").appendChild(ctx);
+            let annotationOptions = {};
+            if (eventsData) {
+                let allEvents = [];
+                const allKeys = Object.keys(eventsData);
+                allKeys.forEach(cat => { if (Array.isArray(eventsData[cat])) { allEvents = allEvents.concat(eventsData[cat]); } });
+                if (allEvents.length > 0) {
+                    annotationOptions = createAnnotations(labels, allEvents);
+                    annotationOptions.interaction = { mode: "nearest", axis: "xy", intersect: false };
+                }
+            }
+            if (Chart && Chart.hasOwnProperty("register") && window['ChartAnnotation']) {
+                Chart.register(window['ChartAnnotation']);
+            }
+            new Chart(ctx, {
+                type: "line",
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: "top" },
+                        tooltip: { mode: "index", intersect: false },
+                        annotation: annotationOptions
+                    },
+                    scales: {
+                        x: { display: true, title: { display: true, text: "Date" } },
+                        y: { display: true, title: { display: true, text: "Interest" } }
+                    }
+                }
+            });
+        }
+        function createAnnotations(labels, allEvents) {
+            const groupedByDate = {};
+            allEvents.forEach(ev => {
+                const sd = ev.Impact_start_dt;
+                if (!groupedByDate[sd]) { groupedByDate[sd] = []; }
+                groupedByDate[sd].push({ ...ev, dateType: "start" });
+                const ed = ev.Impact_end_dt;
+                if (!groupedByDate[ed]) { groupedByDate[ed] = []; }
+                groupedByDate[ed].push({ ...ev, dateType: "end" });
+            });
+            const annotations = {};
+            let idx = 0;
+            for (const dateKey in groupedByDate) {
+                const eventArray = groupedByDate[dateKey];
+                const xValue = findClosestLabel(labels, dateKey) || labels[0];
+                annotations[`eventLine-${idx++}`] = {
+                    type: "line",
+                    scaleID: "x",
+                    value: xValue,
+                    borderColor: "rgba(255, 159, 64, 1)",
+                    borderWidth: 1,
+                    borderDash: [4, 4],
+                    hitTolerance: 2,
+                    label: { display: false },
+                    eventInfo: eventArray,
+                    listeners: {
+                        enter: (ctx, eventObj) => { showAnnotationTooltip(ctx, eventObj.element.options.eventInfo, eventObj.event.x, eventObj.event.y); },
+                        leave: (ctx, eventObj) => { hideAnnotationTooltip(); }
+                    }
+                };
+            }
+            return { annotations };
+        }
+        function findClosestLabel(labels, isoDate) {
+            const exactIndex = labels.indexOf(isoDate);
+            if (exactIndex >= 0) { return labels[exactIndex]; }
+            let best = null;
+            let minDiff = Infinity;
+            const targetTime = new Date(isoDate).getTime();
+            labels.forEach(lbl => {
+                const lblTime = new Date(lbl).getTime();
+                const diff = Math.abs(lblTime - targetTime);
+                if (diff < minDiff) { minDiff = diff; best = lbl; }
+            });
+            return best;
+        }
+        function showAnnotationTooltip(ctx, eventInfo, mouseX, mouseY) {
+            const tooltip = document.getElementById("annotationTooltip");
+            if (!tooltip) return;
+            let html = "";
+            if (eventInfo.length > 1) {
+                html += `<strong>${eventInfo.length} events for this date</strong><br>`;
+                eventInfo.forEach(ev => {
+                    html += `<hr style="margin:4px 0;">`;
+                    html += `<strong>${ev.factor}</strong><br>`;
+                    html += `Type: ${ev.dateType}<br>`;
+                    html += `Date: ${ev.dateType === 'start' ? ev.Impact_start_dt : ev.Impact_end_dt}<br>`;
+                    if (ev.description) { html += `${ev.description}<br>`; }
+                });
+            } else {
+                const ev = eventInfo[0];
+                html += `<strong>${ev.factor}</strong><br>`;
+                html += `Type: ${ev.dateType}<br>`;
+                html += `Date: ${ev.dateType === 'start' ? ev.Impact_start_dt : ev.Impact_end_dt}<br>`;
+                if (ev.description) { html += `${ev.description}<br>`; }
+            }
+            tooltip.innerHTML = html;
+            tooltip.style.display = "block";
+            tooltip.style.left = mouseX + 10 + "px";
+            tooltip.style.top = mouseY + 10 + "px";
+        }
+        function hideAnnotationTooltip() {
+            const tooltip = document.getElementById("annotationTooltip");
+            if (tooltip) { tooltip.style.display = "none"; }
+        }
+
+        // WebSocket for Agent 3
+        const wsAgent3 = new WebSocket("ws://127.0.0.1:8000/ws/agent3");
+        wsAgent3.onopen = () => console.log("Agent 3 WebSocket connection established.");
+        wsAgent3.onclose = () => console.log("Agent 3 WebSocket connection closed.");
+        wsAgent3.onerror = () => {
+            const errorDiv = document.getElementById("agent2Error");
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Agent 3 WebSocket connection error.";
+        };
+        wsAgent3.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                console.log("Combined Agent 3 and 4 response received:", data);
+                const analysisOutput = document.getElementById("agent3Output");
+                analysisOutput.style.display = "none";
+                if (data.error) {
+                    console.error("Combined response error:", data.error);
+                    analysisOutput.style.display = "block";
+                    analysisOutput.innerHTML = `<div class="error">${data.error}</div>`;
+                    return;
+                }
+                let responseHTML = "<h3>Combined Analysis (Agent 3 + Agent 4)</h3>";
+                const agent3 = data.agent3_analysis;
+                responseHTML += "<h4>Agent 3 Analysis</h4>";
+                if (agent3.summary) {
+                    responseHTML += `<h5>Summary:</h5>` + agent3.summary.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                }
+                if (agent3.seasonality_correlations) {
+                    responseHTML += `<h5>Seasonality and Correlations:</h5>` + agent3.seasonality_correlations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                }
+                if (agent3.recommendations) {
+                    responseHTML += `<h5>Recommendations:</h5>` + agent3.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                }
+                if (agent3.key_trends_with_timeframes) {
+                    responseHTML += `<h5>Key Trends with Timeframes:</h5>`;
+                    agent3.key_trends_with_timeframes.forEach(trend => {
+                        responseHTML += `<div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;"><p><strong>Description:</strong> ${trend.description || "N/A"}</p></div>`;
+                    });
+                }
+                const agent4 = data.agent4_analysis;
+                responseHTML += "<h4>Agent 4 Analysis</h4>";
+                if (agent4.insights) {
+                    responseHTML += `<h5>Key Insights:</h5>` + agent4.insights.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                }
+                if (agent4.recommendations) {
+                    responseHTML += `<h5>Recommendations:</h5>` + agent4.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                }
+                analysisOutput.style.display = "block";
+                analysisOutput.innerHTML = responseHTML;
+            } catch (error) {
+                console.error("Error processing Agent 3 and 4 combined response:", error);
+            }
+        };
+
+        // WebSocket for Agent 5
+        const wsAgent5 = new WebSocket("ws://127.0.0.1:8000/ws/agent5");
+        wsAgent5.onopen = () => console.log("Agent 5 WebSocket connection established.");
+        wsAgent5.onclose = () => console.log("Agent 5 WebSocket connection closed.");
+        wsAgent5.onerror = () => {
+            const errorDiv = document.getElementById("agent5Error");
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Agent 5 WebSocket connection error.";
+        };
+        wsAgent5.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                console.log("Agent 5 response received:", data);
+                const outputDiv = document.getElementById("agent5Output");
+                const errorDiv = document.getElementById("agent5Error");
+                errorDiv.style.display = "none";
+                outputDiv.innerHTML = "";
+                if (data.error) {
+                    errorDiv.style.display = "block";
+                    errorDiv.textContent = data.error;
+                } else {
+                    outputDiv.style.display = "block";
+                    let responseHTML = "<h3>Agent 5 Analysis</h3>";
+                    if (data.summary) {
+                        responseHTML += `<h4>Summary:</h4>` + data.summary.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    }
+                    if (data.insights) {
+                        responseHTML += `<h4>Key Insights:</h4>` + data.insights.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    }
+                    if (data.recommendations) {
+                        responseHTML += `<h4>Recommendations:</h4>` + data.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    }
+                    if (data.raw_content) {
+                        console.log("Raw content being processed:", data.raw_content);
+                        responseHTML += `<h4>Raw Content:</h4>` + data.raw_content.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    }
+                    outputDiv.innerHTML = responseHTML;
+                }
+            } catch (error) {
+                console.error("Error processing Agent 5 response:", error);
+                const errorDiv = document.getElementById("agent5Error");
+                errorDiv.style.display = "block";
+                errorDiv.textContent = "Failed to process Agent 5 response.";
+            }
+        };
+
+        // Trigger Agent 3 Analysis from Agent 2
+        function submitAgent3FromAgent2() {
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
+            if (!company || !question) {
+                console.log("Agent 3 requires both company and question inputs.");
+                return;
+            }
+            const payload = JSON.stringify({ company, question });
+            console.log("Triggering Agent 3 with payload:", payload);
+            wsAgent3.send(payload);
+        }
+        // Trigger Agent 4 Analysis from Agent 3
+        function submitAgent4FromAgent3() {
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
+            if (!company || !question) {
+                console.log("Agent 4 requires both company and question inputs.");
+                return;
+            }
+            const payload = JSON.stringify({ company, question });
+            console.log("Triggering Agent 4 with payload:", payload);
+            wsAgent4.send(payload);
+        }
+        // Trigger Agent 5 Analysis from Agent 4
+        function submitAgent5FromAgent3() {
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
+            if (!company || !question) {
+                console.log("Agent 5 requires both company and question inputs.");
+                return;
+            }
+            const payload = JSON.stringify({ company, question });
+            console.log("Triggering Agent 5 with payload:", payload);
+            wsAgent5.send(payload);
+        }
+        function getRandomColor() {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // ----------------- New Code for Agent 9 (Offer Winner Analysis) -----------------
+        // Function to populate the card select boxes using the embedded cardOptions variable.
+        // (The cardOptions variable is provided in the HTML by main.py.)
+        function getCardOptions() {
+            if (typeof cardOptions !== "undefined") {
+                return cardOptions;
+            }
+            var el = document.getElementById("cardOptionsData");
+            if (el) {
+                try {
+                    return JSON.parse(el.textContent);
+                } catch (e) {
+                    console.error("Error parsing cardOptions from element:", e);
+                    return [];
+                }
+            }
+            console.error("No cardOptions variable or element found.");
+            return [];
+        }
+
+        // ----------------- New Code for Agent 9 (Offer Winner Analysis) -----------------
+        // Function to fetch the credit card options from the server.
+        function fetchCardOptions() {
+            // Use the absolute URL for clarity.
+            return fetch("http://127.0.0.1:8000/credit_card_data/all_card.json", { cache: "no-store" })
+                .then(response => {
+                    console.log("Fetch response:", response);
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok: " + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Fetched data:", data);
+                    if (!Array.isArray(data)) {
+                        console.error("Expected an array but got:", data);
+                        return [];
+                    }
+                    return data;
+                })
+                .catch(error => {
+                    console.error("Error fetching card options:", error);
+                    return [];
+                });
+        }
+
+        // Function to populate the card select boxes using the fetched options.
+        function populateCardSelects() {
+            fetchCardOptions().then(options => {
+                if (!Array.isArray(options)) {
+                    console.error("Fetched card options is not an array:", options);
+                    return;
+                }
+                // Sort the options alphabetically.
+                options.sort(function(a, b) {
+                    return a.localeCompare(b);
+                });
+                var optionsHTML = "<option value=''>--Select a Card--</option>";
+                options.forEach(function(cardKey) {
+                    optionsHTML += "<option value='" + cardKey + "'>" + cardKey + "</option>";
+                });
+                document.getElementById("cardSelect1").innerHTML = optionsHTML;
+                document.getElementById("cardSelect2").innerHTML = optionsHTML;
+                document.getElementById("cardSelect3").innerHTML = optionsHTML;
+                document.getElementById("cardSelect4").innerHTML = optionsHTML;
+            });
+        }
+
+        // Call populateCardSelects() when the page loads.
+        window.addEventListener("load", function() {
+            populateCardSelects();
+        });
+
+        // Create the Agent 9 WebSocket connection (using the same style as Agent 3).
+        const wsAgent9 = new WebSocket("ws://127.0.0.1:8000/ws/agent9");
+        wsAgent9.onopen = () => console.log("Agent 9 WebSocket connection established.");
+        wsAgent9.onclose = () => console.log("Agent 9 WebSocket connection closed.");
+        wsAgent9.onerror = () => {
+            const errorDiv = document.getElementById("agent9Error");
+            if (errorDiv) {
+                errorDiv.style.display = "block";
+                errorDiv.textContent = "Agent 9 WebSocket connection error.";
+            } else {
+                console.error("Agent 9 WebSocket connection error.");
+            }
+        };
+
+        // Helper function to format the analysis result into a more readable HTML layout.
+        function formatAnalysisResult(data) {
+        let html = "<h3>Offer Winner Analysis Results</h3>";
+
+        // Format Transaction Results
+        if (data.transaction_results && data.transaction_results.length > 0) {
+            html += "<h4>Transaction Results</h4>";
+            data.transaction_results.forEach((result, index) => {
+            html += `
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction ${index + 1}</h5>
+                <p><strong>Category:</strong> ${result.transaction.category}</p>
+                <p><strong>Amount:</strong> $${result.transaction.amount}</p>
+                <p><strong>Description:</strong> ${result.transaction.description}</p>
+                <p><strong>Merchant:</strong> ${result.transaction.merchant}</p>
+                <p><strong>Recommended Card:</strong> ${result.recommended_card}</p>
+                <p><strong>Explanation:</strong><br>${result.explanation.replace(/\n/g, "<br>")}</p>
+                </div>
+            `;
+            });
+        }
+
+        // Format Aggregated Scores
+        if (data.scores) {
+            html += "<h4>Aggregated Scores</h4><ul>";
+            for (const card in data.scores) {
+            html += `<li><strong>${card}:</strong> $${data.scores[card]}</li>`;
+            }
+            html += "</ul>";
+        }
+
+        // Format Transaction Details by Card
+        if (data.details) {
+            html += "<h4>Transaction Details by Card</h4>";
+            for (const card in data.details) {
+            html += `<h5>${card}</h5><ul>`;
+            data.details[card].forEach(detail => {
+                html += `<li>${detail.description} - $${detail.amount}</li>`;
+            });
+            html += "</ul>";
+            }
+        }
+
+        return html;
+        }
+
+        wsAgent9.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log("Agent 9 response received:", data);
+            const outputDiv = document.getElementById("agent9Output");
+            outputDiv.style.display = "block";
+            // Use the helper function to format the result
+            outputDiv.innerHTML = formatAnalysisResult(data);
+            // Optionally, if there's a plot, display it in the designated div.
+            if (data.plot_file) {
+                const graphDiv = document.getElementById("agent9Graph");
+                graphDiv.style.display = "block";
+                graphDiv.innerHTML = `<h3>Graph</h3><img src="${data.plot_file}" alt="Plot">`;
+            }
+        };
+
+        // Call populateCardSelects() when the page loads.
+        window.addEventListener("load", function() {
+            populateCardSelects();
+        });
+
+        // Save the current transactions from the DOM into localStorage.
+        function saveTransactions() {
+            const rows = document.querySelectorAll("#transactionsContainer .transactionRow");
+            const transactions = [];
+            rows.forEach(row => {
+                const category = row.querySelector(".transCategory").value.trim();
+                const amount = row.querySelector(".transAmount").value.trim();
+                const description = row.querySelector(".transDescription").value.trim();
+                const merchant = row.querySelector(".transMerchant").value.trim();
+                transactions.push({ category, amount, description, merchant });
+            });
+            localStorage.setItem("agent9Transactions", JSON.stringify(transactions));
+        }
+
+        // Load transactions from localStorage and populate the transactions container.
+        function loadTransactions() {
+            const stored = localStorage.getItem("agent9Transactions");
+            if (!stored) return;
+            const transactions = JSON.parse(stored);
+            const container = document.getElementById("transactionsContainer");
+            container.innerHTML = "";  // Clear current rows
+            transactions.forEach(tx => {
+                const row = document.createElement("div");
+                row.className = "transactionRow";
+                row.innerHTML = `
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="${tx.category}">
+                    <input type="number" class="transAmount" placeholder="Amount" value="${tx.amount}">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe's)" value="${tx.description}">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe's)" value="${tx.merchant}">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+        // Function to add a new transaction row.
+        function addTransactionRow() {
+            const container = document.getElementById("transactionsContainer");
+            const row = document.createElement("div");
+            row.className = "transactionRow";
+            row.innerHTML = `
+                <input type="text" class="transCategory" placeholder="Category (e.g., groceries)">
+                <input type="number" class="transAmount" placeholder="Amount">
+                <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe's)">
+                <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe's)">
+                <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+
+            `;
+            container.appendChild(row);
+            saveTransactions();
+        }
+        // Function to delete a transaction row.
+        function deleteTransactionRow(button) {
+            // Remove the transaction row that contains this button.
+            button.parentElement.remove();
+            saveTransactions();
+        }
+
+        // Optionally, add event listeners to inputs to update localStorage when changes occur.
+        document.addEventListener("input", function(e) {
+            if (e.target.classList.contains("transCategory") ||
+                e.target.classList.contains("transAmount") ||
+                e.target.classList.contains("transDescription") ||
+                e.target.classList.contains("transMerchant")) {
+                saveTransactions();
+            }
+        });
+
+        // On page load, load any existing transactions from localStorage.
+        window.addEventListener("load", function() {
+            loadTransactions();
+        });    
+           
+        // Function to submit Agent 9 (Offer Winner Analysis) data over WebSocket.
+        function submitAgent9() {
+            let cardKeys = [];
+            const selectIds = ["cardSelect1", "cardSelect2", "cardSelect3", "cardSelect4"];
+            selectIds.forEach(id => {
+                const value = document.getElementById(id).value.trim();
+                console.log(`Value from ${id}:`, value);
+                if (value) cardKeys.push(value);
+            });
+            console.log("Selected card keys:", cardKeys);
+
+            let transactions = [];
+            const rows = document.querySelectorAll("#transactionsContainer .transactionRow");
+            rows.forEach(row => {
+                const category = row.querySelector(".transCategory").value.trim();
+                const amount = parseFloat(row.querySelector(".transAmount").value.trim());
+                const description = row.querySelector(".transDescription").value.trim();
+                const merchant = row.querySelector(".transMerchant").value.trim();
+                if (category || !isNaN(amount) || description || merchant) {
+                    transactions.push({
+                        category: category,
+                        amount: isNaN(amount) ? 0 : amount,
+                        description: description,
+                        merchant: merchant
+                    });
+                }
+            });
+            console.log("Collected transactions:", transactions);
+
+            const payload = {
+                card_keys: cardKeys,
+                transactions: transactions
+            };
+            console.log("Payload to send:", payload);
+
+            if (wsAgent9 && wsAgent9.readyState === WebSocket.OPEN) {
+                wsAgent9.send(JSON.stringify(payload));
+            } else {
+                console.error("Agent 9 WebSocket is not open.");
+            }
+        }
+
+    </script>
+
+
+
+</body></html>
