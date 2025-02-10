@@ -3,7 +3,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>
 
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,7 +39,7 @@
             display: block;
             margin-bottom: 5px;
         }
-        input[type="text"], textarea, select {
+        input[type="text"], input[type="number"], textarea, select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
@@ -77,15 +76,40 @@
             border-bottom: 1px dashed #ddd;
         }
         #annotationTooltip {
-        position: absolute;
-        pointer-events: none;  /* Let mouse pass through */
-        background: rgba(0, 0, 0, 0.8);
-        color: #fff;
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 0.9em;
-        display: none; /* Hidden by default */
-        z-index: 9999; /* Above canvas */
+            position: absolute;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            display: none;
+            z-index: 9999;
+        }
+        /* Styles for Agent 9 */
+        /* Make the card selection container a flex container so that the selects are arranged in one row */
+        #cardSelectionContainer {
+            display: flex;
+            gap: 10px;      /* space between select boxes */
+            margin-bottom: 15px;
+        }
+        #cardSelectionContainer select {
+            flex: 1;        /* each select takes equal width */
+            margin: 0;      /* remove extra margins */
+        }
+
+        /* Make each transaction row a flex container so that input fields are arranged horizontally */
+        .transactionRow {
+            display: flex;
+            gap: 10px;      /* space between inputs */
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .transactionRow input {
+            flex: 1;        /* each input takes equal width */
+            margin: 0;      /* remove extra margins */
         }
     </style>
 </head>
@@ -114,11 +138,10 @@
                 <strong>Agent 5:</strong> This agent focuses on interpreting the output from Agent 3, integrating company events including promotions or lawsuits into the analysis. It delivers actionable insights of the market trends by explaining what happened, when it happened, and its impact, ensuring easy consumption for end-users and commandar AI Agent.
             </li>
             <li>
-                <strong>Commandar AI(idea developing):</strong> This is agent acts as the user interface for interacting with other agents. By submitting company names and questions, Agent 5 dynamically communicates with Agents 2,3,4,5 or any other agents to retrieve comprehensive, tailored analyses for end-users in real-time.
+                <strong>Agent 8.1,8.2,8.3 and 9:</strong> The multi-AI network provide an enviorment where multiple AI agents work together to build an AI-powered advisor that analyzes your transaction details alongside comprehensive credit card data to deliver personalized, reward-maximizing card recommendations in real time.
             </li>
         </ul>
 
-        
         <!-- Agent 1 Form -->
         <h2>Financial Data Retrieval</h2>
         <form id="agent1Form" onsubmit="return false;">
@@ -190,16 +213,14 @@
         <div id="agent2Error" class="error" style="display: none;"></div>
         <div>
             <h3>Select Event Categories to Display</h3>
-            
             <label><input type="checkbox" class="event-category" value="Global Events" checked>Global Events</label>
             <label><input type="checkbox" class="event-category" value="Financial Policies" checked>Financial Policies</label>
             <label><input type="checkbox" class="event-category" value="Market and Consumer Trends" checked>Market/Consumer</label>
             <label><input type="checkbox" class="event-category" value="Technological Innovations" checked>Tech Innovations</label>
             <label><input type="checkbox" class="event-category" value="Health and Lifestyle" checked>Health & Lifestyle</label>
             <label><input type="checkbox" class="event-category" value="Miscellaneous" checked>Miscellaneous</label>
-          
             <button type="button" onclick="updateEventChart()">Update Chart</button>
-         </div>
+        </div>
         <!-- Chart Container -->
         <div id="combinedGraphContainer" style="width: 100%; height: 400px;"></div>
         <div id="annotationTooltip"></div>
@@ -208,26 +229,59 @@
         <!-- Agent 4 Output -->
         <div id="agent4Output" class="output" style="display: none;"></div>
         <!-- Agent 5 Output -->
-        <div id="agent5Output" class="output" style="display: none;"></div>                
+        <div id="agent5Output" class="output" style="display: none;"></div>
+
+        <div class="separator"></div>
+
+        <!-- Offer Winner Analysis (Agent 9) -->
+        <h2>Offer Winner Analysis</h2>
+        <form id="agent9Form" onsubmit="return false;">
+            <div class="form-group">
+                <label>Select up to 4 Credit Cards:</label>
+                <div id="cardSelectionContainer">
+                    <select id="cardSelect1"></select>
+                    <select id="cardSelect2"></select>
+                    <select id="cardSelect3"></select>
+                    <select id="cardSelect4"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Transactions:</label>
+                <div id="transactionsContainer">
+                    <div class="transactionRow">
+                        <input type="text" class="transCategory" placeholder="Category (e.g., groceries)">
+                        <input type="number" class="transAmount" placeholder="Amount">
+                        <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe's)">
+                        <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe's)">
+                        <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                    </div>
+                </div>
+                <button type="button" onclick="addTransactionRow()">Add Transaction</button>
+            </div>
+            <button type="button" onclick="submitAgent9()">Submit Offer Winner Analysis</button>
+        </form>
+        <div id="agent9Output" class="output" style="display: none;"></div>
+        <div id="agent9Graph" class="output" style="display: none;"></div>
+    </div>
 
     <script>
+        // ----------------- Existing WebSocket Code for Agents 1-5 -----------------
+
         // WebSocket for Agent 1
-            const wsAgent1 = new WebSocket("ws://127.0.0.1:8000/ws/agent1");
-            wsAgent1.onopen = () => console.log("Agent 1 WebSocket connection established.");
-            wsAgent1.onclose = () => console.log("Agent 1 WebSocket connection closed.");
-            wsAgent1.onerror = () => {
-                const errorDiv = document.getElementById("agent1Error");
-                errorDiv.style.display = "block";
-                errorDiv.textContent = "Agent 1 WebSocket connection error.";
-            };
-            
-            wsAgent1.onmessage = (event) => {
+        const wsAgent1 = new WebSocket("ws://127.0.0.1:8000/ws/agent1");
+        wsAgent1.onopen = () => console.log("Agent 1 WebSocket connection established.");
+        wsAgent1.onclose = () => console.log("Agent 1 WebSocket connection closed.");
+        wsAgent1.onerror = () => {
+            const errorDiv = document.getElementById("agent1Error");
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Agent 1 WebSocket connection error.";
+        };
+        wsAgent1.onmessage = (event) => {
             const data = JSON.parse(event.data);
             const outputDiv = document.getElementById("agent1Output");
             const errorDiv = document.getElementById("agent1Error");
             outputDiv.style.display = "none";
             errorDiv.style.display = "none";
-
             if (data.error) {
                 errorDiv.style.display = "block";
                 errorDiv.textContent = data.error;
@@ -240,33 +294,22 @@
                 }
             }
         };
-            function submitAgent1() {
-                const company = document.getElementById("agent1Company").value.trim();
-                const timeRange = document.getElementById("agent1TimeRange").value.trim();
-                const quarter = document.getElementById("agent1Quarter").value.trim();
-                const annual = document.getElementById("agent1Annual").value === "true";
-                const question = document.getElementById("agent1Question").value.trim();
-
-                if (!company || !timeRange || !question) {
-                    alert("Please enter the company name, time range, and question for Agent 1.");
-                    return;
-                }
-
-                wsAgent1.send(
-                    JSON.stringify({
-                        company,
-                        time_range: timeRange,
-                        quarter,
-                        annual,
-                        question
-                    })
-                );
+        function submitAgent1() {
+            const company = document.getElementById("agent1Company").value.trim();
+            const timeRange = document.getElementById("agent1TimeRange").value.trim();
+            const quarter = document.getElementById("agent1Quarter").value.trim();
+            const annual = document.getElementById("agent1Annual").value === "true";
+            const question = document.getElementById("agent1Question").value.trim();
+            if (!company || !timeRange || !question) {
+                alert("Please enter the company name, time range, and question for Agent 1.");
+                return;
             }
-        /****************************************
-         * WebSocket for Agent 2
-         ****************************************/
-         let globalTrendsData = null;
-         let globalEventsData = null;
+            wsAgent1.send(JSON.stringify({ company, time_range: timeRange, quarter, annual, question }));
+        }
+
+        // WebSocket for Agent 2
+        let globalTrendsData = null;
+        let globalEventsData = null;
         const wsAgent2 = new WebSocket("ws://127.0.0.1:8000/ws/agent2");
         wsAgent2.onopen = () => console.log("Agent 2 WebSocket connection established.");
         wsAgent2.onclose = () => console.log("Agent 2 WebSocket connection closed.");
@@ -275,302 +318,193 @@
             errorDiv.style.display = "block";
             errorDiv.textContent = "Agent 2 WebSocket connection error.";
         };
-
         wsAgent2.onmessage = (event) => {
             const data = JSON.parse(event.data);
             const outputDiv = document.getElementById("agent2Output");
             const errorDiv = document.getElementById("agent2Error");
             const combinedGraphContainer = document.getElementById("combinedGraphContainer");
-
-            // Clear any previous messages, errors, or graphs
             outputDiv.style.display = "none";
             errorDiv.style.display = "none";
             combinedGraphContainer.innerHTML = "";
-
             if (data.error) {
                 errorDiv.style.display = "block";
                 errorDiv.textContent = data.error;
             } else {
                 outputDiv.style.display = "block";
                 outputDiv.innerHTML = `<h3>Market Trends Analysis:</h3><p>${data.text_output}</p>`;
-
-                // Render the graph if we have valid trends
                 if (data.trends) {
                     globalTrendsData = data.trends;
-                    globalEventsData = data.eventsData; // store so updateEventChart can read
+                    globalEventsData = data.eventsData;
                     renderCombinedGraph(data.trends, data.eventsData);
                 } else {
                     outputDiv.innerHTML += `<p>No valid trend data available.</p>`;
                 }
-
-                // Trigger Agent 3 after Agent 2 completes
                 console.log("Agent 2 completed successfully. Triggering Agent 3...");
                 submitAgent3FromAgent2();
             }
         };
-
         function submitAgent2() {
             const company = document.getElementById("agent2Company").value.trim();
             const question = document.getElementById("agent2Question").value.trim();
             const timeframe = document.getElementById("agent2Timeframe").value;
-
             if (!company) {
                 alert("Please enter a company name for Agent 2.");
                 return;
             }
-
-            wsAgent2.send(
-                JSON.stringify({
-                    company,
-                    question,
-                    timeframe,
-                })
-            );
+            wsAgent2.send(JSON.stringify({ company, question, timeframe }));
         }
 
-        /****************************************
-         * Chart/Annotation Logic
-         ****************************************/
+        // Chart/Annotation Logic
         function getColor(index) {
             const colors = [
-            "rgba(75, 192, 192, 1)",
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)"
+                "rgba(75, 192, 192, 1)",
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)"
             ];
             return colors[index % colors.length];
         }
         function updateEventChart() {
-            // 1) Make sure we have data
             if (!globalTrendsData || !globalEventsData) {
                 console.warn("No data available to re-render.");
                 return;
             }
-
-            // 2) Gather which categories are selected
             const checkboxes = document.querySelectorAll(".event-category");
             const selectedCategories = [];
-            checkboxes.forEach(cb => {
-                if (cb.checked) {
-                selectedCategories.push(cb.value);
-                }
-            });
+            checkboxes.forEach(cb => { if (cb.checked) { selectedCategories.push(cb.value); } });
             console.log("Selected categories:", selectedCategories);
-
-            // 3) Build filtered event data object
             let filteredEvents = {};
-            selectedCategories.forEach(cat => {
-                if (Array.isArray(globalEventsData[cat])) {
-                filteredEvents[cat] = globalEventsData[cat];
-                }
-            });
+            selectedCategories.forEach(cat => { if (Array.isArray(globalEventsData[cat])) { filteredEvents[cat] = globalEventsData[cat]; } });
             console.log("filteredEvents:", filteredEvents);
-
-            // Clear old chart
             document.getElementById("combinedGraphContainer").innerHTML = "";
-
-            // Re-render with the filtered data
             renderCombinedGraph(globalTrendsData, filteredEvents);
-            }
-
-        // Merges event categories, draws chart
+        }
         function renderCombinedGraph(trends, eventsData) {
             if (!trends || Object.keys(trends).length === 0) {
                 console.warn("No trends available for rendering.");
                 return;
             }
-
-            // Build X-axis labels from first trend
             const firstTrendKey = Object.keys(trends)[0];
             const labels = Object.keys(trends[firstTrendKey]?.trend_data || {});
-
             if (!labels.length) {
                 console.warn("No valid dates available for rendering the graph.");
                 return;
             }
-
-            // Build datasets
             const datasets = Object.entries(trends).map(([keyword, data], index) => ({
-            label: keyword,
-            data: Object.values(data.trend_data || {}),
-            borderColor: getColor(index),
-            fill: false
+                label: keyword,
+                data: Object.values(data.trend_data || {}),
+                borderColor: getColor(index),
+                fill: false
             }));
-
-            // Create a new canvas
             const ctx = document.createElement("canvas");
             document.getElementById("combinedGraphContainer").appendChild(ctx);
-
-            // Build annotation config
             let annotationOptions = {};
             if (eventsData) {
-            // Merge all categories in eventsData
-            let allEvents = [];
-            const allKeys = Object.keys(eventsData);
-            allKeys.forEach(cat => {
-                if (Array.isArray(eventsData[cat])) {
-                allEvents = allEvents.concat(eventsData[cat]);
+                let allEvents = [];
+                const allKeys = Object.keys(eventsData);
+                allKeys.forEach(cat => { if (Array.isArray(eventsData[cat])) { allEvents = allEvents.concat(eventsData[cat]); } });
+                if (allEvents.length > 0) {
+                    annotationOptions = createAnnotations(labels, allEvents);
+                    annotationOptions.interaction = { mode: "nearest", axis: "xy", intersect: false };
                 }
-            });
-
-            if (allEvents.length > 0) {
-                annotationOptions = createAnnotations(labels, allEvents);
-                annotationOptions.interaction = {
-                mode: "nearest",
-                axis: "xy",
-                intersect: false
-                };
             }
-            }
-
-            // If plugin version requires registering
             if (Chart && Chart.hasOwnProperty("register") && window['ChartAnnotation']) {
-            Chart.register(window['ChartAnnotation']);
+                Chart.register(window['ChartAnnotation']);
             }
-
             new Chart(ctx, {
-            type: "line",
-            data: { labels, datasets },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                legend: { position: "top" },
-                tooltip: { mode: "index", intersect: false },
-                annotation: annotationOptions
-                },
-                scales: {
-                x: {
-                    display: true,
-                    title: { display: true, text: "Date" }
-                },
-                y: {
-                    display: true,
-                    title: { display: true, text: "Interest" }
+                type: "line",
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: "top" },
+                        tooltip: { mode: "index", intersect: false },
+                        annotation: annotationOptions
+                    },
+                    scales: {
+                        x: { display: true, title: { display: true, text: "Date" } },
+                        y: { display: true, title: { display: true, text: "Interest" } }
+                    }
                 }
-                }
-            }
             });
         }
-
-        // Create line annotations from an array of events
         function createAnnotations(labels, allEvents) {
-            // Group events by date
             const groupedByDate = {};
             allEvents.forEach(ev => {
-            // start date
-            const sd = ev.Impact_start_dt;
-            if (!groupedByDate[sd]) {
-                groupedByDate[sd] = [];
-            }
-            groupedByDate[sd].push({ ...ev, dateType: "start" });
-
-            // end date
-            const ed = ev.Impact_end_dt;
-            if (!groupedByDate[ed]) {
-                groupedByDate[ed] = [];
-            }
-            groupedByDate[ed].push({ ...ev, dateType: "end" });
+                const sd = ev.Impact_start_dt;
+                if (!groupedByDate[sd]) { groupedByDate[sd] = []; }
+                groupedByDate[sd].push({ ...ev, dateType: "start" });
+                const ed = ev.Impact_end_dt;
+                if (!groupedByDate[ed]) { groupedByDate[ed] = []; }
+                groupedByDate[ed].push({ ...ev, dateType: "end" });
             });
-
-            // Build line annotations
             const annotations = {};
             let idx = 0;
             for (const dateKey in groupedByDate) {
-            const eventArray = groupedByDate[dateKey];
-            // find closest label
-            const xValue = findClosestLabel(labels, dateKey) || labels[0];
-
-            annotations.push({
-                id: `eventLine-${idx++}`,
-                type: "line",
-                scaleID: "x",
-                value: xValue,
-                borderColor: "rgba(255, 159, 64, 1)",
-                borderWidth: 1,
-                borderDash: [4, 4],
-                hitTolerance: 2,
-                label: { display: false },
-                eventInfo: eventArray,
-                listeners: {
-                enter: (ctx, eventObj) => {
-                    showAnnotationTooltip(
-                    ctx,
-                    eventObj.element.options.eventInfo,
-                    eventObj.event.x,
-                    eventObj.event.y
-                    );
-                },
-                leave: (ctx, eventObj) => {
-                    hideAnnotationTooltip();
-                }
-                }
-            });
+                const eventArray = groupedByDate[dateKey];
+                const xValue = findClosestLabel(labels, dateKey) || labels[0];
+                annotations[`eventLine-${idx++}`] = {
+                    type: "line",
+                    scaleID: "x",
+                    value: xValue,
+                    borderColor: "rgba(255, 159, 64, 1)",
+                    borderWidth: 1,
+                    borderDash: [4, 4],
+                    hitTolerance: 2,
+                    label: { display: false },
+                    eventInfo: eventArray,
+                    listeners: {
+                        enter: (ctx, eventObj) => { showAnnotationTooltip(ctx, eventObj.element.options.eventInfo, eventObj.event.x, eventObj.event.y); },
+                        leave: (ctx, eventObj) => { hideAnnotationTooltip(); }
+                    }
+                };
             }
             return { annotations };
         }
-
-        // findClosestLabel
         function findClosestLabel(labels, isoDate) {
             const exactIndex = labels.indexOf(isoDate);
-            if (exactIndex >= 0) {
-            return labels[exactIndex];
-            }
+            if (exactIndex >= 0) { return labels[exactIndex]; }
             let best = null;
             let minDiff = Infinity;
             const targetTime = new Date(isoDate).getTime();
-
             labels.forEach(lbl => {
-            const lblTime = new Date(lbl).getTime();
-            const diff = Math.abs(lblTime - targetTime);
-            if (diff < minDiff) {
-                minDiff = diff;
-                best = lbl;
-            }
+                const lblTime = new Date(lbl).getTime();
+                const diff = Math.abs(lblTime - targetTime);
+                if (diff < minDiff) { minDiff = diff; best = lbl; }
             });
             return best;
         }
-
-        // show/hide custom annotation tooltip
         function showAnnotationTooltip(ctx, eventInfo, mouseX, mouseY) {
             const tooltip = document.getElementById("annotationTooltip");
             if (!tooltip) return;
-
             let html = "";
             if (eventInfo.length > 1) {
-            html += `<strong>${eventInfo.length} events for this date</strong><br>`;
-            eventInfo.forEach(ev => {
-                html += `<hr style="margin:4px 0;">`;
+                html += `<strong>${eventInfo.length} events for this date</strong><br>`;
+                eventInfo.forEach(ev => {
+                    html += `<hr style="margin:4px 0;">`;
+                    html += `<strong>${ev.factor}</strong><br>`;
+                    html += `Type: ${ev.dateType}<br>`;
+                    html += `Date: ${ev.dateType === 'start' ? ev.Impact_start_dt : ev.Impact_end_dt}<br>`;
+                    if (ev.description) { html += `${ev.description}<br>`; }
+                });
+            } else {
+                const ev = eventInfo[0];
                 html += `<strong>${ev.factor}</strong><br>`;
                 html += `Type: ${ev.dateType}<br>`;
                 html += `Date: ${ev.dateType === 'start' ? ev.Impact_start_dt : ev.Impact_end_dt}<br>`;
-                if (ev.description) {
-                html += `${ev.description}<br>`;
-                }
-            });
-            } else {
-            const ev = eventInfo[0];
-            html += `<strong>${ev.factor}</strong><br>`;
-            html += `Type: ${ev.dateType}<br>`;
-            html += `Date: ${ev.dateType === 'start' ? ev.Impact_start_dt : ev.Impact_end_dt}<br>`;
-            if (ev.description) {
-                html += `${ev.description}<br>`;
+                if (ev.description) { html += `${ev.description}<br>`; }
             }
-            }
-
             tooltip.innerHTML = html;
             tooltip.style.display = "block";
             tooltip.style.left = mouseX + 10 + "px";
             tooltip.style.top = mouseY + 10 + "px";
         }
-
         function hideAnnotationTooltip() {
             const tooltip = document.getElementById("annotationTooltip");
-            if (tooltip) {
-            tooltip.style.display = "none";
-            }
+            if (tooltip) { tooltip.style.display = "none"; }
         }
 
         // WebSocket for Agent 3
@@ -578,76 +512,54 @@
         wsAgent3.onopen = () => console.log("Agent 3 WebSocket connection established.");
         wsAgent3.onclose = () => console.log("Agent 3 WebSocket connection closed.");
         wsAgent3.onerror = () => {
-            const errorDiv = document.getElementById("agent2Error"); // Reuse Agent 2 error display for simplicity
+            const errorDiv = document.getElementById("agent2Error");
             errorDiv.style.display = "block";
             errorDiv.textContent = "Agent 3 WebSocket connection error.";
         };
         wsAgent3.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-                console.log("Combined Agent 3 and 4 response received:", data); // Debugging
-
+                console.log("Combined Agent 3 and 4 response received:", data);
                 const analysisOutput = document.getElementById("agent3Output");
-                analysisOutput.style.display = "none"; // Hide by default
-
-                // Check if the response contains an error
+                analysisOutput.style.display = "none";
                 if (data.error) {
                     console.error("Combined response error:", data.error);
                     analysisOutput.style.display = "block";
                     analysisOutput.innerHTML = `<div class="error">${data.error}</div>`;
                     return;
                 }
-
-                // Display the structured response
                 let responseHTML = "<h3>Combined Analysis (Agent 3 + Agent 4)</h3>";
-
-                // Render Agent 3 analysis
                 const agent3 = data.agent3_analysis;
                 responseHTML += "<h4>Agent 3 Analysis</h4>";
                 if (agent3.summary) {
-                    responseHTML += `<h5>Summary:</h5>`;
-                    responseHTML += agent3.summary.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    responseHTML += `<h5>Summary:</h5>` + agent3.summary.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                 }
                 if (agent3.seasonality_correlations) {
-                    responseHTML += `<h5>Seasonality and Correlations:</h5>`;
-                    responseHTML += agent3.seasonality_correlations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    responseHTML += `<h5>Seasonality and Correlations:</h5>` + agent3.seasonality_correlations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                 }
                 if (agent3.recommendations) {
-                    responseHTML += `<h5>Recommendations:</h5>`;
-                    responseHTML += agent3.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    responseHTML += `<h5>Recommendations:</h5>` + agent3.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                 }
                 if (agent3.key_trends_with_timeframes) {
                     responseHTML += `<h5>Key Trends with Timeframes:</h5>`;
                     agent3.key_trends_with_timeframes.forEach(trend => {
-                        responseHTML += `
-                            <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
-                                <p><strong>Description:</strong> ${trend.description || "N/A"}</p>
-                            </div>
-                        `;
+                        responseHTML += `<div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;"><p><strong>Description:</strong> ${trend.description || "N/A"}</p></div>`;
                     });
                 }
-
-                // Render Agent 4 analysis
                 const agent4 = data.agent4_analysis;
                 responseHTML += "<h4>Agent 4 Analysis</h4>";
                 if (agent4.insights) {
-                    responseHTML += `<h5>Key Insights:</h5>`;
-                    responseHTML += agent4.insights.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    responseHTML += `<h5>Key Insights:</h5>` + agent4.insights.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                 }
                 if (agent4.recommendations) {
-                    responseHTML += `<h5>Recommendations:</h5>`;
-                    responseHTML += agent4.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                    responseHTML += `<h5>Recommendations:</h5>` + agent4.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                 }
-
-                // Display the output
                 analysisOutput.style.display = "block";
                 analysisOutput.innerHTML = responseHTML;
             } catch (error) {
                 console.error("Error processing Agent 3 and 4 combined response:", error);
             }
         };
-
-
 
         // WebSocket for Agent 5
         const wsAgent5 = new WebSocket("ws://127.0.0.1:8000/ws/agent5");
@@ -661,51 +573,35 @@
         wsAgent5.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-                console.log("Agent 5 response received:", data); // Debugging
-
+                console.log("Agent 5 response received:", data);
                 const outputDiv = document.getElementById("agent5Output");
                 const errorDiv = document.getElementById("agent5Error");
-
-                // Clear previous outputs
                 errorDiv.style.display = "none";
                 outputDiv.innerHTML = "";
-
                 if (data.error) {
-                    // Display error message
                     errorDiv.style.display = "block";
                     errorDiv.textContent = data.error;
                 } else {
-                    // Display structured response
                     outputDiv.style.display = "block";
-
                     let responseHTML = "<h3>Agent 5 Analysis</h3>";
-
                     if (data.summary) {
-                        responseHTML += `<h4>Summary:</h4>`;
-                        responseHTML += data.summary.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                        responseHTML += `<h4>Summary:</h4>` + data.summary.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                     }
-
                     if (data.insights) {
-                        responseHTML += `<h4>Key Insights:</h4>`;
-                        responseHTML += data.insights.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                        responseHTML += `<h4>Key Insights:</h4>` + data.insights.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                     }
-
                     if (data.recommendations) {
-                        responseHTML += `<h4>Recommendations:</h4>`;
-                        responseHTML += data.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                        responseHTML += `<h4>Recommendations:</h4>` + data.recommendations.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                     }
-
-                    // Fallback for raw content
                     if (data.raw_content) {
                         console.log("Raw content being processed:", data.raw_content);
-                        responseHTML += `<h4>Raw Content:</h4>`;
-                        responseHTML += data.raw_content.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
+                        responseHTML += `<h4>Raw Content:</h4>` + data.raw_content.trim().split("\n").map(line => `<p>${line.trim()}</p>`).join("");
                     }
-
                     outputDiv.innerHTML = responseHTML;
                 }
             } catch (error) {
                 console.error("Error processing Agent 5 response:", error);
+                const errorDiv = document.getElementById("agent5Error");
                 errorDiv.style.display = "block";
                 errorDiv.textContent = "Failed to process Agent 5 response.";
             }
@@ -715,61 +611,38 @@
         function submitAgent3FromAgent2() {
             const company = document.getElementById("agent2Company").value.trim();
             const question = document.getElementById("agent2Question").value.trim();
-
             if (!company || !question) {
                 console.log("Agent 3 requires both company and question inputs.");
                 return;
             }
-
-            const payload = JSON.stringify({
-                company,
-                question
-            });
-
-            console.log("Triggering Agent 3 with payload:", payload); // Debugging
+            const payload = JSON.stringify({ company, question });
+            console.log("Triggering Agent 3 with payload:", payload);
             wsAgent3.send(payload);
         }
         // Trigger Agent 4 Analysis from Agent 3
         function submitAgent4FromAgent3() {
-            const company = document.getElementById("agent2Company").value.trim(); // Reuse Agent 2 input
-            const question = document.getElementById("agent2Question").value.trim(); // Reuse Agent 2 input
-
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
             if (!company || !question) {
                 console.log("Agent 4 requires both company and question inputs.");
                 return;
             }
-
-            const payload = JSON.stringify({
-                company,
-                question
-            });
-
-            console.log("Triggering Agent 4 with payload:", payload); // Debugging
+            const payload = JSON.stringify({ company, question });
+            console.log("Triggering Agent 4 with payload:", payload);
             wsAgent4.send(payload);
         }
-
         // Trigger Agent 5 Analysis from Agent 4
         function submitAgent5FromAgent3() {
-            const company = document.getElementById("agent2Company").value.trim(); // Reuse Agent 2 input
-            const question = document.getElementById("agent2Question").value.trim(); // Reuse Agent 2 input
-
+            const company = document.getElementById("agent2Company").value.trim();
+            const question = document.getElementById("agent2Question").value.trim();
             if (!company || !question) {
                 console.log("Agent 5 requires both company and question inputs.");
                 return;
             }
-
-            const payload = JSON.stringify({
-                company,
-                question
-            });
-
-            console.log("Triggering Agent 5 with payload:", payload); // Debugging
+            const payload = JSON.stringify({ company, question });
+            console.log("Triggering Agent 5 with payload:", payload);
             wsAgent5.send(payload);
         }
-
-
-
-        // Utility to generate random colors for chart lines
         function getRandomColor() {
             const letters = "0123456789ABCDEF";
             let color = "#";
@@ -778,6 +651,275 @@
             }
             return color;
         }
+
+        // ----------------- New Code for Agent 9 (Offer Winner Analysis) -----------------
+        // Function to populate the card select boxes using the embedded cardOptions variable.
+        // (The cardOptions variable is provided in the HTML by main.py.)
+        function getCardOptions() {
+            if (typeof cardOptions !== "undefined") {
+                return cardOptions;
+            }
+            var el = document.getElementById("cardOptionsData");
+            if (el) {
+                try {
+                    return JSON.parse(el.textContent);
+                } catch (e) {
+                    console.error("Error parsing cardOptions from element:", e);
+                    return [];
+                }
+            }
+            console.error("No cardOptions variable or element found.");
+            return [];
+        }
+
+        // ----------------- New Code for Agent 9 (Offer Winner Analysis) -----------------
+        // Function to fetch the credit card options from the server.
+        function fetchCardOptions() {
+            // Use the absolute URL for clarity.
+            return fetch("http://127.0.0.1:8000/credit_card_data/all_card.json", { cache: "no-store" })
+                .then(response => {
+                    console.log("Fetch response:", response);
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok: " + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Fetched data:", data);
+                    if (!Array.isArray(data)) {
+                        console.error("Expected an array but got:", data);
+                        return [];
+                    }
+                    return data;
+                })
+                .catch(error => {
+                    console.error("Error fetching card options:", error);
+                    return [];
+                });
+        }
+
+        // Function to populate the card select boxes using the fetched options.
+        function populateCardSelects() {
+            fetchCardOptions().then(options => {
+                if (!Array.isArray(options)) {
+                    console.error("Fetched card options is not an array:", options);
+                    return;
+                }
+                // Sort the options alphabetically.
+                options.sort(function(a, b) {
+                    return a.localeCompare(b);
+                });
+                var optionsHTML = "<option value=''>--Select a Card--</option>";
+                options.forEach(function(cardKey) {
+                    optionsHTML += "<option value='" + cardKey + "'>" + cardKey + "</option>";
+                });
+                document.getElementById("cardSelect1").innerHTML = optionsHTML;
+                document.getElementById("cardSelect2").innerHTML = optionsHTML;
+                document.getElementById("cardSelect3").innerHTML = optionsHTML;
+                document.getElementById("cardSelect4").innerHTML = optionsHTML;
+            });
+        }
+
+        // Call populateCardSelects() when the page loads.
+        window.addEventListener("load", function() {
+            populateCardSelects();
+        });
+
+        // Create the Agent 9 WebSocket connection (using the same style as Agent 3).
+        const wsAgent9 = new WebSocket("ws://127.0.0.1:8000/ws/agent9");
+        wsAgent9.onopen = () => console.log("Agent 9 WebSocket connection established.");
+        wsAgent9.onclose = () => console.log("Agent 9 WebSocket connection closed.");
+        wsAgent9.onerror = () => {
+            const errorDiv = document.getElementById("agent9Error");
+            if (errorDiv) {
+                errorDiv.style.display = "block";
+                errorDiv.textContent = "Agent 9 WebSocket connection error.";
+            } else {
+                console.error("Agent 9 WebSocket connection error.");
+            }
+        };
+
+        // Helper function to format the analysis result into a more readable HTML layout.
+        function formatAnalysisResult(data) {
+        let html = "<h3>Offer Winner Analysis Results</h3>";
+
+        // Format Transaction Results
+        if (data.transaction_results && data.transaction_results.length > 0) {
+            html += "<h4>Transaction Results</h4>";
+            data.transaction_results.forEach((result, index) => {
+            html += `
+                <div class="transactionResult" style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                <h5>Transaction ${index + 1}</h5>
+                <p><strong>Category:</strong> ${result.transaction.category}</p>
+                <p><strong>Amount:</strong> $${result.transaction.amount}</p>
+                <p><strong>Description:</strong> ${result.transaction.description}</p>
+                <p><strong>Merchant:</strong> ${result.transaction.merchant}</p>
+                <p><strong>Recommended Card:</strong> ${result.recommended_card}</p>
+                <p><strong>Explanation:</strong><br>${result.explanation.replace(/\n/g, "<br>")}</p>
+                </div>
+            `;
+            });
+        }
+
+        // Format Aggregated Scores
+        if (data.scores) {
+            html += "<h4>Aggregated Scores</h4><ul>";
+            for (const card in data.scores) {
+            html += `<li><strong>${card}:</strong> $${data.scores[card]}</li>`;
+            }
+            html += "</ul>";
+        }
+
+        // Format Transaction Details by Card
+        if (data.details) {
+            html += "<h4>Transaction Details by Card</h4>";
+            for (const card in data.details) {
+            html += `<h5>${card}</h5><ul>`;
+            data.details[card].forEach(detail => {
+                html += `<li>${detail.description} - $${detail.amount}</li>`;
+            });
+            html += "</ul>";
+            }
+        }
+
+        return html;
+        }
+
+        wsAgent9.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log("Agent 9 response received:", data);
+            const outputDiv = document.getElementById("agent9Output");
+            outputDiv.style.display = "block";
+            // Use the helper function to format the result
+            outputDiv.innerHTML = formatAnalysisResult(data);
+            // Optionally, if there's a plot, display it in the designated div.
+            if (data.plot_file) {
+                const graphDiv = document.getElementById("agent9Graph");
+                graphDiv.style.display = "block";
+                graphDiv.innerHTML = `<h3>Graph</h3><img src="${data.plot_file}" alt="Plot">`;
+            }
+        };
+
+        // Call populateCardSelects() when the page loads.
+        window.addEventListener("load", function() {
+            populateCardSelects();
+        });
+
+        // Save the current transactions from the DOM into localStorage.
+        function saveTransactions() {
+            const rows = document.querySelectorAll("#transactionsContainer .transactionRow");
+            const transactions = [];
+            rows.forEach(row => {
+                const category = row.querySelector(".transCategory").value.trim();
+                const amount = row.querySelector(".transAmount").value.trim();
+                const description = row.querySelector(".transDescription").value.trim();
+                const merchant = row.querySelector(".transMerchant").value.trim();
+                transactions.push({ category, amount, description, merchant });
+            });
+            localStorage.setItem("agent9Transactions", JSON.stringify(transactions));
+        }
+
+        // Load transactions from localStorage and populate the transactions container.
+        function loadTransactions() {
+            const stored = localStorage.getItem("agent9Transactions");
+            if (!stored) return;
+            const transactions = JSON.parse(stored);
+            const container = document.getElementById("transactionsContainer");
+            container.innerHTML = "";  // Clear current rows
+            transactions.forEach(tx => {
+                const row = document.createElement("div");
+                row.className = "transactionRow";
+                row.innerHTML = `
+                    <input type="text" class="transCategory" placeholder="Category (e.g., groceries)" value="${tx.category}">
+                    <input type="number" class="transAmount" placeholder="Amount" value="${tx.amount}">
+                    <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe's)" value="${tx.description}">
+                    <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe's)" value="${tx.merchant}">
+                    <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+        // Function to add a new transaction row.
+        function addTransactionRow() {
+            const container = document.getElementById("transactionsContainer");
+            const row = document.createElement("div");
+            row.className = "transactionRow";
+            row.innerHTML = `
+                <input type="text" class="transCategory" placeholder="Category (e.g., groceries)">
+                <input type="number" class="transAmount" placeholder="Amount">
+                <input type="text" class="transDescription" placeholder="Description (e.g., $150 at Trader Joe's)">
+                <input type="text" class="transMerchant" placeholder="Merchant (e.g., Trader Joe's)">
+                <button type="button" class="deleteTransactionRow" onclick="deleteTransactionRow(this)">Delete</button>
+
+            `;
+            container.appendChild(row);
+            saveTransactions();
+        }
+        // Function to delete a transaction row.
+        function deleteTransactionRow(button) {
+            // Remove the transaction row that contains this button.
+            button.parentElement.remove();
+            saveTransactions();
+        }
+
+        // Optionally, add event listeners to inputs to update localStorage when changes occur.
+        document.addEventListener("input", function(e) {
+            if (e.target.classList.contains("transCategory") ||
+                e.target.classList.contains("transAmount") ||
+                e.target.classList.contains("transDescription") ||
+                e.target.classList.contains("transMerchant")) {
+                saveTransactions();
+            }
+        });
+
+        // On page load, load any existing transactions from localStorage.
+        window.addEventListener("load", function() {
+            loadTransactions();
+        });    
+           
+        // Function to submit Agent 9 (Offer Winner Analysis) data over WebSocket.
+        function submitAgent9() {
+            let cardKeys = [];
+            const selectIds = ["cardSelect1", "cardSelect2", "cardSelect3", "cardSelect4"];
+            selectIds.forEach(id => {
+                const value = document.getElementById(id).value.trim();
+                console.log(`Value from ${id}:`, value);
+                if (value) cardKeys.push(value);
+            });
+            console.log("Selected card keys:", cardKeys);
+
+            let transactions = [];
+            const rows = document.querySelectorAll("#transactionsContainer .transactionRow");
+            rows.forEach(row => {
+                const category = row.querySelector(".transCategory").value.trim();
+                const amount = parseFloat(row.querySelector(".transAmount").value.trim());
+                const description = row.querySelector(".transDescription").value.trim();
+                const merchant = row.querySelector(".transMerchant").value.trim();
+                if (category || !isNaN(amount) || description || merchant) {
+                    transactions.push({
+                        category: category,
+                        amount: isNaN(amount) ? 0 : amount,
+                        description: description,
+                        merchant: merchant
+                    });
+                }
+            });
+            console.log("Collected transactions:", transactions);
+
+            const payload = {
+                card_keys: cardKeys,
+                transactions: transactions
+            };
+            console.log("Payload to send:", payload);
+
+            if (wsAgent9 && wsAgent9.readyState === WebSocket.OPEN) {
+                wsAgent9.send(JSON.stringify(payload));
+            } else {
+                console.error("Agent 9 WebSocket is not open.");
+            }
+        }
+
     </script>
+
 </body>
 </html>
