@@ -11,3 +11,5 @@ Agent 4: This agent focuses on interpreting the output from Agent 3, integrating
 Agent 5: This agent focuses on interpreting the output from Agent 3, integrating company events including promotions or lawsuits into the analysis. It delivers actionable insights of the market trends by explaining what happened, when it happened, and its impact, ensuring easy consumption for end-users and commandar AI Agent.
 
 Agent 8.1,8.2,8.3 and 9: The multi-AI network provide an enviorment where multiple AI agents work together to build an AI-powered advisor that analyzes your transaction details alongside comprehensive credit card data to deliver personalized, reward-maximizing card recommendations in real time.
+
+Please refer to example.pdf to learn what it can do
